@@ -1,0 +1,128 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>::Fantasize::  Subcategories Edit </title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
+
+    <!--plugin css file -->
+    <link rel="stylesheet" href="assets/plugin/cropper/cropper.min.css">   
+    <link rel="stylesheet" href="assets/plugin/dropify/dist/css/dropify.min.css"/>
+    
+    <!-- Project css file  -->
+    <link rel="stylesheet" href="assets/css/ebazar.style.min.css">
+</head>
+<body>
+    <div id="ebazar-layout" class="theme-blue">
+        
+        <!-- sidebar -->
+        <div id="sidebar"></div>
+ 
+
+        <!-- main body area -->
+        <div class="main px-lg-4 px-md-4"> 
+
+            <!-- Body: Header -->
+            <div id="header"></div>
+
+
+            <!-- Body: Body -->
+            <div class="body d-flex py-3">
+                <div class="container-xxl">
+                    <div class="row align-items-center">
+                        <div class="border-0 mb-4">
+                            <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
+                                <h3 class="fw-bold mb-0">Subcategories Edit</h3>
+                                <button type="button" id="saveButton" class="btn btn-primary py-2 px-5 text-uppercase btn-set-task w-sm-100">Save</button>
+                            </div>
+                        </div>
+                    </div> <!-- Row end -->  
+            
+                    <div class="row g-3 mb-3">
+                        <div class="col-lg-2">
+                            <div class="sticky-lg-top">
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="card mb-3">
+                                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                                    <h6 class="mb-0 fw-bold ">Basic information</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form id="editSubCategoryForm">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Name</label>
+                                                <input type="text" class="form-control" id="subCategoryName">
+                                            </div>
+                                            
+                                            <!-- IsActive Checkbox -->
+                                            <div class="col-md-6">
+                                                <label class="form-label">Is Active</label>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="isActive">
+                                                    <label class="form-check-label" for="isActive">Active</label>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Parent Category Select -->
+                                            <div class="card mb-3">
+                                                <div class="card-body">
+                                                    <label class="form-label">Parent Category Select</label>
+                                                    <select class="form-select" size="6" aria-label="size 3 select example" id="parentCategorySelect">
+                                                        <!-- سيتم ملؤها ديناميكياً عبر JavaScript -->
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div id="responseMessage"></div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- Row end  --> 
+                </div>
+            </div>
+            
+            
+        
+            <!-- Modal Custom Settings-->
+            <div id="modal"></div>
+
+
+
+        </div>
+
+    </div>
+    <script>
+            function loadComponent(selector, url) {
+             fetch(url)
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector(selector).innerHTML = data;
+            });
+    }
+
+        loadComponent('#sidebar', 'sidebar.html');
+        loadComponent('#header', 'header.html');
+        loadComponent('#modal', 'modal.html');
+
+    </script>
+
+    <!-- Jquery Core Js -->      
+    <script src="assets/bundles/libscripts.bundle.js"></script>
+
+    <!-- Jquery Plugin -->  
+    <script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>
+    <script src="assets/plugin/cropper/cropper.min.js"></script>
+    <script src="assets/plugin/cropper/cropper-init.js"></script>
+    <script src="assets/bundles/dropify.bundle.js"></script>
+
+    <!-- Jquery Page Js -->   
+    <script src="../js/template.js"></script>
+    <script src="assets/js/subCategoriesEdit.js"></script>
+</body>
+</html> 

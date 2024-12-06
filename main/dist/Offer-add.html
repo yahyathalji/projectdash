@@ -1,0 +1,167 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>::Fantasize:: Offer Add </title>   
+    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
+
+    <!-- plugin css file  -->
+    <link rel="stylesheet" href="assets/plugin/datatables/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="assets/plugin/datatables/dataTables.bootstrap5.min.css">
+
+    <!-- project css file  -->
+    <link rel="stylesheet" href="assets/css/ebazar.style.min.css">
+
+</head>
+<body>
+    <div id="ebazar-layout" class="theme-blue">
+        
+        <!-- sidebar -->
+        <div id="sidebar"></div>
+
+
+        <!-- main body area -->
+        <div class="main px-lg-4 px-md-4">
+
+            <!-- Body: Header -->
+            <div id="header"></div>
+
+
+           <!-- Body: Body -->
+<div class="container-xxl">
+    <!-- Submit Offer Button -->
+    <div class="col-12 mt-2 text-end">
+        <button type="submit" class="btn btn-primary px-4" id="submitOfferBtn"><i class="fa fa-check me-2"></i> Submit Offer</button>
+    </div>
+
+    <!-- Add Offer Card -->
+    <div class="card mb-4" style="margin: 0.5%">
+        <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+            <h6 class="mb-0 fw-bold">Add Offer</h6>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <!-- Discount -->
+                <div class="col-md-4">
+                    <label class="form-label">Discount (%)</label>
+                    <input type="number" class="form-control" id="discount" required>
+                </div>
+
+                <!-- Valid From -->
+                <div class="col-md-4">
+                    <label class="form-label">Valid From</label>
+                    <input type="date" class="form-control" id="validFrom" required>
+                </div>
+
+                <!-- Valid To -->
+                <div class="col-md-4">
+                    <label class="form-label">Valid To</label>
+                    <input type="date" class="form-control" id="validTo" required>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products and Packages Tables -->
+    <div class="row g-3 mb-4">
+        
+        <!-- Products Table -->
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                    <h5 class="fw-bold">Products List</h5>
+                </div>
+                <div class="card-body">
+                    <table id="myProductsTable" class="table table-hover align-middle mb-0"  style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Discount</th>
+                                <th>Status</th>
+                                <th>Select</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productTableBody">
+                            <!-- Product rows will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Packages Table -->
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                    <h6 class="mb-0 fw-bold">Packages List</h6>
+                </div>
+                <div class="card-body">
+                    <table id="myPackagesTable" class="table table-hover align-middle mb-0" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Package ID</th>
+                                <th>Package Name</th>
+                                <th>Price</th>
+                                <th>Discount</th>
+                                <th>Status</th>
+                                <th>Select</th>
+                            </tr>
+                        </thead>
+                        <tbody id="packageTableBody">
+                            <!-- Package rows will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+         
+            
+            
+        
+            <!-- Modal Custom Settings-->
+            <div id="modal"></div>
+
+            
+        </div>  
+        
+    </div>
+    <script>
+        function loadComponent(selector, url) {
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.querySelector(selector).innerHTML = data;
+                });
+        }
+
+        loadComponent('#sidebar', 'sidebar.html');
+        loadComponent('#header', 'header.html');
+        loadComponent('#modal', 'modal.html');
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+
+
+    <!-- Jquery Core Js -->
+    <script src="assets/bundles/libscripts.bundle.js"></script>
+
+    <!-- Plugin Js -->
+    <script src="assets/bundles/dataTables.bundle.js"></script>  
+
+    <!-- Jquery Page Js -->
+    <script src="../js/template.js"></script>
+
+    <script src="assets/js/offer.js"></script>
+    
+    
+ </body>
+</html> 

@@ -58,8 +58,7 @@ $(function() {
             }
         };
 
-        var chart = new ApexCharts(document.querySelector("#topselling"), options);
-        chart.render();
+        
     });
     
     $(document).ready(function() {
@@ -134,9 +133,7 @@ $(function() {
             },
         };
 
-        var chart = new ApexCharts(document.querySelector("#apex-GenderOverview"), options);
-        chart.render();
-
+        
     });
 
     //online and off line
@@ -180,76 +177,13 @@ $(function() {
             }
         };
 
-        var chart = new ApexCharts(document.querySelector("#apex-shoppingstatus"), options);
-        chart.render();
+        
     });
 
-    $(document).ready(function() {
-        var options = {
-            series: [{
-                name: 'Costs',
-                data: [1131, 1180, 1114, 1109, 1112, 1016, 1317, 1213, 1014, 1199, 1251]
-            }],
-            chart: {
-                height: 315,
-                type: 'bar',
-                toolbar: {
-                    show: false,
-                },
-            },
-            colors: ['var(--chart-color2)'],
-            plotOptions: {
-                bar: {
-                    dataLabels: {
-                        position: 'top', // top, center, bottom
-                    },
-                }
-            },
-            dataLabels: {
-                enabled: true,
-                formatter: function (val) {
-                    return val + "$";
-                },
-                offsetY: -20,
-                style: {
-                    fontSize: '12px',
-                    colors: ['var(--color-500)'],
-                }
-            },
-            
-            xaxis: {
-                categories: ["Jan", "Feb", "Mar", "Apr", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                position: 'bottom',
-                axisBorder: {
-                    show: false
-                },
-                axisTicks: {
-                    show: false
-                },
-                tooltip: {
-                    enabled: true,
-                }
-            },
-            yaxis: {
-                axisBorder: {
-                    show: false
-                },
-                axisTicks: {
-                    show: false,
-                },
-                labels: {
-                    show: false,
-                    formatter: function (val) {
-                        return val + "$";
-                    }
-                }
-            }
-        };
-
-        var chart = new ApexCharts(document.querySelector("#apex-expense"), options);
-        chart.render();
-    });
-
+   
+    
+   
+        
 });
 
 function myMap() {
