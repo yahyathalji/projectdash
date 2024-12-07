@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>::Fantasize::  Package Add </title>
+    <title>::Fantasize::  Package Edit </title>
     <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
 
     <!--plugin css file -->
@@ -56,7 +56,7 @@
                     <div class="row align-items-center">
                         <div class="border-0 mb-4">
                             <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
-                                <h3 class="fw-bold mb-0">Package Add</h3>
+                                <h3 class="fw-bold mb-0">Package Edit</h3>
                                 <div id="responseMessage" style="display: none; padding: 10px; margin: 10px 0; border-radius: 5px; color: white;"></div>
 
                                 <button type="button" class="btn btn-primary btn-set-task w-sm-100 py-2 px-5 text-uppercase" id="submitButton">Save</button>
@@ -256,7 +256,7 @@
                                             <label class="form-label">Product Images Upload</label>
                                             <small class="d-block text-muted mb-2">Only portrait or square images, 2MB max and 2000px max-height.</small>
                                             <input type="file" id="image-uploader" class="form-control" accept="image/*" multiple>
-                                            <div class="uploaded-images mt-3 d-flex flex-wrap gap-2" id="uploadedImagesContainer"></div>
+                                            <div id="uploaded-images" class="mt-3 d-flex flex-wrap gap-2"></div>
                                             <div id="file-limit-warning" class="text-danger mt-2" style="display:none;">You can only upload a maximum of 5 images.</div>
                                             <div id="file-size-warning" class="text-danger mt-2" style="display:none;">Image size must not exceed 2MB.</div>
                                         </div>
@@ -299,7 +299,8 @@
 <!-- Jquery Plugin -->  
 <script src="assets/plugin/multi-select/js/jquery.multi-select.js"></script>
 <script src="assets/plugin/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>  
-
+<!-- <script src="assets/plugin/cropper/cropper.min.js"></script>
+<script src="assets/plugin/cropper/cropper-init.js"></script> -->
 <script src="assets/bundles/dropify.bundle.js"></script>
 <script src="assets/bundles/dataTables.bundle.js"></script>
 

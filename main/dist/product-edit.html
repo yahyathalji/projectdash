@@ -10,7 +10,6 @@
     <!--plugin css file -->
     <link rel="stylesheet" href="assets/plugin/multi-select/css/multi-select.css"><!-- Multi Select Css -->
     <link rel="stylesheet" href="assets/plugin/bootstrap-tagsinput/bootstrap-tagsinput.css"><!-- Bootstrap Tagsinput Css -->
-    <link rel="stylesheet" href="assets/plugin/cropper/cropper.min.css"><!--Cropperer Css -->   
     <link rel="stylesheet" href="assets/plugin/dropify/dist/css/dropify.min.css"/><!-- Dropify Css -->
     <link rel="stylesheet" href="assets/plugin/datatables/responsive.dataTables.min.css"><!-- Datatable Css -->
     <link rel="stylesheet" href="assets/plugin/datatables/dataTables.bootstrap5.min.css"><!-- Datatable Css -->
@@ -263,10 +262,10 @@
                                         <div class="col-md-12">
                                             <label class="form-label">Product Images Upload</label>
                                             <small class="d-block text-muted mb-2">Only portrait or square images, 2MB max and 2000px max-height.</small>
-                                            <input type="file" class="image-uploader form-control" accept="image/*" multiple>
-                                            <div class="uploaded-images mt-3 d-flex flex-wrap gap-2"></div>
-                                            <div class="file-limit-warning text-danger mt-2" style="display:none;">You can only upload a maximum of 5 images.</div>
-                                            <div class="file-size-warning text-danger mt-2" style="display:none;">Image size must not exceed 2MB.</div>
+                                            <input type="file" id="image-uploader" class="form-control" accept="image/*" multiple>
+                                            <div id="uploaded-images" class="mt-3 d-flex flex-wrap gap-2"></div>
+                                            <div id="file-limit-warning" class="text-danger mt-2" style="display:none;">You can only upload a maximum of 5 images.</div>
+                                            <div id="file-size-warning" class="text-danger mt-2" style="display:none;">Image size must not exceed 2MB.</div>
                                         </div>
                                     </div>
                                 </div>
@@ -308,8 +307,8 @@
     <!-- <script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script> -->
     <script src="assets/plugin/multi-select/js/jquery.multi-select.js"></script>
     <script src="assets/plugin/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>  
-    <script src="assets/plugin/cropper/cropper.min.js"></script>
-    <script src="assets/plugin/cropper/cropper-init.js"></script>
+    <!-- <script src="assets/plugin/cropper/cropper.min.js"></script>
+    <script src="assets/plugin/cropper/cropper-init.js"></script> -->
     <!-- <script src="assets/bundles/dropify.bundle.js"></script>
     <script src="assets/bundles/dataTables.bundle.js"></script> -->
 

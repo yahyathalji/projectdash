@@ -97,18 +97,27 @@
             });
         });
 // ---------------------------- Image Upload ----------------------------
-const imageUploader = document.getElementById("image-uploader");
 const uploadedImagesContainer = document.getElementById('uploaded-images');
+const imageUploader = document.getElementById("image-uploader");
 const fileLimitWarning = document.getElementById('file-limit-warning');
 const fileSizeWarning = document.getElementById('file-size-warning');
 
 let uploadedImagesCount = 0;
+let selectedFiles = [];
+
+function removeSelectedFile(file) {
+    const index = selectedFiles.indexOf(file);
+    if (index !== -1) {
+        selectedFiles.splice(index, 1);
+    }
+}
+
 imageUploader.addEventListener('change', function(event) {
     const files = event.target.files;
-
     let validFiles = [];
+
     Array.from(files).forEach(file => {
-        if (file.size > 5 * 1024 * 1024) { 
+        if (file.size > 2 * 1024 * 1024) { 
             fileSizeWarning.style.display = 'block';
         } else {
             fileSizeWarning.style.display = 'none';
@@ -126,6 +135,7 @@ imageUploader.addEventListener('change', function(event) {
 
     validFiles.forEach(file => {
         uploadedImagesCount++;
+        selectedFiles.push(file);
 
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -134,7 +144,7 @@ imageUploader.addEventListener('change', function(event) {
             imgElement.style.width = '100px';
             imgElement.style.height = '100px';
             imgElement.style.objectFit = 'cover';
-            imgElement.className = 'rounded border';
+            imgElement.className = 'rounded border uploaded-image'; 
 
             const removeButton = document.createElement('button');
             removeButton.innerHTML = '&times;';
@@ -152,13 +162,13 @@ imageUploader.addEventListener('change', function(event) {
             removeButton.addEventListener('click', () => {
                 wrapper.remove();
                 uploadedImagesCount--;
+                removeSelectedFile(file);
                 fileLimitWarning.style.display = 'none';
             });
         };
         reader.readAsDataURL(file);
     });
 
-    // Clear the input for the next selection
     event.target.value = '';
 });
         // ----------------------------upload one vedio ---------------------------------------
@@ -509,6 +519,9 @@ selectedProductsTable.addEventListener("click", function (event) {
             }, 5000);
         }
         
+
+
+        
         document.getElementById('submitButton').addEventListener('click', async function (e) {
             e.preventDefault();
         
@@ -546,16 +559,18 @@ selectedProductsTable.addEventListener("click", function (event) {
                 formData.append('products', JSON.stringify(selectedProducts));
         
                 // Handle image uploads
-                const imageFiles = document.getElementById('image-uploader').files;
-                for (let i = 0; i < imageFiles.length; i++) {
-                    formData.append('images', imageFiles[i]);
-                }
+                selectedFiles.forEach(file => {
+                    formData.append("images", file);
+                });
+            
         
                 // Handle video upload
                 const videoFile = document.getElementById('videoInput').files[0];
                 if (videoFile) {
                     formData.append('videos', videoFile);
                 }
+
+                
         
                 // Debugging FormData contents
                 console.log('FormData contents:');

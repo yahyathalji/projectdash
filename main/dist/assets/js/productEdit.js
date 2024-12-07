@@ -96,17 +96,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 const productId = getUserIdFromURL();
 console.log(productId);
-const imageUploader = document.querySelector(".image-uploader");
-const uploadedImagesContainer = document.querySelector('.uploaded-images');
+const imageUploader = document.getElementById("image-uploader");
+const uploadedImagesContainer = document.getElementById('uploaded-images');
 const videoInput = document.getElementById("videoInput");
 const videoPreviewContainer = document.getElementById("videoPreviewContainer");
 const videoPreview = document.getElementById("videoPreview");
-const fileLimitWarning = document.querySelector('.file-limit-warning');
-const fileSizeWarning = document.querySelector('.file-size-warning');
+const fileLimitWarning = document.getElementById('file-limit-warning');
+const fileSizeWarning = document.getElementById('file-size-warning');
 const errorText = document.getElementById("errorText");
 const deleteVideoButton = document.getElementById("deleteVideoButton");
 let uploadedImagesCount = 0;
-
+let selectedFiles = [];
 
 function displayImage(fileOrUrl, isFile = true) {
     uploadedImagesCount++; 
@@ -138,10 +138,11 @@ function displayImage(fileOrUrl, isFile = true) {
     });
 }
 
-imageUploader.addEventListener('change', function (event) {
-    const files = event.target.files;
 
+imageUploader.addEventListener('change', function(event) {
+    const files = event.target.files;
     let validFiles = [];
+
     Array.from(files).forEach(file => {
         if (file.size > 2 * 1024 * 1024) { 
             fileSizeWarning.style.display = 'block';
@@ -159,11 +160,45 @@ imageUploader.addEventListener('change', function (event) {
 
     fileLimitWarning.style.display = 'none';
 
-   
-    validFiles.forEach(file => displayImage(file));
+    validFiles.forEach(file => {
+        uploadedImagesCount++;
+        selectedFiles.push(file);
 
-    event.target.value = ''; 
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imgElement = document.createElement('img');
+            imgElement.src = e.target.result;
+            imgElement.style.width = '100px';
+            imgElement.style.height = '100px';
+            imgElement.style.objectFit = 'cover';
+            imgElement.className = 'rounded border uploaded-image'; 
+
+            const removeButton = document.createElement('button');
+            removeButton.innerHTML = '&times;';
+            removeButton.className = 'btn btn-sm btn-danger position-absolute top-0 end-0';
+            removeButton.style.margin = '-5px';
+            removeButton.style.zIndex = '1';
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'position-relative d-inline-block';
+            wrapper.appendChild(imgElement);
+            wrapper.appendChild(removeButton);
+
+            uploadedImagesContainer.appendChild(wrapper);
+
+            removeButton.addEventListener('click', () => {
+                wrapper.remove();
+                uploadedImagesCount--;
+                removeSelectedFile(file);
+                fileLimitWarning.style.display = 'none';
+            });
+        };
+        reader.readAsDataURL(file);
+    });
+
+    event.target.value = '';
 });
+
 
 function displayVideo(videoUrl) {
     videoPreview.src = videoUrl;
@@ -226,7 +261,6 @@ document.addEventListener('DOMContentLoaded', async function () {
                     categorySelect.appendChild(li);
 
                     li.style.fontWeight = "bold";  
-                    li.style.color = "blue";       
                 } else {
                     console.error('SubCategoryID not found');
                 }
@@ -310,29 +344,27 @@ document.getElementById("EditProductForm").addEventListener("submit", function (
     e.preventDefault();
     const productId = getUserIdFromURL();
 
-    const name = document.getElementById('productName').value;
-    const price = document.getElementById('price').value;
-    const quantity = document.getElementById('quantity').value;
-    const description = document.getElementById('description').value;
-    const subCategoryId = document.getElementById('categorySelect').value;
-    const brandName = document.getElementById('brandSelect').value;
-    const material = document.getElementById('materialSelect').value;
-
-    const videoFile = document.getElementById("videoInput").files[0];
-    const imageFiles = document.querySelector(".image-uploader").files;
-
     const formData = new FormData();
-    formData.append("Name", name);
-    formData.append("Price", price);
-    formData.append("Quantity", quantity);
-    formData.append("Description", description);
-    formData.append("SubCategoryID", subCategoryId);
-    formData.append("BrandName", brandName);
-    formData.append("Material", material);
+    formData.append("Name", document.getElementById("productName").value);
+    formData.append("Price", document.getElementById("price").value);
+    formData.append("Quantity", document.getElementById("quantity").value);
+    formData.append("Description", document.getElementById("description").value);
+    formData.append("SubCategoryID", document.getElementById("categorySelect").value);
+    formData.append("BrandName", document.getElementById("brandSelect").value);
+    formData.append("Material", document.getElementById("materialSelect").value);
 
-    if (videoFile) formData.append("videos", videoFile);
-    Array.from(imageFiles).forEach((image) => formData.append("images", image));
+    // Append images
+    selectedFiles.forEach(file => {
+        formData.append("images", file);
+    });
 
+    // Add video
+    const video = document.getElementById("videoInput").files[0];
+    if (video) {
+        formData.append("videos", video);
+    }
+
+console.log(formData);
     fetch(`http://localhost:3000/api/product/${productId}`, {
         method: 'PUT',
         body: formData,

@@ -87,19 +87,26 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-
 // ---------------------------- Image Upload ----------------------------
-const uploadedImagesContainer = document.querySelector('.uploaded-images'); 
+const uploadedImagesContainer = document.getElementById('uploaded-images');
 const imageUploader = document.getElementById("image-uploader");
 const fileLimitWarning = document.getElementById('file-limit-warning');
 const fileSizeWarning = document.getElementById('file-size-warning');
 
 let uploadedImagesCount = 0;
+let selectedFiles = [];
+
+function removeSelectedFile(file) {
+    const index = selectedFiles.indexOf(file);
+    if (index !== -1) {
+        selectedFiles.splice(index, 1);
+    }
+}
 
 imageUploader.addEventListener('change', function(event) {
     const files = event.target.files;
-
     let validFiles = [];
+
     Array.from(files).forEach(file => {
         if (file.size > 2 * 1024 * 1024) { 
             fileSizeWarning.style.display = 'block';
@@ -119,8 +126,8 @@ imageUploader.addEventListener('change', function(event) {
 
     validFiles.forEach(file => {
         uploadedImagesCount++;
+        selectedFiles.push(file);
 
-   
         const reader = new FileReader();
         reader.onload = function(e) {
             const imgElement = document.createElement('img');
@@ -143,10 +150,10 @@ imageUploader.addEventListener('change', function(event) {
 
             uploadedImagesContainer.appendChild(wrapper);
 
-          
             removeButton.addEventListener('click', () => {
                 wrapper.remove();
                 uploadedImagesCount--;
+                removeSelectedFile(file);
                 fileLimitWarning.style.display = 'none';
             });
         };
@@ -155,7 +162,6 @@ imageUploader.addEventListener('change', function(event) {
 
     event.target.value = '';
 });
-
 
 // ---------------------------- Video Upload ----------------------------
 document.getElementById("videoInput").addEventListener("change", function (event) {
@@ -254,42 +260,36 @@ document.getElementById("addProductForm").addEventListener("submit", function (e
     formData.append("BrandName", document.getElementById("brandSelect").value);
     formData.append("Material", document.getElementById("materialSelect").value);
 
-    // Add images to formData
-    const images = document.getElementById("image-uploader").files;
-    for (let i = 0; i < images.length; i++) {
-        console.log(images[i]);
-        formData.append("images", images[i]); // Ensure this is 'images'
-    }
+    // Append images
+    selectedFiles.forEach(file => {
+        formData.append("images", file);
+    });
 
-    // Add video to formData with the name 'videos'
+    // Add video
     const video = document.getElementById("videoInput").files[0];
     if (video) {
-        formData.append("videos", video); // Changed name to 'videos'
+        formData.append("videos", video);
     }
-    console.log(formData);
 
-    // Send data via fetch
     fetch('http://localhost:3000/api/createProduct', {
         method: 'POST',
-        body: formData
+        body: formData,
+        
     })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Display success message
-                document.getElementById('responseMessage').innerHTML = '<div class="alert alert-success">Productss added successfully!</div>';
-                
-            } else {
-                // Display error message
-                document.getElementById('responseMessage').innerHTML = '<div class="alert alert-success"> ' + data.message + '</div>';
-            }
-        })
-        .catch(error => {
-            console.error('Error adding product:', error);
-            document.getElementById('responseMessage').innerHTML = '<div class="alert alert-danger">Failed to add product.</div>';
-        });
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('responseMessage').innerHTML = '<div class="alert alert-success">Product added successfully!</div>';
+        } else {
+            document.getElementById('responseMessage').innerHTML = '<div class="alert alert-danger">' + data.message + '</div>';
+        }
+    })
+    .catch(error => {
+        console.error('Error adding product:', error);
+        document.getElementById('responseMessage').innerHTML = '<div class="alert alert-danger">Failed to add product.</div>';
+    });
 
-        setTimeout(function() {
-            document.getElementById('responseMessage').innerHTML = '';
-            }, 1500);
+    setTimeout(function() {
+        document.getElementById('responseMessage').innerHTML = '';
+    }, 1500);
 });
