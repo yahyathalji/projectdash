@@ -12,7 +12,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     try {
-        const response = await fetch("http://localhost:3000/api/categories");
+        const response = await fetch("http://localhost:5000/api/categories",
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+                    cookie: 'authToken=' + sessionStorage.getItem("authToken"),
+                },
+            }
+
+        );
         const categories = await response.json();
 
         table.clear();

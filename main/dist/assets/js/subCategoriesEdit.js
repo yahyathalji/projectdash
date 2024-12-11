@@ -6,8 +6,16 @@ $(document).ready(function () {
     console.log("CategoryID from URL:", categoryId);
 
     $.ajax({
-        url: 'http://localhost:3000/api/categories/subcategories',
+        url: 'http://localhost:5000/api/categories/subcategories',
+        
+
         method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+            cookie: 'authToken=' + sessionStorage.getItem('authToken')
+        },
+
         success: function (data) {
             console.log("Data fetched from API:", data); 
 
@@ -70,8 +78,13 @@ $(document).ready(function () {
     });
 
     $.ajax({
-        url: 'http://localhost:3000/api/categories',
+        url: 'http://localhost:5000/api/categories',
         method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+            cookie: 'authToken=' + sessionStorage.getItem('authToken')
+        },
         success: function (data) {
             const selectElement = $('select.form-select');
             selectElement.empty();

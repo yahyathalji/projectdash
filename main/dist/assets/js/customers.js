@@ -1,8 +1,18 @@
-const apiUrl = 'http://localhost:3000/api';
+const apiUrl = 'http://localhost:5000/api';
 
 // Load all users and populate the table
 function loadUsers() {
-    fetch(`${apiUrl}/get_all_users`)
+    fetch(`${apiUrl}/get_all_users`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+                cookie: 'authToken=' + sessionStorage.getItem("authToken"),
+            },
+        }
+        
+    )
         .then(response => response.json())
         .then(data => {
             const tableBody = document.getElementById('tableBody');

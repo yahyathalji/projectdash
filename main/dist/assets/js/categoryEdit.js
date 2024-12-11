@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    const apiUrl = `http://localhost:3000/api/getCategory/${params}`;
+    const apiUrl = `http://localhost:5000/api/category/${params}`;
     const categoryNameInput = document.getElementById("categoryName");
     const isActiveCheckbox = document.getElementById("isActive");
     const imageInput = document.getElementById("dropify-event");
@@ -41,7 +41,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     const statusMessage = document.getElementById("statusMessage");
 
     try {
-        const response = await fetch(apiUrl);
+        const response = await fetch(apiUrl,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+                    cookie: 'authToken=' + sessionStorage.getItem("authToken"),
+                },
+            }
+        );
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -55,7 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (data.Image && data.Image.filePath) {
      
             const fixedPath = data.Image.filePath.replace(/\\/g, "/");
-            const imagePath = `http://localhost:3000/${fixedPath}`;
+            const imagePath = `http://localhost:5000/${fixedPath}`;
         
             imageInput.setAttribute("data-default-file", imagePath);
         
@@ -95,9 +104,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         try {
-            const updateResponse = await fetch(`http://localhost:3000/api/category/${params}`, {
+            const updateResponse = await fetch(`http://localhost:5000/api/category/${params}`, {
                 method: "PUT",
+
                 body: formData,
+
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+                    cookie: 'authToken=' + sessionStorage.getItem("authToken"),
+                },
+                
             });
 
             if (updateResponse.ok) {

@@ -69,7 +69,7 @@ $(document).ready(function() {
         
                 try {
                     // Make API request to create category
-                    const response = await fetch("http://localhost:3000/api/categories", {
+                    const response = await fetch("http://localhost:5000/api/categories", {
                         method: "POST",
                         body: formData,
                     });

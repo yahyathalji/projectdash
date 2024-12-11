@@ -218,7 +218,16 @@ document.getElementById("videoInput").addEventListener("change", function (event
             let products = [];
             let filteredProducts = [];
         
-            fetch("http://localhost:3000/api/GetAllProducts")
+            fetch("http://localhost:5000/api/GetAllProducts",
+                {
+                    method: "GET",
+                    headers: {
+                        "content-type": "application/json",
+                        Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+                        cookie: 'authToken=' + sessionStorage.getItem("authToken"),
+                    },
+                }
+            )
                 .then((response) => response.json())
                 .then((data) => {
                     products = data;
@@ -442,7 +451,16 @@ selectedProductsTable.addEventListener("click", function (event) {
     let selectedCategoryId = null;
 
     // Fetch categories and subcategories data from API
-    fetch('http://localhost:3000/api/categories/subcategories')
+    fetch('http://localhost:5000/api/categories/subcategories',
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+                cookie: 'authToken=' + sessionStorage.getItem('authToken'),
+            },
+        }
+    )
         .then(response => response.json())
         .then(data => {
             const categorySelect = document.getElementById('categorySelect');
@@ -579,8 +597,13 @@ selectedProductsTable.addEventListener("click", function (event) {
                 }
         
                 // Submit data to the API
-                const response = await fetch('http://localhost:3000/api/packages', {
+                const response = await fetch('http://localhost:5000/api/packages', {
                     method: 'POST',
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+                        cookie: 'authToken=' + sessionStorage.getItem('authToken'),
+                    },
+                    
                     body: formData,
                 });
         

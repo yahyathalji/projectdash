@@ -9,10 +9,19 @@ const params =getUserIdFromURL();
 
 document.addEventListener("DOMContentLoaded", () => {
     const tableBody = document.querySelector("#myDataTable tbody");
-    const apiUrl = `http://localhost:3000/api/get_user_detail/${params}`;
+    const apiUrl = `http://localhost:5000/api/get_user_detail/${params}`;
 
     // Fetch data from API
-    fetch(apiUrl)
+    fetch(apiUrl,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+                cookie: 'authToken=' + sessionStorage.getItem("authToken"),
+            },
+        }
+    )
         .then((response) => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);

@@ -1,5 +1,14 @@
 $(document).ready(function () {
-    const response =fetch("http://localhost:3000/api/categories/subcategories")
+    const response =fetch("http://localhost:5000/api/categories/subcategories",
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+                cookie: 'authToken=' + sessionStorage.getItem("authToken"),
+            },
+        }   
+    )
         .then(response => response.json())
         .then(data => {
             let subCategories = [];
