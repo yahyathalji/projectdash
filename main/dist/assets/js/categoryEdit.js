@@ -43,12 +43,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
         const response = await fetch(apiUrl,
             {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
-                    cookie: 'authToken=' + sessionStorage.getItem("authToken"),
-                },
+               method: "GET",
+               headers: {
+                   "Content-Type": "application/json",
+                   Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+                   cookie: 'authToken=' + sessionStorage.getItem("authToken"),
+               },
             }
         );
         if (!response.ok) {

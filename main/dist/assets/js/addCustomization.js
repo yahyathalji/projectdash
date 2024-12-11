@@ -234,88 +234,51 @@ document.addEventListener("DOMContentLoaded", function () {
             ],
             optionFields: [
                 {
-                    label: "Option One Name",
+                    label: "Option Name",
                     type: "text",
-                    class: "option-one-name",
-                    placeholder: "Enter first option name",
+                    class: "option-name",
+                    placeholder: "Enter option name",
                     required: true
                 },
                 {
-                    label: "Option One Value",
+                    label: "Option Value",
                     type: "text",
-                    class: "option-one-value",
-                    placeholder: "Enter first option value",
+                    class: "option-value",
+                    placeholder: "Enter option value",
                     required: true
                 },
                 {
-                    label: "Upload Option One File",
+                    label: "Upload Option File",
                     type: "file",
-                    class: "upload-option-one-file",
-                    accept: "image/*",
-                    required: false
-                },
-                {
-                    label: "Option Two Name",
-                    type: "text",
-                    class: "option-two-name",
-                    placeholder: "Enter second option name",
-                    required: true
-                },
-                {
-                    label: "Option Two Value",
-                    type: "text",
-                    class: "option-two-value",
-                    placeholder: "Enter second option value",
-                    required: true
-                },
-                {
-                    label: "Upload Option Two File",
-                    type: "file",
-                    class: "upload-option-two-file",
+                    class: "upload-option-file",
                     accept: "image/*",
                     required: false
                 }
             ],
-            multipleOptions: true,
+            multipleOptions: true, // Allow multiple image options
             transformOption: function(optionGroup) {
-                const optionOneNameInput = optionGroup.querySelector('.option-one-name');
-                const optionOneValueInput = optionGroup.querySelector('.option-one-value');
-                const optionOneFileInput = optionGroup.querySelector('.upload-option-one-file');
+                const nameInput = optionGroup.querySelector('.option-name');
+                const valueInput = optionGroup.querySelector('.option-value');
+                const fileInput = optionGroup.querySelector('.upload-option-file');
 
-                const optionTwoNameInput = optionGroup.querySelector('.option-two-name');
-                const optionTwoValueInput = optionGroup.querySelector('.option-two-value');
-                const optionTwoFileInput = optionGroup.querySelector('.upload-option-two-file');
-
-                if (!optionOneNameInput || !optionOneValueInput || !optionTwoNameInput || !optionTwoValueInput) {
+                if (!nameInput || !valueInput) {
                     throw new Error("Option field is missing.");
                 }
 
-                const name1 = optionOneNameInput.value.trim();
-                const value1 = optionOneValueInput.value.trim();
-                const fileName1 = optionOneFileInput && optionOneFileInput.files.length > 0 ? optionOneFileInput.files[0].name : "";
+                const name = nameInput.value.trim();
+                const value = valueInput.value.trim();
+                const fileName = fileInput && fileInput.files.length > 0 ? fileInput.files[0].name : "";
 
-                const name2 = optionTwoNameInput.value.trim();
-                const value2 = optionTwoValueInput.value.trim();
-                const fileName2 = optionTwoFileInput && optionTwoFileInput.files.length > 0 ? optionTwoFileInput.files[0].name : "";
-
-                if (name1 === "" || value1 === "" || name2 === "" || value2 === "") {
-                    throw new Error("Image option names and values cannot be empty.");
+                if (name === "" || value === "") {
+                    throw new Error("Option name and value cannot be empty.");
                 }
 
-                return [
-                    {
-                        name: name1,
-                        value: value1,
-                        fileName: fileName1,
-                        isSelected: false
-                    },
-                    {
-                        name: name2,
-                        value: value2,
-                        fileName: fileName2,
-                        isSelected: false
-                    }
-                ];
+                return {
+                    name: name,
+                    value: value,
+                    fileName: fileName,
+                    isSelected: false
+                };
             }
         }
     };
@@ -482,14 +445,9 @@ document.addEventListener("DOMContentLoaded", function () {
             optionFields = `
                 <div class="option-value-group" id="${optionId}" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
                     <div style="display: flex; gap: 10px;">
-                        <input type="text" class="form-control option-one-name" placeholder="Option One Name" required>
-                        <input type="text" class="form-control option-one-value" placeholder="Option One Value" required>
-                        <input type="file" class="form-control upload-option-one-file" accept="image/*">
-                    </div>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" class="form-control option-two-name" placeholder="Option Two Name" required>
-                        <input type="text" class="form-control option-two-value" placeholder="Option Two Value" required>
-                        <input type="file" class="form-control upload-option-two-file" accept="image/*">
+                        <input type="text" class="form-control option-name" placeholder="Option Name" required>
+                        <input type="text" class="form-control option-value" placeholder="Option Value" required>
+                        <input type="file" class="form-control upload-option-file" accept="image/*">
                     </div>
                     <button class="btn btn-outline-danger remove-option-btn" title="Remove Option">
                         <i class="fa fa-trash"></i>
@@ -522,6 +480,12 @@ document.addEventListener("DOMContentLoaded", function () {
         // Array to hold all customizations
         const options = [];
 
+        // Object to hold file mappings: { 'optionName': File }
+        const fileMappings = {};
+
+        // Set to track unique option names
+        const optionNamesSet = new Set();
+
         // Iterate through each customization form
         for (let form of customizationForms) {
             const type = form.getAttribute('data-type');
@@ -545,15 +509,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
             for (let group of optionGroups) {
                 try {
-                    let transformedOptions = config.transformOption(group);
-                    if (type === 'image') {
-                        // For 'image' type, transformOption returns an array
-                        if (Array.isArray(transformedOptions)) {
-                            optionValues.push(...transformedOptions);
-                        }
-                    } else {
-                        optionValues.push(transformedOptions);
+                    let transformedOption = config.transformOption(group);
+                    
+                    // Check for duplicate option names
+                    if (optionNamesSet.has(transformedOption.name)) {
+                        throw new Error(`Duplicate option name detected: ${transformedOption.name}`);
                     }
+                    optionNamesSet.add(transformedOption.name);
+
+                    optionValues.push(transformedOption);
+
+                    // Handle file uploads if customization type is 'image'
+                    if (type === 'image') {
+                        const fileInput = group.querySelector('.upload-option-file');
+                        if (fileInput && fileInput.files.length > 0) {
+                            const optionName = transformedOption.name;
+                            fileMappings[optionName] = fileInput.files[0];
+                        }
+                    }
+
                 } catch (error) {
                     showFeedback(error.message, 'danger');
                     return;
@@ -590,23 +564,8 @@ document.addEventListener("DOMContentLoaded", function () {
             formData.append("options", JSON.stringify(options));
 
             // Attach all files associated with customizations
-            for (let customization of options) {
-                if (customization.type === 'uploadPicture') {
-                    // No file to attach; skip
-                    continue;
-                } else if (customization.type === 'image') {
-                    const form = Array.from(document.querySelectorAll('.customization-form'))
-                        .find(f => f.getAttribute('data-type') === 'image' && f.querySelector('.customization-name').value.trim() === customization.name);
-                    if (form) {
-                        customization.optionValues.forEach((option, index) => {
-                            const fileInput = form.querySelectorAll('input[type="file"]')[index];
-                            if (fileInput && fileInput.files[0]) {
-                                formData.append(`uploadImage_${customization.name}_${option.name}`, fileInput.files[0]);
-                            }
-                        });
-                    }
-                }
-                // Add handling for other customization types that require file uploads if necessary
+            for (let optionName in fileMappings) {
+                formData.append(optionName, fileMappings[optionName]);
             }
 
             // Send POST request with all customizations

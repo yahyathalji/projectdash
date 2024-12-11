@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function editCustomization(customizationID) {
         // Implement the logic to edit the customization
         // For example, redirect to an edit form page
-        // Example: window.location.href = `edit-customization.html?id=${customizationID}`;
+         window.location.href = `Edit-customization.html?id=${customizationID}`;
         showFeedback(`Edit Customization ID: ${customizationID}`, 'warning');
     }
 
