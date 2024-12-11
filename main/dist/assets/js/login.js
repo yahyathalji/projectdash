@@ -22,7 +22,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
     // If the response is just the token string:
     if (response.status === 200 && data) {
-      const token = data; // `data` is the token string returned by the server
+      const token = data.replace(/"/g, "");
       console.log("Token:", token);
       // Parse JWT token to get user role
       sessionStorage.setItem("authToken", token);
@@ -30,7 +30,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
       const decodedToken = JSON.parse(atob(token.split(".")[1]));
       console.log("Decoded Token:", decodedToken);
       // store the role in session storage
-      sessionStorage.setItem("role", decodedToken.role);
+      sessionStorage.setItem("role", decodedToken.payload.role);
       // redirect user to the appropriate page
         if (decodedToken.payload.role === "admin") {
             window.location.href = "index.html";
