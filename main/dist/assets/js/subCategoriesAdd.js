@@ -1,7 +1,13 @@
 $(document).ready(function() {
     $.ajax({
-        url: 'http://localhost:3000/api/categories',
+        url: 'http://localhost:5000/api/categories',
         method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+            cookie: 'authToken=' + sessionStorage.getItem('authToken')
+        },
+
         success: function(data) {
             const selectElement = $('select.form-select');
             selectElement.empty();
@@ -40,13 +46,19 @@ $(document).ready(function() {
 
         const categoryId = parentCategoryId; 
         $.ajax({
-            url: `http://localhost:3000/api/categories/${categoryId}/subcategories`,
+            url: `http://localhost:5000/api/categories/${categoryId}/subcategories`,
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+                cookie: 'authToken=' + sessionStorage.getItem('authToken')
+            },
             data: {
                 Name: name,
                 IsActive: isActive,
                 ParentCategoryId: parentCategoryId
             },
+
             success: function(response) {
                 $('#message').text('Subcategory added successfully!').removeClass('text-danger').addClass('text-success');
             },

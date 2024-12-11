@@ -4,7 +4,16 @@ function extractFirstImage(resources) {
 }
 
 function fetchOrders() {
-    fetch('http://localhost:3000/api/orders/admin')
+    fetch('http://localhost:5000/api/orders/admin',
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+                cookie: 'authToken=' + sessionStorage.getItem("authToken"),
+            },
+        }
+    )
         .then(response => response.json())
         .then(data => {
             if (data && Array.isArray(data)) {
@@ -84,9 +93,18 @@ let total = 0;
 
 cartTableBody.innerHTML = '';
 
-const url = `http://localhost:3000/api/orders/${param}`;
+const url = `http://localhost:5000/api/orders/${param}`;
 
-fetch(url)
+fetch(url,
+    {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+            cookie: 'authToken=' + sessionStorage.getItem("authToken"),
+        },
+    }
+)
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -115,7 +133,7 @@ fetch(url)
             const firstImage = extractFirstImage(OrdersProducts.Product.Resource);
             console.log("firstImage product",firstImage);
             if (firstImage) {
-                const imagePath = `http://localhost:3000/${firstImage.filePath.replace(/\\/g, '/')}`;
+                const imagePath = `http://localhost:5000/${firstImage.filePath.replace(/\\/g, '/')}`;
                 imgCell.innerHTML = `<img src="${imagePath}" class="avatar rounded lg" style="width: 100px; height: auto;" alt="${OrdersProducts.Product.Name}">`;
             } else {
                 imgCell.textContent = "No image available";
@@ -144,7 +162,7 @@ fetch(url)
             const firstImage = extractFirstImage(OrdersPackages.Package.Resource);
             console.log("firstImage Pkg",firstImage);
             if (firstImage) {
-                const imagePath = `http://localhost:3000${firstImage.filePath.replace(/\\/g, '/')}`;
+                const imagePath = `http://localhost:5000${firstImage.filePath.replace(/\\/g, '/')}`;
                 imgCell.innerHTML = `<img src="${imagePath}" class="avatar rounded lg" style="width: 100px; height: auto;" alt="${OrdersPackages.Package.Name}">`;
             } else {
                 imgCell.textContent = "No image available";
