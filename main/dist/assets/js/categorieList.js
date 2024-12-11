@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         );
         const categories = await response.json();
-
+            
         table.clear();
 
         if (response.ok && categories.length > 0) {
