@@ -95,12 +95,14 @@ $("#submitOfferBtn").click(async function () {
 async function sendOfferToAPI(url, data) {
   const response = await fetch(url, {
     method: "POST",
+    
+    body: JSON.stringify(data),
     headers: {
       "Content-Type": "application/json",
-      cookie: "authToken=" + sessionStorage.getItem("authToken"),
-      Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+        Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+        cookie: "authToken=" + sessionStorage.getItem("authToken"),
     },
-    body: JSON.stringify(data),
+
   });
   if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
   return response.json();
@@ -108,7 +110,16 @@ async function sendOfferToAPI(url, data) {
 
 // Utility to fetch data
 async function fetchData(url) {
-  const response = await fetch(url);
+  const response = await fetch(url,
+    {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+            cookie: 'authToken=' + sessionStorage.getItem("authToken"),
+        },
+    }
+  );
   if (!response.ok) throw new Error(`Error fetching data from ${url}`);
   return response.json();
 }
@@ -133,13 +144,7 @@ function getStatusClass(status) {
 
 // Populate Products Table
 async function populateProducts() {
-  const products = await fetchData("http://localhost:5000/api/GetAllProducts", {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
-      cookie: "authToken=" + sessionStorage.getItem("authToken"),
-    },
-  });
+  const products = await fetchData("http://localhost:5000/api/GetAllProducts");
 
   const productTableBody = document.getElementById("productTableBody");
   productTableBody.innerHTML = "";
