@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.warn("Slider elements not found. Slider functionality will not work.");
     }
 
-    const apiUrl = 'http://localhost:3000/api/GetAllProducts';
+    const apiUrl = 'http://localhost:5000/api/GetAllProducts';
     let currentPage = 1;
     const rowsPerPage = 10;
     let products = [];
@@ -41,6 +41,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const response = await fetch(apiUrl, {
                 method: "GET",
+                headers: {
+                    "content-type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+                    cookie: 'authToken=' + sessionStorage.getItem("authToken"),
+                },
             });
 
             if (!response.ok) {

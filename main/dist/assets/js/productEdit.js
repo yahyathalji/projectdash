@@ -112,7 +112,7 @@ function displayImage(fileOrUrl, isFile = true) {
     uploadedImagesCount++; 
 
     const imgElement = document.createElement('img');
-    imgElement.src = isFile ? URL.createObjectURL(fileOrUrl) : `http://localhost:3000/${fileOrUrl}`;
+    imgElement.src = isFile ? URL.createObjectURL(fileOrUrl) : `http://localhost:5000/${fileOrUrl}`;
     imgElement.style.width = '100px';
     imgElement.style.height = '100px';
     imgElement.style.objectFit = 'cover';
@@ -234,7 +234,18 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (productId) {
         try {
 
-            const response = await fetch(`http://localhost:3000/api/getProduct/${productId}`);
+            const response = await fetch(`http://localhost:5000/api/getProduct/${productId}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+                        cookie: 'authToken=' + sessionStorage.getItem('authToken'),
+
+                    },  
+                }
+
+            );
             const productData = await response.json();
 
             if (response.ok && productData) {
@@ -269,7 +280,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 imageResources.forEach(image => displayImage(image.filePath, false));
                 const videoResources = productData.Resource.filter(resource => resource.fileType.startsWith('video/'));
                 if (videoResources.length > 0) {
-                    displayVideo(`http://localhost:3000/${videoResources[0].filePath}`);
+                    displayVideo(`http://localhost:5000/${videoResources[0].filePath}`);
                 }
             } else {
                 console.error('Error fetching product data:', productData.message || 'Unknown error');
@@ -285,7 +296,16 @@ document.addEventListener('DOMContentLoaded', async function () {
 let selectedCategoryId = null;
 
 // Fetch categories and subcategories data from API
-fetch('http://localhost:3000/api/categories/subcategories')
+fetch('http://localhost:5000/api/categories/subcategories',
+    {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+            cookie: 'authToken=' + sessionStorage.getItem('authToken'),
+        },
+    }
+)
     .then(response => response.json())
     .then(data => {
         const categorySelect = document.getElementById('categorySelect');
@@ -365,8 +385,13 @@ document.getElementById("EditProductForm").addEventListener("submit", function (
     }
 
 console.log(formData);
-    fetch(`http://localhost:3000/api/product/${productId}`, {
+    fetch(`http://localhost:5000/api/product/${productId}`, {
         method: 'PUT',
+        headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+            cookie: 'authToken=' + sessionStorage.getItem('authToken'),
+        },
+
         body: formData,
     })
     .then(response => response.json())

@@ -196,7 +196,16 @@ document.getElementById("deleteVideoButton").addEventListener("click", function 
 let selectedCategoryId = null;
 
 // Fetch categories and subcategories data from API
-fetch('http://localhost:3000/api/categories/subcategories')
+fetch('http://localhost:5000/api/categories/subcategories',
+    {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+            cookie: 'authToken=' + sessionStorage.getItem("authToken"),
+        },
+    }
+)
     .then(response => response.json())
     .then(data => {
         const categorySelect = document.getElementById('categorySelect');
@@ -271,8 +280,12 @@ document.getElementById("addProductForm").addEventListener("submit", function (e
         formData.append("videos", video);
     }
 
-    fetch('http://localhost:3000/api/createProduct', {
+    fetch('http://localhost:5000/api/createProduct', {
         method: 'POST',
+        headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+            cookie: 'authToken=' + sessionStorage.getItem("authToken"),
+        },
         body: formData,
         
     })

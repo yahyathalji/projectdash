@@ -101,7 +101,16 @@ document.getElementById('searchInput').addEventListener('input', function() {
 
 async function fetchPackages() {
     try {
-        const response = await fetch('http://localhost:3000/api/packages');
+        const response = await fetch('http://localhost:5000/api/packages',
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+                    cookie: 'authToken=' + sessionStorage.getItem('authToken')
+                }
+            }
+        );
         const data = await response.json();
         allPackages = [...data];
         packages = [...data];
