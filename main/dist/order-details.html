@@ -4,56 +4,54 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>::Fantasize:: Order Details </title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
+    <title>::Fantasize:: Order Details</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon -->
 
-    <!-- plugin css file  -->
+    <!-- Plugin CSS -->
     <link rel="stylesheet" href="assets/plugin/datatables/responsive.dataTables.min.css">
     <link rel="stylesheet" href="assets/plugin/datatables/dataTables.bootstrap5.min.css">
 
-    <!-- project css file  -->
+    <!-- Project CSS -->
     <link rel="stylesheet" href="assets/css/ebazar.style.min.css">
 </head>
 <body>
     <div id="ebazar-layout" class="theme-blue">
-
-        <!-- sidebar -->
+        <!-- Sidebar -->
         <div id="sidebar"></div>
 
-
-        <!-- main body area -->   
-        <div class="main px-lg-4 px-md-4"> 
-
-            <!-- Body: Header -->
+        <!-- Main Body Area -->
+        <div class="main px-lg-4 px-md-4">
+            <!-- Header -->
             <div id="header"></div>
 
-
-            <!-- Body: Body --> 
-            <div class="body d-flex py-3">  
-                <div class="container-xxl"> 
-                    <div class="row align-items-center"> 
-                        <div class="border-0 mb-4"> 
+            <!-- Body -->
+            <div class="body d-flex py-3">
+                <div class="container-xxl">
+                    <div class="row align-items-center">
+                        <div class="border-0 mb-4">
                             <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
-                                <h3 class="fw-bold mb-0" id="orderTitle"></h3>
+                                <h3 class="fw-bold mb-0" id="orderTitle">Order Details</h3>
                                 <div class="col-auto d-flex btn-set-task w-sm-100 align-items-center">
-                                    <select class="form-select" aria-label="Default select example" id="orderSelect">
+                                    <select class="form-select" aria-label="Select Order" id="orderSelect">
+                                        <option disabled selected>Select Order</option>
                                         <!-- Orders will be dynamically loaded here -->
                                     </select>
                                 </div>
                             </div>
                         </div>
                     </div>
-            
-                    <!-- Row end -->
+
+                    <!-- Order Information -->
                     <div class="row g-3 mb-3 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-4">
                         <div class="col">
                             <div class="alert-success alert mb-0">
                                 <div class="d-flex align-items-center">
-                                    <div class="avatar rounded no-thumbnail bg-sStatus Orders
-                                    uccess text-light"><i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i></div>
-                                    <div class="flex-fill ms-3 text-truncate">
+                                    <div class="avatar rounded no-thumbnail bg-success text-light">
+                                        <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="flex-fill ms-3">
                                         <div class="h6 mb-0">Order Created at</div>
-                                        <span class="small" id="OrderCreatedAt"></span>
+                                        <span class="small" id="OrderCreatedAt">-</span>
                                     </div>
                                 </div>
                             </div>
@@ -61,10 +59,12 @@
                         <div class="col">
                             <div class="alert-danger alert mb-0">
                                 <div class="d-flex align-items-center">
-                                    <div class="avatar rounded no-thumbnail bg-danger text-light"><i class="fa fa-user fa-lg" aria-hidden="true"></i></div>
-                                    <div class="flex-fill ms-3 text-truncate">
+                                    <div class="avatar rounded no-thumbnail bg-danger text-light">
+                                        <i class="fa fa-user fa-lg" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="flex-fill ms-3">
                                         <div class="h6 mb-0">Name</div>
-                                        <span class="small" id="customerName"></span>
+                                        <span class="small" id="customerName">-</span>
                                     </div>
                                 </div>
                             </div>
@@ -72,10 +72,12 @@
                         <div class="col">
                             <div class="alert-warning alert mb-0">
                                 <div class="d-flex align-items-center">
-                                    <div class="avatar rounded no-thumbnail bg-warning text-light"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></div>
-                                    <div class="flex-fill ms-3 text-truncate">
+                                    <div class="avatar rounded no-thumbnail bg-warning text-light">
+                                        <i class="fa fa-envelope fa-lg" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="flex-fill ms-3">
                                         <div class="h6 mb-0">Email</div>
-                                        <span class="small" id="userEmail"></span>
+                                        <span class="small" id="userEmail">-</span>
                                     </div>
                                 </div>
                             </div>
@@ -83,123 +85,538 @@
                         <div class="col">
                             <div class="alert-info alert mb-0">
                                 <div class="d-flex align-items-center">
-                                    <div class="avatar rounded no-thumbnail bg-info text-light"><i class="fa fa-phone-square fa-lg" aria-hidden="true"></i></div>
-                                    <div class="flex-fill ms-3 text-truncate">
+                                    <div class="avatar rounded no-thumbnail bg-info text-light">
+                                        <i class="fa fa-phone-square fa-lg" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="flex-fill ms-3">
                                         <div class="h6 mb-0">Contact No</div>
-                                        <span class="small" id="PhoneNumber"></span>
+                                        <span class="small" id="PhoneNumber">-</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div> <!-- Row end -->
-            
+                    </div> <!-- Order Information Row end -->
+
+                    <!-- Order Summary and Address -->
                     <div class="row g-3 mb-3">
+                        <!-- Order Summary -->
                         <div class="col-xl-12 col-xxl-8">
                             <div class="card">
-                                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                                    <h6 class="mb-0 fw-bold ">Order Summary</h6>
+                                <div class="card-header d-flex justify-content-between bg-transparent border-bottom-0">
+                                    <h6 class="mb-0 fw-bold">Order Summary</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="product-cart">
-                                        <div class="checkout-table table-responsive">
-                                            <table id="myCartTable" class="table display dataTable table-hover align-middle" style="width:100%">
+                                        <div class="table-responsive">
+                                            <table id="myCartTable" class="table table-hover align-middle" style="width:100%">
                                                 <thead>
                                                     <tr>
-                                                        <th class="product">Item Image</th>
+                                                        <th>Item Image</th>
                                                         <th>Item Name</th>
-                                                        <th class="quantity">Quantity</th>
-                                                        <th class="price">Price</th>
+                                                        <th>Quantity</th>
+                                                        <th>Price</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="cartTableBody">
-
+                                                    <!-- Products and packages will be dynamically loaded here -->
                                                 </tbody>
                                             </table>
                                         </div>
-                                        
-                                        <div class="checkout-coupon-total checkout-coupon-total-2 d-flex flex-wrap justify-content-end">
-                                            <div class="checkout-total">
-                                                <div class="single-total total-payable">
-                                                    <p class="value">Total Payable:</p>
-                                                    <p class="price" id="totalPayable"></p>
-                                                </div>
+                                        <div class="d-flex justify-content-end">
+                                            <div>
+                                                <p>Total Payable: <strong id="totalPayable">$0.00</strong></p>
                                             </div>
                                         </div>
-                                    </div>     
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Order Address and Status -->
                         <div class="col-xl-12 col-xxl-4">
+                            <!-- Address Details -->
                             <div class="card mb-3">
-                                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                                    <h6 class="mb-0 fw-bold ">Status Orders</h6>
+                                <div class="card-header d-flex justify-content-between bg-transparent border-bottom-0">
+                                    <h6 class="mb-0 fw-bold">Address Details</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="row g-3">
                                         <div class="col-12">
-                                            <label class="form-label col-6 col-sm-5">AddressLine:</label>
-                                            <span><strong id="AddressLine"></strong></span>
+                                            <label class="form-label">Address Line:</label>
+                                            <span><strong id="AddressLine">-</strong></span>
                                         </div>
                                         <div class="col-12">
-                                            <label class="form-label col-6 col-sm-5">Postal Code:</label>
-                                            <span><strong id="PostalCode"></strong></span>
+                                            <label class="form-label">Postal Code:</label>
+                                            <span><strong id="PostalCode">-</strong></span>
                                         </div>
                                         <div class="col-12">
-                                            <label class="form-label col-6 col-sm-5">City:</label>
-                                            <span><strong id="City"></strong></span>
+                                            <label class="form-label">City:</label>
+                                            <span><strong id="City">-</strong></span>
                                         </div>
                                         <div class="col-12">
-                                            <label class="form-label col-6 col-sm-5">State:</label>
-                                            <span><strong id="State"></strong></span>
+                                            <label class="form-label">State:</label>
+                                            <span><strong id="State">-</strong></span>
                                         </div>
                                         <div class="col-12">
-                                            <label class="form-label col-6 col-sm-5">Country:</label>
-                                            <span><strong id="Country"></strong></span>
+                                            <label class="form-label">Country:</label>
+                                            <span><strong id="Country">-</strong></span>
                                         </div>
                                         <div class="col-12">
-                                            <label class="form-label col-6 col-sm-5">Phone:</label>
-                                            <span><strong id="Phone"></strong></span>
+                                            <label class="form-label">Phone:</label>
+                                            <span><strong id="Phone">-</strong></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Order Status Update -->
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between bg-transparent border-bottom-0">
+                                    <h6 class="mb-0 fw-bold">Update Order Status</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form id="statusForm">
+                                        <div class="mb-3">
+                                            <label for="statusSelect" class="form-label">Select Status</label>
+                                            <select class="form-select" id="statusSelect" required>
+                                                <option disabled selected>Select a status</option>
+                                                <option value="pending">Pending</option>
+                                                <option value="purchased">Purchased</option>
+                                                <option value="under review">Under Review</option>
+                                                <option value="rejected">Rejected</option>
+                                                <option value="shipped">Shipped</option>
+                                                <option value="delivered">Delivered</option>
+                                                <option value="returned">Returned</option>
+                                                <option value="canceled">Canceled</option>
+                                                <option value="completed">Completed</option>
+                                                <option value="approved">Approved</option>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Update Status</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                    </div> <!-- Row end -->
+                    </div> <!-- Order Summary and Address Row end -->
                 </div>
             </div>
-            
-        
+
             <!-- Modal Custom Settings-->
             <div id="modal"></div>
+        </div>
 
-            
-        </div> 
+        <!-- Load Sidebar, Header, and Modal -->
+        <script>
+            function loadComponent(selector, url) {
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        document.querySelector(selector).innerHTML = data;
+                    })
+                    .catch(error => console.error(`Error loading ${url}:`, error));
+            }
 
-    </div>
-    <script>
-        function loadComponent(selector, url) {
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    document.querySelector(selector).innerHTML = data;
+            loadComponent('#sidebar', 'sidebar.html');
+            loadComponent('#header', 'header.html');
+            loadComponent('#modal', 'modal.html');
+        </script>
+
+        <!-- Include Scripts -->
+        <script src="assets/bundles/libscripts.bundle.js"></script> <!-- Ensure this path is correct -->
+        <script src="assets/bundles/dataTables.bundle.js"></script>
+        
+        <!-- Embedded JavaScript to handle order details and status updates -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Get references to DOM elements
+                const orderSelect = document.getElementById('orderSelect');
+                const orderTitle = document.getElementById('orderTitle');
+                const orderCreatedAt = document.getElementById('OrderCreatedAt');
+                const customerName = document.getElementById('customerName');
+                const userEmail = document.getElementById('userEmail');
+                const phoneNumber = document.getElementById('PhoneNumber');
+                const addressLine = document.getElementById('AddressLine');
+                const postalCode = document.getElementById('PostalCode');
+                const city = document.getElementById('City');
+                const state = document.getElementById('State');
+                const country = document.getElementById('Country');
+                const phone = document.getElementById('Phone');
+                const cartTableBody = document.getElementById('cartTableBody');
+                const totalPayable = document.getElementById('totalPayable');
+                const statusForm = document.getElementById('statusForm');
+                const statusSelect = document.getElementById('statusSelect');
+
+                // Function to extract the first image from resources
+                function extractFirstImage(resources) {
+                    if (!resources || !Array.isArray(resources)) return null;
+                    return resources.find(resource => resource.fileType && resource.fileType.startsWith("image/")) || null;
+                }
+
+                // Function to get OrderID from URL
+                function getOrderIdFromURL() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    return urlParams.get('orderId');
+                }
+
+                // Function to fetch all orders for the dropdown
+                async function fetchOrders() {
+                    const authToken = sessionStorage.getItem("authToken");
+                    if (!authToken) {
+                        alert("Authentication token not found. Please log in first.");
+                        window.location.href = '/login.html'; // Redirect to login page
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch('http://localhost:5000/api/orders/admin', {
+                            method: "GET",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Authorization": `Bearer ${authToken}`,
+                            },
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`Failed to fetch orders: ${response.status} ${response.statusText}`);
+                        }
+
+                        const orders = await response.json();
+                        populateOrderDropdown(orders);
+                    } catch (error) {
+                        console.error('Error fetching orders:', error);
+                        alert('Failed to fetch orders. Please try again later.');
+                    }
+                }
+
+                // Function to populate the order dropdown
+                function populateOrderDropdown(orders) {
+                    // Clear existing options except the first
+                    orderSelect.innerHTML = '<option disabled selected>Select Order</option>';
+
+                    orders.forEach(order => {
+                        const option = document.createElement("option");
+                        option.value = order.OrderID;
+                        option.textContent = `Order #${order.OrderID} - ${order.Status}`;
+                        orderSelect.appendChild(option);
+                    });
+
+                    // If there's an OrderID in the URL, select it
+                    const orderIdFromURL = getOrderIdFromURL();
+                    if (orderIdFromURL) {
+                        orderSelect.value = orderIdFromURL;
+                        fetchOrderDetails(orderIdFromURL);
+                    }
+                }
+
+                // Function to fetch order details by OrderID
+                async function fetchOrderDetails(orderId) {
+                    const authToken = sessionStorage.getItem("authToken");
+                    if (!authToken) {
+                        alert("Authentication token not found. Please log in first.");
+                        window.location.href = '/login.html'; // Redirect to login page
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch(`http://localhost:5000/api/orders/${orderId}`, {
+                            method: "GET",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Authorization": `Bearer ${authToken}`,
+                            },
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`Failed to fetch order details: ${response.status} ${response.statusText}`);
+                        }
+
+                        const order = await response.json();
+                        displayOrderDetails(order);
+                    } catch (error) {
+                        console.error('Error fetching order details:', error);
+                        alert('Failed to fetch order details. Please try again later.');
+                    }
+                }
+
+                // Function to display order details in the HTML
+                function displayOrderDetails(order) {
+                    // Update Order Title
+                    orderTitle.textContent = `Order Details: #${order.OrderID}`;
+
+                    // Update Order Information
+                    const createdAt = new Date(order.CreatedAt);
+                    orderCreatedAt.textContent = createdAt.toLocaleDateString();
+
+                    customerName.textContent = order.User?.Username || 'N/A';
+                    userEmail.textContent = order.User?.Email || 'N/A';
+                    phoneNumber.textContent = order.User?.PhoneNumber || 'N/A';
+
+                    addressLine.textContent = order.Address?.AddressLine || 'N/A';
+                    postalCode.textContent = order.Address?.PostalCode || 'N/A';
+                    city.textContent = order.Address?.City || 'N/A';
+                    state.textContent = order.Address?.State || 'N/A';
+                    country.textContent = order.Address?.Country || 'N/A';
+                    phone.textContent = order.User?.PhoneNumber || 'N/A';
+
+                    totalPayable.textContent = `$${parseFloat(order.TotalPrice).toFixed(2)}`;
+
+                    // Populate Order Summary Table
+                    cartTableBody.innerHTML = ''; // Clear existing rows
+
+                    // Handle OrdersProducts
+                    order.OrdersProducts.forEach(product => {
+                        const row = document.createElement('tr');
+
+                        // Item Image
+                        const imgCell = document.createElement('td');
+                        const firstImage = extractFirstImage(product.Product?.Resource);
+                        if (firstImage) {
+                            const imagePath = `http://localhost:5000/${firstImage.filePath.replace(/\\/g, '/')}`;
+                            imgCell.innerHTML = `<img src="${imagePath}" class="avatar rounded lg" style="width: 100px; height: auto;" alt="${product.Product.Name}">`;
+                        } else {
+                            imgCell.textContent = "No image available";
+                        }
+                        row.appendChild(imgCell);
+
+                        // Item Name
+                        const nameCell = document.createElement('td');
+                        nameCell.innerHTML = `<h6 class="title">${product.Product?.Name || 'N/A'}</h6>`;
+                        row.appendChild(nameCell);
+
+                        // Quantity
+                        const quantityCell = document.createElement('td');
+                        quantityCell.textContent = product.Quantity || 'N/A';
+                        row.appendChild(quantityCell);
+
+                        // Price
+                        const priceCell = document.createElement('td');
+                        priceCell.innerHTML = `<p class="price">$${parseFloat(product.TotalPrice).toFixed(2)}</p>`;
+                        row.appendChild(priceCell);
+
+                        cartTableBody.appendChild(row);
+
+                        // Handle Ordered Customization if available and not null
+                        if (product.OrderedCustomization && product.OrderedCustomization.SelectedOptions && Array.isArray(product.OrderedCustomization.SelectedOptions)) {
+                            const customizationRow = document.createElement('tr');
+                            const customizationCell = document.createElement('td');
+                            customizationCell.colSpan = 4; // Span across all columns
+
+                            // Build Customization Details
+                            let customizationHTML = '<div style="margin-left: 20px;"><strong>Customizations:</strong><br>';
+                            const customization = product.OrderedCustomization;
+
+                            customization.SelectedOptions.forEach(option => {
+                                // Filter optionValues with isSelected: true
+                                const selectedValues = option.optionValues.filter(value => value.isSelected);
+
+                                if (selectedValues.length > 0) {
+                                    customizationHTML += `<strong>${option.name} (${option.type}):</strong><br>`;
+                                    selectedValues.forEach(value => {
+                                        customizationHTML += `&nbsp;&nbsp;&nbsp;&nbsp;<strong>${value.name}:</strong> ${value.value || 'N/A'}<br>`;
+                                        
+                                        // Check if the option type is 'special customization' or 'uploadPicture' to display images
+                                        if ((option.type === 'special customization' || option.type === 'uploadPicture') && value.fileName) {
+                                            const resourcePath = `http://localhost:5000/resources/${value.fileName}`;
+                                            customizationHTML += `&nbsp;&nbsp;&nbsp;&nbsp;<img src="${resourcePath}" style="max-width:100px; max-height:100px;" alt="${value.name}"><br>`;
+                                        }
+
+                                        // Check if the option type is 'image' to display images via filePath
+                                        if (option.type === 'image' && value.filePath) {
+                                            const imagePath = `http://localhost:5000/${value.filePath.replace(/\\/g, '/')}`;
+                                            customizationHTML += `&nbsp;&nbsp;&nbsp;&nbsp;<img src="${imagePath}" style="max-width:100px; max-height:100px;" alt="${value.name}"><br>`;
+                                        }
+                                    });
+                                }
+                            });
+
+                            customizationHTML += '</div>';
+
+                            // If no options are selected
+                            if (customizationHTML === '<div style="margin-left: 20px;"><strong>Customizations:</strong><br></div>') {
+                                customizationHTML = '<div style="margin-left: 20px;"><strong>Customizations:</strong> None selected.</div>';
+                            }
+
+                            customizationCell.innerHTML = customizationHTML;
+                            customizationRow.appendChild(customizationCell);
+                            cartTableBody.appendChild(customizationRow);
+                        }
+                    });
+
+                    // Handle OrdersPackages if any
+                    if (order.OrdersPackages && order.OrdersPackages.length > 0) {
+                        order.OrdersPackages.forEach(pkg => {
+                            const row = document.createElement('tr');
+
+                            // Package Image
+                            const imgCell = document.createElement('td');
+                            const firstImage = extractFirstImage(pkg.Package?.Resource);
+                            if (firstImage) {
+                                const imagePath = `http://localhost:5000/${firstImage.filePath.replace(/\\/g, '/')}`;
+                                imgCell.innerHTML = `<img src="${imagePath}" class="avatar rounded lg" style="width: 100px; height: auto;" alt="${pkg.Package.Name}">`;
+                            } else {
+                                imgCell.textContent = "No image available";
+                            }
+                            row.appendChild(imgCell);
+
+                            // Package Name
+                            const nameCell = document.createElement('td');
+                            nameCell.innerHTML = `<h6 class="title">${pkg.Package?.Name || 'N/A'}</h6>`;
+                            row.appendChild(nameCell);
+
+                            // Quantity
+                            const quantityCell = document.createElement('td');
+                            quantityCell.textContent = pkg.quantity || 'N/A';
+                            row.appendChild(quantityCell);
+
+                            // Price
+                            const priceCell = document.createElement('td');
+                            priceCell.innerHTML = `<p class="price">$${parseFloat(pkg.TotalPrice).toFixed(2)}</p>`;
+                            row.appendChild(priceCell);
+
+                            cartTableBody.appendChild(row);
+
+                            // Handle Package Customization if available and not null
+                            if (pkg.OrderedCustomization && pkg.OrderedCustomization.SelectedOptions && Array.isArray(pkg.OrderedCustomization.SelectedOptions)) {
+                                const customizationRow = document.createElement('tr');
+                                const customizationCell = document.createElement('td');
+                                customizationCell.colSpan = 4; // Span across all columns
+
+                                // Build Customization Details
+                                let customizationHTML = '<div style="margin-left: 20px;"><strong>Package Customizations:</strong><br>';
+                                const customization = pkg.OrderedCustomization;
+
+                                customization.SelectedOptions.forEach(option => {
+                                    // Filter optionValues with isSelected: true
+                                    const selectedValues = option.optionValues.filter(value => value.isSelected);
+
+                                    if (selectedValues.length > 0) {
+                                        customizationHTML += `<strong>${option.name} (${option.type}):</strong><br>`;
+                                        selectedValues.forEach(value => {
+                                            customizationHTML += `&nbsp;&nbsp;&nbsp;&nbsp;<strong>${value.name}:</strong> ${value.value || 'N/A'}<br>`;
+                                            
+                                            // Check if the option type is 'special customization' or 'uploadPicture' to display images
+                                            if ((option.type === 'special customization' || option.type === 'uploadPicture') && value.fileName) {
+                                                const resourcePath = `http://localhost:5000/resources/${value.fileName}`;
+                                                customizationHTML += `&nbsp;&nbsp;&nbsp;&nbsp;<img src="${resourcePath}" style="max-width:100px; max-height:100px;" alt="${value.name}"><br>`;
+                                            }
+
+                                            // Check if the option type is 'image' to display images via filePath
+                                            if (option.type === 'image' && value.filePath) {
+                                                const imagePath = `http://localhost:5000/${value.filePath.replace(/\\/g, '/')}`;
+                                                customizationHTML += `&nbsp;&nbsp;&nbsp;&nbsp;<img src="${imagePath}" style="max-width:100px; max-height:100px;" alt="${value.name}"><br>`;
+                                            }
+                                        });
+                                    }
+                                });
+
+                                customizationHTML += '</div>';
+
+                                // If no options are selected
+                                if (customizationHTML === '<div style="margin-left: 20px;"><strong>Package Customizations:</strong><br></div>') {
+                                    customizationHTML = '<div style="margin-left: 20px;"><strong>Package Customizations:</strong> None selected.</div>';
+                                }
+
+                                customizationCell.innerHTML = customizationHTML;
+                                customizationRow.appendChild(customizationCell);
+                                cartTableBody.appendChild(customizationRow);
+                            }
+                        });
+                    }
+                }
+
+                // Function to update order status
+                async function updateOrderStatus(orderId, newStatus) {
+                    const authToken = sessionStorage.getItem("authToken");
+                    if (!authToken) {
+                        alert("Authentication token not found. Please log in first.");
+                        window.location.href = '/login.html'; // Redirect to login page
+                        return;
+                    }
+
+                    let endpoint = `http://localhost:5000/api/orders/${orderId}`;
+                    let method = 'PATCH';
+                    let body = JSON.stringify({ Status: newStatus });
+
+                    // Special handling for 'approved' and 'rejected' statuses
+                    if (newStatus === 'approved') {
+                        endpoint = `http://localhost:5000/api/orders/${orderId}/approve`;
+                        method = 'POST'; // Assuming approve is a POST action
+                        body = null;
+                    } else if (newStatus === 'rejected') {
+                        endpoint = `http://localhost:5000/api/orders/${orderId}/reject`;
+                        method = 'POST'; // Assuming reject is a POST action
+                        body = null;
+                    }
+
+                    try {
+                        const response = await fetch(endpoint, {
+                            method: method,
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Authorization": `Bearer ${authToken}`,
+                            },
+                            body: body,
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`Failed to update status: ${response.status} ${response.statusText}`);
+                        }
+
+                        const updatedOrder = await response.json();
+                        alert('Order status updated successfully!');
+                        // Optionally, refresh the order details
+                        fetchOrderDetails(orderId);
+                        // Update the order select dropdown to reflect the new status
+                        fetchOrders();
+                    } catch (error) {
+                        console.error('Error updating order status:', error);
+                        alert('Failed to update order status. Please try again.');
+                    }
+                }
+
+                // Handle Order Status Update Form Submission
+                statusForm.addEventListener('submit', (e) => {
+                    e.preventDefault(); // Prevent form from submitting normally
+                    const newStatus = statusSelect.value;
+                    const selectedOrderId = orderSelect.value;
+
+                    if (!selectedOrderId) {
+                        alert('Please select an order first.');
+                        return;
+                    }
+
+                    if (!newStatus) {
+                        alert('Please select a status to update.');
+                        return;
+                    }
+
+                    // Confirm with the user
+                    const confirmUpdate = confirm(`Are you sure you want to update the status to "${newStatus}"?`);
+                    if (!confirmUpdate) return;
+
+                    // Update the order status
+                    updateOrderStatus(selectedOrderId, newStatus);
                 });
-        }
 
-        loadComponent('#sidebar', 'sidebar.html');
-        loadComponent('#header', 'header.html');
-        loadComponent('#modal', 'modal.html');
-    </script>
+                // Handle Order Selection Change
+                orderSelect.addEventListener('change', () => {
+                    const selectedOrderId = orderSelect.value;
+                    // Update the URL with the selected orderId
+                    const newURL = `${window.location.pathname}?orderId=${selectedOrderId}`;
+                    window.history.pushState({ path: newURL }, '', newURL);
+                    // Fetch and display the selected order details
+                    fetchOrderDetails(selectedOrderId);
+                });
 
-    <!-- Jquery Core Js -->
-    <script src="assets/bundles/libscripts.bundle.js"></script>
+                // Initial Fetch of Orders
+                fetchOrders();
 
-    <!-- Plugin Js-->
-    <script src="assets/bundles/dataTables.bundle.js"></script>
-
-    <!-- Jquery Page Js -->
-    <script src="../js/template.js"></script>
-
-
-    <script src="assets/js/orderDetials.js"></script>
-</body>
-</html>
+                // If there's an orderId in the URL, fetch its details
+                const initialOrderId = getOrderIdFromURL();
+                if (initialOrderId) {
+                    fetchOrderDetails(initialOrderId);
+                }
+            });
+            </script>
+        </body>
+    </html>

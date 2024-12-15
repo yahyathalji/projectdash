@@ -4,31 +4,31 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>::Fantasize::  Orders List </title>
+    <title>::Fantasize:: Orders List</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
 
-    <!-- plugin css file  -->
+    <!-- Plugin CSS files -->
     <link rel="stylesheet" href="assets/plugin/datatables/responsive.dataTables.min.css">
     <link rel="stylesheet" href="assets/plugin/datatables/dataTables.bootstrap5.min.css">
 
-    <!-- project css file  -->
+    <!-- Project CSS file -->
     <link rel="stylesheet" href="assets/css/ebazar.style.min.css">
 </head>
 <body>
     <div id="ebazar-layout" class="theme-blue">                          
         
-        <!-- sidebar -->
+        <!-- Sidebar -->
         <div id="sidebar"></div>
 
 
-        <!-- main body area -->
+        <!-- Main body area -->
         <div class="main px-lg-4 px-md-4"> 
 
-            <!-- Body: Header -->
+            <!-- Header -->
             <div id="header"></div>
 
 
-            <!-- Body: Body -->
+            <!-- Body -->
             <div class="body d-flex py-3">  
                 <div class="container-xxl"> 
                     <div class="row align-items-center"> 
@@ -43,6 +43,24 @@
                         <div class="col-md-12">
                             <div class="card"> 
                                 <div class="card-body"> 
+                                    
+                                    <!-- Status Filter Dropdown and Apply Button -->
+                                    <div class="mb-3 d-flex align-items-center">
+                                        <label for="statusFilter" class="form-label me-2">Filter by Status:</label>
+                                        <select id="statusFilter" class="form-select me-2" style="width: 200px;">
+                                            <option value="under review" selected>Under Review</option>
+                                            <option value="">All</option>
+                                            <option value="pending">Pending</option>
+                                            <option value="purchased">Purchased</option>
+                                            <option value="rejected">Rejected</option>
+                                            <option value="shipped">Shipped</option>
+                                            <option value="delivered">Delivered</option>
+                                            <option value="returned">Returned</option>
+                                            <option value="canceled">Canceled</option>
+                                        </select>
+                                        <button id="applyFilterButton" class="btn btn-primary">Apply Filter</button>
+                                    </div>
+                                    
                                     <table id="myDataTable" class="table table-hover align-middle mb-0" style="width: 100%;">  
                                         <thead>
                                             <tr>
@@ -53,7 +71,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                           
+                                            <!-- Data will be populated here -->
                                         </tbody>
                                     </table>
                                 </div>
@@ -64,38 +82,43 @@
                 </div>
             </div>
             
-        
+
             <!-- Modal Custom Settings-->
             <div id="modal"></div>
 
-            
+
         </div>                                 
 
     </div> 
     <script>
+        // Function to load external HTML components (sidebar, header, modal)
         function loadComponent(selector, url) {
             fetch(url)
                 .then(response => response.text())
                 .then(data => {
                     document.querySelector(selector).innerHTML = data;
+                })
+                .catch(error => {
+                    console.error(`Error loading ${url}:`, error);
                 });
         }
 
+        // Load external components
         loadComponent('#sidebar', 'sidebar.html');
         loadComponent('#header', 'header.html');
         loadComponent('#modal', 'modal.html');
     </script>
 
-    <!-- Jquery Core Js -->
+    <!-- jQuery Core JS -->
     <script src="assets/bundles/libscripts.bundle.js"></script>
 
-    <!-- Plugin Js -->
+    <!-- Plugin JS -->
     <script src="assets/bundles/dataTables.bundle.js"></script>  
 
-    <!-- Jquery Page Js -->
+    <!-- jQuery Page JS -->
     <script src="../js/template.js"></script>
     
    
     <script src="assets/js/orderList.js"></script>
 </body>
-</html> 
+</html>

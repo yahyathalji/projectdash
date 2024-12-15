@@ -22,15 +22,16 @@
             width: 60px;
             text-align: center; 
         }
-    
         .input-group .btn {
             padding: 5px 10px;
         }
-    
         .input-group {
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        .material-item .remove-material-btn {
+            margin-top: 28px;
         }
     </style>
 </head>
@@ -40,19 +41,15 @@
         <!-- sidebar -->
         <div id="sidebar"></div>
 
-
         <!-- main body area -->
         <div class="main px-lg-4 px-md-4"> 
 
             <!-- Body: Header -->
             <div id="header"></div>
 
-
             <!-- Body: Body -->
-             
             <div class="body d-flex py-3">
                 <div class="container-xxl">
-
                     <div class="row align-items-center">
                         <div class="border-0 mb-4">
                             <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
@@ -64,207 +61,181 @@
                         </div>
                     </div> <!-- Row end  -->  
                     
-                    <div class="row g-3 mb-3">
-                        <div class="col-xl-4 col-lg-4">
-                            <div class="sticky-lg-top">
-                                
-                                <div class="card mb-3">
-                                    <div class="card-header py-3 d-flex justify-content-between align-items-center bg-transparent border-bottom-0">
-                                        <h6 class="m-0 fw-bold">Customization</h6>
-                                        <a href="Add-Customization.html" class="btn btn-outline-secondary"><i class="icofont-edit text-success" data-bs-toggle="modal" data-bs-target="#expadd"></i></a>
-
-                                    </div>
-                                    
-                                    <div class="card-body">
-                                        <div class="form-group demo-tagsinput-area">
-                                            <div class="form-line">
-                                                <input type="text" class="form-control" data-role="tagsinput">
+                    <div class="col-xl-12 col-lg-8">
+                         <div class="card mb-3">
+                            <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                                <h6 class="mb-0 fw-bold">Basic Information</h6>
+                            </div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="row g-3 align-items-center">
+                                        <!-- Package Name -->
+                                        <div class="col-md-4">
+                                            <label class="form-label">Name</label>
+                                            <input type="text" id="packageName" class="form-control" placeholder="Enter Package Name">
+                                        </div>
+                                        <!-- Price -->
+                                        <div class="col-md-4">
+                                            <label class="form-label">Price</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" id="packagePrice" class="form-control" placeholder="Enter Price" min="0" step="0.01">
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <label  class="form-label w-100">Select Package Color</label>
-                                            <input type="color" id="color">
+                                        <!-- Quantity -->
+                                        <div class="col-md-4">
+                                            <label class="form-label">Quantity</label>
+                                            <input type="number" id="packageQuantity" class="form-control" placeholder="Enter Quantity" min="0">
                                         </div>
+                                        <!-- Package Description -->
+                                        <div class="col-md-12">
+                                            <label class="form-label">Package Description</label>
+                                            <textarea class="form-control" id="packageDescription" rows="4" placeholder="Enter Package Description Here"></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Main Products Section -->
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5>Main Products</h5>
+                                    <div class="input-group mb-3">
+                                        <input type="text" id="searchInput" class="form-control" placeholder="Search products..." aria-label="Search" aria-describedby="search-addon" />
+                                        <span class="input-group-text" id="search-addon"><i class="icofont-search"></i></span>
+                                    </div>
+                                    <table id="myDataTable" class="table table-hover align-middle mb-0" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>ProductId</th>
+                                                <th>Product Name</th>
+                                                <th>Offer</th>
+                                                <th>Price</th>
+                                                <th>Status</th>
+                                                <th>Quantity</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableBody">
+                                            <!-- Data will be inserted here dynamically -->
+                                        </tbody>
+                                    </table>
+                                    <div id="paginationControls" class="mt-3 d-flex justify-content-between">
+                                        <button id="prevPage" class="btn btn-outline-primary">Previous</button>
+                                        <span id="pageNumber" class="align-self-center"></span>
+                                        <button id="nextPage" class="btn btn-outline-primary">Next</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-8 col-lg-8">
 
-                         <div class="card mb-3">
-    <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-        <h6 class="mb-0 fw-bold">Basic Information</h6>
-    </div>
-    <div class="card-body">
-        <form>
-            <div class="row g-3 align-items-center">
-                <!-- Product Name -->
-                <div class="col-md-6">
-                    <label class="form-label">Name</label>
-                    <input type="text" id="packageName" class="form-control" placeholder="Enter Package Name">
-                </div>
-
-                
-                <!-- Price -->
-                <div class="col-md-6">
-                    <label class="form-label">Price</label>
-                    <div class="input-group">
-                        <span class="input-group-text">$</span>
-                        <input type="number" id="packagePrice" class="form-control" placeholder="Enter Price" min="0" step="0.01">
-                    </div>
-                </div>
-                
-                <!-- Quantity -->
-                <div class="col-md-6">
-                    <label class="form-label">Quantity</label>
-                    <input type="number" id="packageQuantity" class="form-control" placeholder="Enter Quantity" min="0">
-                </div>
-                <!-- Product Description -->
-                <div class="col-md-12">
-                    <label class="form-label">Package Description</label>
-                    <textarea class="form-control" id="packageDescription" rows="4" placeholder="Enter Package Description Here"></textarea>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-<div class="col-md-12">
-    <div class="card">
-        <div class="card-body">
-            <h5>Main Products</h5>
-            
-            <!-- Search input with advanced styles -->
-            <div class="input-group mb-3">
-                <input type="text" id="searchInput" class="form-control" placeholder="Search products..." aria-label="Search" aria-describedby="search-addon" />
-                <span class="input-group-text" id="search-addon"><i class="icofont-search"></i></span>
-            </div>
-
-            <!-- Main Products Table -->
-            <table id="myDataTable" class="table table-hover align-middle mb-0" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>ProductId</th>
-                        <th>Product Name</th>
-                        <th>Offer</th>
-                        <th>Price</th>
-                        <th>Status</th>
-                        <th>Quantity</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <!-- Data will be inserted here dynamically -->
-                </tbody>
-            </table>
-
-            <!-- Pagination Controls with page number -->
-            <div id="paginationControls" class="mt-3 d-flex justify-content-between">
-                <button id="prevPage" class="btn btn-outline-primary">Previous</button>
-                <span id="pageNumber" class="align-self-center"></span>
-                <button id="nextPage" class="btn btn-outline-primary">Next</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Selected Products Table -->
-<div class="col-md-12 mt-4">
-    <div class="card">
-        <div class="card-body">
-            <h5>Selected Products</h5>
-            <table id="selectedProductsTable" class="table table-hover align-middle mb-0" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>ProductId</th>
-                        <th>Product Name</th>
-                        <th style="text-align: center;">Quantity</th>
-                        <th></th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="selectedProductsBody">
-                    <!-- Selected products will be added dynamically -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-                                                        
-                            <div class="card mb-3">
-                                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                                    <h6 class="mb-0 fw-bold">Categories</h6>
-                                </div>
+                        <!-- Selected Products Table -->
+                        <div class="col-md-12 mt-4">
+                            <div class="card">
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <!-- Categories List (Single Selection) -->
-                                        <div class="flex-column" style="width: 48%;">
-                                            <select id="categorySelect" size="10" class="ms w-100" style="font-size: 16px; padding: 10px;">
-                                                
-                                            </select>
-                                        </div>
-                            
-                                        <!-- Selected Category List -->
-                                        <div class="flex-column" style="width: 48%;">
-                                            <h6 class="fw-bold">Selected Category</h6>
-                                            <ul id="selectedCategoriesList" style="list-style-type: none; padding: 0;">
-                                                <!-- Selected category will be added here dynamically -->
-                                            </ul>
-                                        </div>
+                                    <h5>Selected Products</h5>
+                                    <table id="selectedProductsTable" class="table table-hover align-middle mb-0" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>ProductId</th>
+                                                <th>Product Name</th>
+                                                <th style="text-align: center;">Quantity</th>
+                                                <th></th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="selectedProductsBody">
+                                            <!-- Selected products will be added dynamically -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Categories Selection Card -->
+                        <div class="card mb-3">
+                            <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                                <h6 class="mb-0 fw-bold">Categories</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <!-- Categories List (Single Selection) -->
+                                    <div class="flex-column" style="width: 48%;">
+                                        <select id="categorySelect" size="10" class="ms w-100" style="font-size: 16px; padding: 10px;">  
+                                        </select>
+                                    </div>
+                        
+                                    <!-- Selected Category List -->
+                                    <div class="flex-column" style="width: 48%;">
+                                        <h6 class="fw-bold">Selected Category</h6>
+                                        <ul id="selectedCategoriesList" style="list-style-type: none; padding: 0;">
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            
-
-                            
-                            <!-- add vedio -->
-                            <div class="card mb-3">
-                                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                                    <h6 class="mb-0 fw-bold">Video Upload</h6>
-                                </div>
-                                <div class="card-body">
-                                    <form id="videoUploadForm">
-                                        <div class="row g-3 align-items-center">
-                                            <div class="col-md-12">
-                                                <label class="form-label">Product Video Upload</label>
-                                                <small class="d-block text-muted mb-2">
-                                                    Only one video is allowed. Maximum size: 10MB.
-                                                </small>
-                                                <input type="file" id="videoInput" class="form-control" accept="video/*">
-                                                <small id="errorText" class="text-danger mt-1" style="display: none;">
-                                                    Video size exceeds the 10MB limit. Please choose a smaller file.
-                                                </small>
-                                            </div>
-                                            <div class="col-md-12 mt-3" id="videoPreviewContainer" style="display: none;">
-                                                <video id="videoPreview" controls style="width: 100%; max-height: 400px;"></video>
-                                                <button type="button" id="deleteVideoButton" class="btn btn-danger mt-2">Delete Video</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
+                        <!-- Video Upload Card -->
+                        <div class="card mb-3">
+                            <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                                <h6 class="mb-0 fw-bold">Video Upload</h6>
                             </div>
-
-                            <div class="card mb-3">
-                                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                                    <h6 class="mb-0 fw-bold">Images</h6>
-                                </div>
-                                <div class="card-body">
+                            <div class="card-body">
+                                <form id="videoUploadForm">
                                     <div class="row g-3 align-items-center">
                                         <div class="col-md-12">
-                                            <label class="form-label">Product Images Upload</label>
-                                            <small class="d-block text-muted mb-2">Only portrait or square images, 2MB max and 2000px max-height.</small>
-                                            <input type="file" id="image-uploader" class="form-control" accept="image/*" multiple>
-                                            <div id="uploaded-images" class="mt-3 d-flex flex-wrap gap-2"></div>
-                                            <div id="file-limit-warning" class="text-danger mt-2" style="display:none;">You can only upload a maximum of 5 images.</div>
-                                            <div id="file-size-warning" class="text-danger mt-2" style="display:none;">Image size must not exceed 2MB.</div>
+                                            <label class="form-label">Product Video Upload</label>
+                                            <small class="d-block text-muted mb-2">
+                                                Only one video is allowed. Maximum size: 10MB.
+                                            </small>
+                                            <input type="file" id="videoInput" class="form-control" accept="video/*">
+                                            <small id="errorText" class="text-danger mt-1" style="display: none;">
+                                                Video size exceeds the 10MB limit. Please choose a smaller file.
+                                            </small>
                                         </div>
+                                        <div class="col-md-12 mt-3" id="videoPreviewContainer" style="display: none;">
+                                            <video id="videoPreview" controls style="width: 100%; max-height: 400px;"></video>
+                                            <button type="button" id="deleteVideoButton" class="btn btn-danger mt-2">Delete Video</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Images Upload Card -->
+                        <div class="card mb-3">
+                            <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                                <h6 class="mb-0 fw-bold">Images</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-md-12">
+                                        <label class="form-label">Product Images Upload</label>
+                                        <small class="d-block text-muted mb-2">Only portrait or square images, 2MB max and 2000px max-height.</small>
+                                        <input type="file" id="image-uploader" class="form-control" accept="image/*" multiple>
+                                        <div id="uploaded-images" class="mt-3 d-flex flex-wrap gap-2"></div>
+                                        <div id="file-limit-warning" class="text-danger mt-2" style="display:none;">You can only upload a maximum of 5 images.</div>
+                                        <div id="file-size-warning" class="text-danger mt-2" style="display:none;">Image size must not exceed 2MB.</div>
                                     </div>
                                 </div>
                             </div>
-                           
                         </div>
+
+                        <!-- Materials Assignment Section -->
+                        <div class="card mb-3" id="materialsAssignmentSection" style="display: none;">
+                            <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                                <h6 class="mb-0 fw-bold">Assign Materials</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="materialsContainer"></div>
+                                <button type="button" class="btn btn-secondary" id="addMaterialBtn">Add Another Material</button>
+                                <button type="button" class="btn btn-primary" id="assignMaterialsBtn">Assign Materials</button>
+                                <div id="materialsResponseMessage" class="mt-3"></div>
+                            </div>
+                        </div>
+
                     </div><!-- Row end  --> 
                     
                 </div>
@@ -273,13 +244,9 @@
             <!-- Modal Custom Settings-->
             <div id="modal"></div>
 
-
-           
-
         </div>      
-
     </div>
-    <textarea id="editor" ></textarea>  <!-- or another element with id="editor" -->
+    <textarea id="editor" ></textarea>  
 
     <script>
         function loadComponent(selector, url) {
@@ -295,22 +262,742 @@
         loadComponent('#modal', 'modal.html');
     </script>
 
-<!-- Jquery Core Js -->      
-<script src="assets/bundles/libscripts.bundle.js"></script>
-<!-- Jquery Plugin -->  
-<script src="assets/plugin/multi-select/js/jquery.multi-select.js"></script>
-<script src="assets/plugin/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>  
-<script src="assets/plugin/cropper/cropper.min.js"></script>
-<script src="assets/plugin/cropper/cropper-init.js"></script>
-<script src="assets/bundles/dropify.bundle.js"></script>
-<script src="assets/bundles/dataTables.bundle.js"></script>
+    <!-- Jquery Core Js -->      
+    <script src="assets/bundles/libscripts.bundle.js"></script>
+    <!-- Jquery Plugin -->  
+    <script src="assets/plugin/multi-select/js/jquery.multi-select.js"></script>
+    <script src="assets/plugin/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>  
+    <script src="assets/plugin/cropper/cropper.min.js"></script>
+    <script src="assets/plugin/cropper/cropper-init.js"></script>
+    <script src="assets/bundles/dropify.bundle.js"></script>
+    <script src="assets/bundles/dataTables.bundle.js"></script>
 
-<!-- CKEditor CDN or Local Path -->
-<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>  <!-- or use local path if you have CKEditor downloaded -->
+    <!-- CKEditor -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 
+    <script>
+        // ------------------------- Global Variables -------------------------
+        let uploadedImagesCount = 0;
+        let selectedFiles = [];
+        let createdPackageId = null; 
+        let materialsAssigned = false; 
+        let availableMaterials = [];
 
-    <!-- Jquery Page Js -->   
-    <script src="../js/template.js"></script>
-    <script src="assets/js/packageAdd.js"></script>
+        // Show message
+        function showMessage(message, isSuccess) {
+            const responseMessage = document.getElementById('responseMessage');
+            responseMessage.style.display = 'block';
+            responseMessage.style.backgroundColor = isSuccess ? 'green' : 'red';
+            responseMessage.textContent = message;
+            setTimeout(() => {
+                responseMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        // Get selected category ID
+        let selectedCategoryId = null;
+        function getSelectedCategoryId() {
+            return selectedCategoryId;
+        }
+
+        // -------------------------- Document Ready --------------------------
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initialize CKEditor if needed
+            const editorElement = document.querySelector('#editor');
+            if (editorElement) {
+                if (typeof ClassicEditor !== 'undefined') {
+                    ClassicEditor
+                        .create(editorElement)
+                        .catch(error => {
+                            console.error("CKEditor initialization failed:", error);
+                        });
+                } else {
+                    console.error("CKEditor is not loaded correctly.");
+                }
+            }
+
+            // Remove editor element as per original code
+            document.getElementById('editor').remove();
+
+            // Category selection logic
+            const categorySelect = document.getElementById('categorySelect');
+            const selectedCategoriesList = document.getElementById('selectedCategoriesList');
+
+            categorySelect.addEventListener('change', function(event) {
+                selectedCategoriesList.innerHTML = '';  
+                const selectedOption = event.target.options[event.target.selectedIndex];
+                if (selectedOption) {
+                    selectedCategoryId = selectedOption.value;
+                    const listItem = document.createElement('li');
+                    listItem.textContent = selectedOption.textContent;
+                    selectedCategoriesList.appendChild(listItem);
+                }
+            });
+
+            // Fetch categories
+            const authToken = sessionStorage.getItem("authToken");
+            fetch('http://localhost:5000/api/categories/subcategories', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+                },
+            })
+            .then(response => {
+                if(!response.ok) { throw new Error('Failed to fetch categories'); }
+                return response.json();
+            })
+            .then(data => {
+                categorySelect.innerHTML = "";
+                data.forEach(category => {
+                    if (category.SubCategory && category.SubCategory.length > 0) {
+                        const optgroup = document.createElement('optgroup');
+                        optgroup.label = category.Name;
+                        category.SubCategory.forEach(subCategory => {
+                            const option = document.createElement('option');
+                            option.value = subCategory.SubCategoryID;  
+                            option.textContent = subCategory.Name;
+                            optgroup.appendChild(option);
+                        });
+                        categorySelect.appendChild(optgroup);
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching categories:', error));
+
+            // Fetch products
+            let products = [];
+            let filteredProducts = [];
+            let currentPage = 1;
+            const rowsPerPage = 10;
+            const mainTable = document.getElementById("tableBody");
+            const selectedProductsTable = document.getElementById("selectedProductsBody");
+            const searchInput = document.getElementById("searchInput");
+            const prevPageButton = document.getElementById("prevPage");
+            const nextPageButton = document.getElementById("nextPage");
+            const pageNumber = document.getElementById("pageNumber");
+
+            fetch("http://localhost:5000/api/GetAllProducts", {
+                method: "GET",
+                headers: {
+                    "content-type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+                    cookie: 'authToken=' + sessionStorage.getItem("authToken"),
+                },
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                products = data;
+                filteredProducts = products;
+                renderTable();
+            })
+            .catch((error) => console.error("Error fetching data:", error));
+
+            function renderTable() {
+                mainTable.innerHTML = "";
+                const start = (currentPage - 1) * rowsPerPage;
+                const end = start + rowsPerPage;
+                const pageProducts = filteredProducts.slice(start, end);
+
+                pageProducts.forEach((product) => {
+                    const row = document.createElement("tr");
+
+                    const productId = product.ProductID;
+                    const productName = product.Name;
+                    const offerStatus = product.Offer?.IsActive === false ? "Available" : "Not Available";
+                    const price = `$${parseFloat(product.Price).toFixed(2)}`;
+                    const status = product.Status === "in stock" ? "In Stock"
+                                   : product.Status === "out of stock" ? "Out of Stock"
+                                   : "Running Low";
+                    const quantity = product.Quantity;
+
+                    row.innerHTML = `
+                        <td><strong>#${productId}</strong></td>
+                        <td>${productName}</td>
+                        <td><span class="badge bg-${offerStatus === "Available" ? "success" : "danger"}">${offerStatus}</span></td>
+                        <td>${price}</td>
+                        <td><span class="badge bg-${status === "In Stock" ? "success" : status === "Out of Stock" ? "danger" : "warning"}">${status}</span></td>
+                        <td class="main-quantity">${quantity}</td>
+                        <td>
+                            <button class="btn btn-outline-primary add-to-selected" ${quantity <= 0 ? "disabled" : ""}>
+                                <i class="icofont-plus text-primary"></i>
+                            </button>
+                        </td>
+                    `;
+                    mainTable.appendChild(row);
+                });
+                updatePaginationControls();
+                updatePageNumber();
+            }
+
+            function updatePaginationControls() {
+                prevPageButton.disabled = currentPage === 1;
+                nextPageButton.disabled = currentPage * rowsPerPage >= filteredProducts.length;
+            }
+
+            function updatePageNumber() {
+                const totalPages = Math.ceil(filteredProducts.length / rowsPerPage);
+                pageNumber.textContent = `Page ${currentPage} of ${totalPages}`;
+            }
+
+            searchInput.addEventListener("input", function () {
+                const searchTerm = searchInput.value.toLowerCase();
+                filteredProducts = products.filter((product) => {
+                    return (
+                        product.Name.toLowerCase().includes(searchTerm) ||
+                        product.ProductID.toString().includes(searchTerm)
+                    );
+                });
+                currentPage = 1;
+                renderTable();
+            });
+
+            prevPageButton.addEventListener("click", function () {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderTable();
+                }
+            });
+
+            nextPageButton.addEventListener("click", function () {
+                if (currentPage * rowsPerPage < filteredProducts.length) {
+                    currentPage++;
+                    renderTable();
+                }
+            });
+
+            mainTable.addEventListener("click", function (event) {
+                if (event.target.closest(".add-to-selected")) {
+                    const row = event.target.closest("tr");
+                    const productName = row.children[1].textContent.trim();
+                    const quantityCell = row.querySelector(".main-quantity");
+                    let mainQuantity = parseInt(quantityCell.textContent, 10);
+
+                    if (mainQuantity > 0) {
+                        const existingRow = Array.from(selectedProductsTable.rows).find(
+                            (r) => r.children[1].textContent.trim() === productName
+                        );
+
+                        if (existingRow) {
+                            const quantityInput = existingRow.querySelector(".quantity-input");
+                            quantityInput.value = parseInt(quantityInput.value, 10) + 1;
+                            mainQuantity -= 1;
+                        } else {
+                            const clonedRow = row.cloneNode(true);
+                            clonedRow.deleteCell(3); 
+                            clonedRow.deleteCell(2); 
+                            const selectedQuantity = 1;
+                            mainQuantity -= selectedQuantity;
+
+                            const actionCell = clonedRow.querySelector("td:last-child");
+                            actionCell.innerHTML = `
+                                <button class="btn btn-outline-danger remove-from-selected">
+                                    <i class="icofont-ui-delete text-danger"></i>
+                                </button>
+                            `;
+
+                            const quantityCellClone = clonedRow.children[2];
+                            quantityCellClone.innerHTML = `
+                                <div class="input-group">
+                                    <button class="btn btn-outline-secondary decrease-quantity">-</button>
+                                    <input type="text" class="form-control text-center quantity-input" value="${selectedQuantity}" readonly>
+                                    <button class="btn btn-outline-secondary increase-quantity">+</button>
+                                </div>
+                            `;
+                            selectedProductsTable.appendChild(clonedRow);
+                        }
+
+                        quantityCell.textContent = mainQuantity;
+                        if (mainQuantity <= 0) {
+                            row.querySelector(".add-to-selected").disabled = true;
+                        }
+                    }
+                }
+            });
+
+            selectedProductsTable.addEventListener("click", function (event) {
+                const target = event.target;
+                if (target.closest(".decrease-quantity")) {
+                    const row = target.closest("tr");
+                    const quantityInput = row.querySelector(".quantity-input");
+                    const currentQuantity = parseInt(quantityInput.value, 10);
+                    const productName = row.children[1].textContent.trim();
+
+                    if (currentQuantity > 1) {
+                        quantityInput.value = currentQuantity - 1;
+                        const mainRow = Array.from(mainTable.rows).find(
+                            (r) => r.children[1].textContent.trim() === productName
+                        );
+                        if (mainRow) {
+                            const mainQuantityCell = mainRow.querySelector(".main-quantity");
+                            let mainQuantity = parseInt(mainQuantityCell.textContent, 10);
+                            mainQuantity += 1;
+                            mainQuantityCell.textContent = mainQuantity;
+                            mainRow.querySelector(".add-to-selected").disabled = false;
+                        }
+                    }
+                }
+
+                if (target.closest(".increase-quantity")) {
+                    const row = target.closest("tr");
+                    const quantityInput = row.querySelector(".quantity-input");
+                    const currentQuantity = parseInt(quantityInput.value, 10);
+                    const productName = row.children[1].textContent.trim();
+
+                    const mainRow = Array.from(mainTable.rows).find(
+                        (r) => r.children[1].textContent.trim() === productName
+                    );
+                    if (mainRow) {
+                        const mainQuantityCell = mainRow.querySelector(".main-quantity");
+                        let mainQuantity = parseInt(mainQuantityCell.textContent, 10);
+
+                        if (mainQuantity > 0) {
+                            quantityInput.value = currentQuantity + 1;
+                            mainQuantity -= 1;
+                            mainQuantityCell.textContent = mainQuantity;
+                            if (mainQuantity <= 0) {
+                                mainRow.querySelector(".add-to-selected").disabled = true;
+                            }
+                        }
+                    }
+                }
+            });
+
+            selectedProductsTable.addEventListener("click", function (event) {
+                if (event.target.closest(".remove-from-selected")) {
+                    const row = event.target.closest("tr");
+                    const productName = row.children[1].textContent.trim();
+                    const quantityInput = row.querySelector(".quantity-input");
+                    const selectedQuantity = parseInt(quantityInput.value, 10);
+
+                    const mainRow = Array.from(mainTable.rows).find(
+                        (r) => r.children[1].textContent.trim() === productName
+                    );
+
+                    if (mainRow) {
+                        const mainQuantityCell = mainRow.querySelector(".main-quantity");
+                        let mainQuantity = parseInt(mainQuantityCell.textContent, 10);
+                        mainQuantity += selectedQuantity;
+                        mainQuantityCell.textContent = mainQuantity;
+                        mainRow.querySelector(".add-to-selected").disabled = false;
+                    }
+
+                    row.remove();
+                }
+            });
+        });
+
+        // Image and Video handling logic is already in the provided code
+        // Just keep them as is.
+
+        // ---------------------------- Materials Logic ----------------------------
+        const materialsAssignmentSection = document.getElementById("materialsAssignmentSection");
+        const addMaterialBtn = document.getElementById("addMaterialBtn");
+        const assignMaterialsBtn = document.getElementById("assignMaterialsBtn");
+        const materialsContainer = document.getElementById("materialsContainer");
+        const materialsResponseMessage = document.getElementById("materialsResponseMessage");
+
+        function fetchMaterials() {
+            const authToken = sessionStorage.getItem("authToken");
+            return fetch("http://localhost:5000/material/material", {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+                },
+            })
+            .then((response) => {
+                if (!response.ok) { throw new Error("Failed to fetch materials"); }
+                return response.json();
+            })
+            .then((data) => {
+                availableMaterials = data;
+            })
+            .catch((error) => {
+                console.error("Error fetching materials:", error);
+                availableMaterials = [];
+            });
+        }
+
+        function createMaterialItem() {
+            const materialCount = materialsContainer.querySelectorAll(".material-item").length + 1;
+            const materialItem = document.createElement("div");
+            materialItem.classList.add("material-item", "mb-3");
+            const selectID = `materialName${materialCount}`;
+            const percentageID = `materialPercentage${materialCount}`;
+
+            let materialOptions = "";
+            availableMaterials.forEach((mat) => {
+                materialOptions += `<option value="${mat.Name}">${mat.Name}</option>`;
+            });
+
+            materialItem.innerHTML = `
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-6">
+                        <label class="form-label" for="${selectID}">Material Name</label>
+                        <select class="form-select material-name" id="${selectID}" required>
+                            <option value="" disabled selected>Select a material</option>
+                            ${materialOptions}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label" for="${percentageID}">Percentage</label>
+                        <input type="number" class="form-control material-percentage" id="${percentageID}" placeholder="Enter Percentage" min="0" max="100" required>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="button" class="btn btn-danger remove-material-btn">Remove</button>
+                    </div>
+                </div>
+            `;
+            return materialItem;
+        }
+
+        materialsContainer.addEventListener("click", function (e) {
+            if (e.target && e.target.classList.contains("remove-material-btn")) {
+                e.target.closest(".material-item").remove();
+            }
+        });
+
+        addMaterialBtn.addEventListener("click", function () {
+            if (availableMaterials.length === 0) {
+                fetchMaterials().then(() => {
+                    materialsContainer.appendChild(createMaterialItem());
+                });
+            } else {
+                materialsContainer.appendChild(createMaterialItem());
+            }
+        });
+
+        assignMaterialsBtn.addEventListener("click", function () {
+            if (!createdPackageId) {
+                alert("Package ID not found. Please create the package first.");
+                return;
+            }
+
+            const materials = [];
+            const materialItems = document.querySelectorAll(".material-item");
+            let totalPercentage = 0;
+            let valid = true;
+
+            materialItems.forEach(item => {
+                const name = item.querySelector(".material-name").value;
+                const percentage = parseInt(item.querySelector(".material-percentage").value, 10);
+
+                if (!name || isNaN(percentage) || percentage < 0 || percentage > 100) {
+                    valid = false;
+                    return;
+                }
+                totalPercentage += percentage;
+                materials.push({ name, percentage });
+            });
+
+            if (!valid) {
+                alert("Please ensure all materials are selected and percentages are between 0 and 100.");
+                return;
+            }
+
+            if (totalPercentage !== 100) {
+                alert("Total percentage of materials must equal 100%. Currently, it is " + totalPercentage + "%.");
+                return;
+            }
+
+            const assignMaterials = {
+                PackageID: createdPackageId,
+                Materials: materials,
+            };
+
+            assignMaterialsBtn.disabled = true;
+            assignMaterialsBtn.textContent = "Assigning...";
+
+            const authToken = sessionStorage.getItem("authToken");
+            fetch("http://localhost:5000/material/package", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+                },
+                body: JSON.stringify(assignMaterials),
+            })
+            .then(response => {
+                if (!response.ok) { throw new Error("Failed to assign materials"); }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    materialsResponseMessage.innerHTML = '<div class="alert alert-success">Materials assigned successfully!</div>';
+                    materialsAssigned = true;
+                    materialsAssignmentSection.style.display = "none";
+                    window.removeEventListener("beforeunload", beforeUnloadListener);
+                } else {
+                    materialsResponseMessage.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+                }
+            })
+            .catch(error => {
+                console.error("Error assigning materials:", error);
+                materialsResponseMessage.innerHTML = '<div class="alert alert-danger">Failed to assign materials.</div>';
+            })
+            .finally(() => {
+                assignMaterialsBtn.disabled = false;
+                assignMaterialsBtn.textContent = "Assign Materials";
+                setTimeout(function () {
+                    materialsResponseMessage.innerHTML = "";
+                }, 5000);
+            });
+        });
+
+        // ---------------------------- Image Upload Logic ----------------------------
+        const uploadedImagesContainer = document.getElementById('uploaded-images');
+        const imageUploader = document.getElementById("image-uploader");
+        const fileLimitWarning = document.getElementById('file-limit-warning');
+        const fileSizeWarning = document.getElementById('file-size-warning');
+
+        function removeSelectedFile(file) {
+            const index = selectedFiles.indexOf(file);
+            if (index !== -1) {
+                selectedFiles.splice(index, 1);
+            }
+        }
+
+        imageUploader.addEventListener('change', function(event) {
+            const files = event.target.files;
+            let validFiles = [];
+
+            Array.from(files).forEach(file => {
+                if (file.size > 2 * 1024 * 1024) { 
+                    fileSizeWarning.style.display = 'block';
+                } else {
+                    fileSizeWarning.style.display = 'none';
+                    validFiles.push(file);
+                }
+            });
+
+            if (uploadedImagesCount + validFiles.length > 5) {
+                fileLimitWarning.style.display = 'block';
+                event.target.value = ''; 
+                return;
+            }
+
+            fileLimitWarning.style.display = 'none';
+
+            validFiles.forEach(file => {
+                uploadedImagesCount++;
+                selectedFiles.push(file);
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = e.target.result;
+                    imgElement.style.width = '100px';
+                    imgElement.style.height = '100px';
+                    imgElement.style.objectFit = 'cover';
+                    imgElement.className = 'rounded border uploaded-image'; 
+
+                    const removeButton = document.createElement('button');
+                    removeButton.innerHTML = '&times;';
+                    removeButton.className = 'btn btn-sm btn-danger position-absolute top-0 end-0';
+                    removeButton.style.margin = '-5px';
+                    removeButton.style.zIndex = '1';
+
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'position-relative d-inline-block';
+                    wrapper.style.position = 'relative';
+                    wrapper.style.display = 'inline-block';
+                    wrapper.style.margin = '5px';
+                    wrapper.appendChild(imgElement);
+                    wrapper.appendChild(removeButton);
+
+                    uploadedImagesContainer.appendChild(wrapper);
+
+                    removeButton.addEventListener('click', () => {
+                        wrapper.remove();
+                        uploadedImagesCount--;
+                        removeSelectedFile(file);
+                        fileLimitWarning.style.display = 'none';
+                    });
+                };
+                reader.readAsDataURL(file);
+            });
+
+            event.target.value = '';
+        });
+
+        // ---------------------------- Video Upload Logic ----------------------------
+        document.getElementById("videoInput").addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.size > 10 * 1024 * 1024) {
+                document.getElementById("errorText").style.display = "block";
+                this.value = ""; 
+                return;
+            }
+
+            document.getElementById("errorText").style.display = "none";
+            const fileURL = URL.createObjectURL(file);
+
+            const videoPreviewContainer = document.getElementById("videoPreviewContainer");
+            const videoPreview = document.getElementById("videoPreview");
+            videoPreview.src = fileURL; 
+            videoPreviewContainer.style.display = "block"; 
+        });
+
+        document.getElementById("deleteVideoButton").addEventListener("click", function () {
+            const videoInput = document.getElementById("videoInput");
+            const videoPreviewContainer = document.getElementById("videoPreviewContainer");
+            const videoPreview = document.getElementById("videoPreview");
+
+            videoInput.value = "";
+            videoPreview.src = "";
+            videoPreviewContainer.style.display = "none";
+            document.getElementById("errorText").style.display = "none"; 
+        });
+
+        // ---------------------------- Submit Package Logic ----------------------------
+        document.getElementById('submitButton').addEventListener('click', async function (e) {
+            e.preventDefault();
+
+            try {
+                const name = document.getElementById('packageName').value.trim();
+                const description = document.getElementById('packageDescription').value.trim();
+                const price = parseFloat(document.getElementById('packagePrice').value);
+                const packageQuantity = parseInt(document.getElementById('packageQuantity').value, 10);
+                const subCategoryId = getSelectedCategoryId();
+
+                if (!name || !description || isNaN(price) || isNaN(packageQuantity) || !subCategoryId) {
+                    showMessage('Please fill out all fields correctly.', false);
+                    return;
+                }
+
+                const selectedProducts = [];
+                document.querySelectorAll('#selectedProductsBody tr').forEach(row => {
+                    const productName = row.children[1].textContent.trim();
+                    const productQuantity = parseInt(row.querySelector('.quantity-input').value, 10);
+                    selectedProducts.push({
+                        productName,
+                        quantity: productQuantity,
+                    });
+                });
+
+                const formData = new FormData();
+                formData.append('Name', name);
+                formData.append('Description', description);
+                formData.append('Price', price);
+                formData.append('Quantity', packageQuantity);
+                formData.append('SubCategoryId', subCategoryId);
+                formData.append('products', JSON.stringify(selectedProducts));
+
+                // Images
+                selectedFiles.forEach(file => {
+                    formData.append("images", file);
+                });
+
+                // Video
+                const videoFile = document.getElementById('videoInput').files[0];
+                if (videoFile) {
+                    formData.append('videos', videoFile);
+                }
+
+                const submitButton = document.getElementById('submitButton');
+                submitButton.disabled = true;
+                submitButton.textContent = 'Saving...';
+
+                const authToken = sessionStorage.getItem('authToken');
+                const response = await fetch('http://localhost:5000/api/packages', {
+                    method: 'POST',
+                    headers: {
+                        ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+                        cookie: 'authToken=' + sessionStorage.getItem('authToken'),
+                    },
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                const result = await response.json();
+                console.log('Success:', result);
+
+                // Fetch the last created package to get its PackageID
+                const lastPackage = await fetchLastPackage();
+                createdPackageId = lastPackage.PackageID;
+                activateMaterialsSection();
+                window.addEventListener("beforeunload", beforeUnloadListener);
+
+                // Store the success message
+                localStorage.setItem('responseMessage', 'Package added successfully!');
+                localStorage.setItem('responseSuccess', 'true');
+
+                // Reload is optional. If we reload, we lose the material assignment. Let's not reload automatically.
+                // Instead show success and allow user to assign materials.
+                showMessage('Package added successfully! Please assign materials.', true);
+
+                submitButton.disabled = false;
+                submitButton.textContent = 'Save';
+
+            } catch (error) {
+                console.error('Error submitting the package:', error);
+                showMessage('An error occurred while submitting the package. Check the console for details.', false);
+                const submitButton = document.getElementById('submitButton');
+                submitButton.disabled = false;
+                submitButton.textContent = 'Save';
+            }
+        });
+
+        async function fetchLastPackage() {
+            const authToken = sessionStorage.getItem('authToken');
+            const response = await fetch('http://localhost:5000/api/last/package', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+                },
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch the last created package');
+            }
+            return response.json();
+        }
+
+        function beforeUnloadListener(event) {
+            if (!materialsAssigned) {
+                event.preventDefault();
+                event.returnValue = '';
+                return '';
+            }
+        }
+
+        function activateMaterialsSection() {
+            const inputs = materialsAssignmentSection.querySelectorAll("input, select");
+            inputs.forEach((input) => {
+                input.disabled = false;
+            });
+
+            addMaterialBtn.disabled = false;
+            assignMaterialsBtn.disabled = false;
+
+            materialsResponseMessage.innerHTML = '<div class="alert alert-info">Please assign materials to complete the package setup.</div>';
+            materialsAssignmentSection.style.display = "block";
+
+            // Fetch materials and create initial material item
+            fetchMaterials().then(() => {
+                if (materialsContainer.querySelectorAll(".material-item").length === 0) {
+                    materialsContainer.appendChild(createMaterialItem());
+                }
+            });
+        }
+
+        // Display message after page refresh
+        window.addEventListener('load', () => {
+            const message = localStorage.getItem('responseMessage');
+            const isSuccess = localStorage.getItem('responseSuccess') === 'true';
+
+            if (message) {
+                showMessage(message, isSuccess);
+                localStorage.removeItem('responseMessage');
+                localStorage.removeItem('responseSuccess');
+            }
+        });
+    </script>
 </body>
-</html> 
+</html>

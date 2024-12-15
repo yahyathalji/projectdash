@@ -1,330 +1,577 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <title>::Fantasize:: Package Edit</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <!-- Favicon-->
 
     <!-- Plugin CSS files -->
-    <link rel="stylesheet" href="assets/plugin/multi-select/css/multi-select.css"><!-- Multi Select Css -->
-    <link rel="stylesheet" href="assets/plugin/bootstrap-tagsinput/bootstrap-tagsinput.css"><!-- Bootstrap Tagsinput Css -->
-    <link rel="stylesheet" href="assets/plugin/dropify/dist/css/dropify.min.css"/><!-- Dropify Css -->
-    <link rel="stylesheet" href="assets/plugin/datatables/responsive.dataTables.min.css"><!-- Datatable Css -->
-    <link rel="stylesheet" href="assets/plugin/datatables/dataTables.bootstrap5.min.css"><!-- Datatable Css -->
+    <link
+      rel="stylesheet"
+      href="assets/plugin/multi-select/css/multi-select.css"
+    />
+    <!-- Multi Select Css -->
+    <link
+      rel="stylesheet"
+      href="assets/plugin/bootstrap-tagsinput/bootstrap-tagsinput.css"
+    />
+    <!-- Bootstrap Tagsinput Css -->
+    <link
+      rel="stylesheet"
+      href="assets/plugin/dropify/dist/css/dropify.min.css"
+    />
+    <!-- Dropify Css -->
+    <link
+      rel="stylesheet"
+      href="assets/plugin/datatables/responsive.dataTables.min.css"
+    />
+    <!-- Datatable Css -->
+    <link
+      rel="stylesheet"
+      href="assets/plugin/datatables/dataTables.bootstrap5.min.css"
+    />
+    <!-- Datatable Css -->
 
     <!-- Project CSS file -->
-    <link rel="stylesheet" href="assets/css/ebazar.style.min.css">
+    <link rel="stylesheet" href="assets/css/ebazar.style.min.css" />
     <style>
-        .quantity-input {
-            width: 60px;
-            text-align: center; 
-        }
+      .quantity-input {
+        width: 60px;
+        text-align: center;
+      }
 
-        .input-group .btn {
-            padding: 5px 10px;
-        }
+      .input-group .btn {
+        padding: 5px 10px;
+      }
 
-        .input-group {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+      .input-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-        /* Customization Section Styles */
-        .customization-form {
-            background-color: #f8f9fa;
-            border-radius: 5px;
-        }
+      #responseMessage .alert {
+        margin-bottom: 0;
+      }
 
-        .option-value-group {
-            background-color: #ffffff;
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 10px;
-            position: relative;
-        }
+      .material-item {
+        margin-bottom: 10px;
+      }
+      .material-item .remove-material-btn {
+        margin-top: 25px;
+      }
 
-        .option-value-group .remove-option-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 1;
-        }
+      /* Customization styling */
+      .customization-widget {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 15px;
+      }
 
-        /* Response Message Styles */
-        #responseMessage .alert {
-            margin-bottom: 0;
-        }
+      .customization-widget h6 {
+        margin-bottom: 10px;
+      }
+
+      .customization-options {
+        margin-bottom: 10px;
+      }
+
+      .option-value-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+      }
+
+      .option-value-item span {
+        margin-right: 10px;
+        width: 150px;
+      }
+
+      .option-value-item img {
+        max-width: 50px;
+        max-height: 50px;
+        object-fit: cover;
+        border: 1px solid #ccc;
+        margin-right: 10px;
+      }
+
+      /* Customizations Assigned Card */
+      .customizations-assigned-card {
+        margin-bottom: 20px;
+      }
+
+      .customizations-assigned-card .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .customizations-assigned-card .card-body {
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      .customization-item {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .customization-item:last-child {
+        border-bottom: none;
+      }
+
+      .assign-customization-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 0.4rem;
+        background-color: #0ea5e9;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        gap: 0.5rem;
+      }
+
+      .assign-customization-btn:hover {
+        background-color: #c90c6e;
+      }
+
+      .remove-customization-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.1rem 0.4rem;
+        background: transparent;
+        border: 1px solid #dc2626;
+        border-radius: 4px;
+        color: #dc2626;
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        /* Icon styles using pseudo-element */
+        gap: 0.5rem;
+      }
+
+      .remove-customization-btn:hover {
+        background-color: #dc2626;
+        color: white;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="ebazar-layout" class="theme-blue">
-        
-        <!-- Sidebar -->
-        <div id="sidebar"></div>
+      <!-- Sidebar -->
+      <div id="sidebar"></div>
 
+      <!-- Main Body Area -->
+      <div class="main px-lg-4 px-md-4">
+        <!-- Header -->
+        <div id="header"></div>
 
-        <!-- Main Body Area -->
-        <div class="main px-lg-4 px-md-4"> 
+        <!-- Body Content -->
+        <div class="body d-flex py-3">
+          <div class="container-xxl">
+            <!-- Page Header -->
+            <div class="row align-items-center">
+              <div class="border-0 mb-4">
+                <div
+                  class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap"
+                >
+                  <h3 class="fw-bold mb-0">Package Edit</h3>
+                  <div id="responseMessage" style="display: none"></div>
 
-            <!-- Header -->
-            <div id="header"></div>
-
-
-            <!-- Body Content -->
-            <div class="body d-flex py-3">
-                <div class="container-xxl">
-
-                    <!-- Page Header -->
-                    <div class="row align-items-center">
-                        <div class="border-0 mb-4">
-                            <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
-                                <h3 class="fw-bold mb-0">Package Edit</h3>
-                                <div id="responseMessage" style="display: none;"></div>
-
-                                <button type="button" class="btn btn-primary btn-set-task w-sm-100 py-2 px-5 text-uppercase" id="submitButton">Save</button>
-                            </div>
-                        </div>
-                    </div> <!-- Row end  -->  
-                    
-                    <div class="row g-3 mb-3">
-                        <!-- Left Column: Customizations and Categories -->
-                        <div class="col-xl-4 col-lg-4">
-                            <div class="sticky-lg-top">
-                                
-                                <!-- Customizations Management Section -->
-                                <div class="card mb-3">
-                                    <div class="card-header py-3 d-flex justify-content-between align-items-center bg-transparent border-bottom-0">
-                                        <h6 class="mb-0 fw-bold">Customizations</h6>
-                                        <button type="button" class="btn btn-outline-primary" id="addCustomizationBtn">
-                                            <i class="icofont-plus"></i> Add Customization
-                                        </button>
-                                    </div>
-                                    <div class="card-body">
-                                        <div id="customizationsContainer">
-                                            <!-- Dynamic customization forms will be appended here -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End of Customizations Management Section -->
-
-                                <!-- Categories Section -->
-                                <div class="card mb-3">
-                                    <div class="card-header py-3 d-flex justify-content-between align-items-center bg-transparent border-bottom-0">
-                                        <h6 class="mb-0 fw-bold">Categories</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between">
-                                            <!-- Categories List (Single Selection) -->
-                                            <div class="flex-column" style="width: 48%;">
-                                                <select id="categorySelect" size="10" class="ms w-100" style="font-size: 16px; padding: 10px;">
-                                                    <!-- Options will be populated dynamically -->
-                                                </select>
-                                            </div>
-                                
-                                            <!-- Selected Category List -->
-                                            <div class="flex-column" style="width: 48%;">
-                                                <h6 class="fw-bold">Selected Category</h6>
-                                                <ul id="selectedCategoriesList" style="list-style-type: none; padding: 0;">
-                                                    <!-- Selected category will be added here dynamically -->
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End of Categories Section -->
-                            </div>
-                        </div>
-
-                        <!-- Right Column: Package Information, Products, Images, Videos -->
-                        <div class="col-xl-8 col-lg-8">
-
-                            <!-- Package Basic Information -->
-                            <div class="card mb-3">
-                                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                                    <h6 class="mb-0 fw-bold">Basic Information</h6>
-                                </div>
-                                <div class="card-body">
-                                    <form id="EditProductForm">
-                                        <div class="row g-3 align-items-center">
-                                            <!-- Package Name -->
-                                            <div class="col-md-6">
-                                                <label class="form-label">Name</label>
-                                                <input type="text" id="packageName" class="form-control" placeholder="Enter Package Name" required>
-                                            </div>
-
-                                            <!-- Price -->
-                                            <div class="col-md-6">
-                                                <label class="form-label">Price</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text">$</span>
-                                                    <input type="number" id="packagePrice" class="form-control" placeholder="Enter Price" min="0" step="0.01" required>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Quantity -->
-                                            <div class="col-md-6">
-                                                <label class="form-label">Quantity</label>
-                                                <input type="number" id="packageQuantity" class="form-control" placeholder="Enter Quantity" min="0" required>
-                                            </div>
-
-                                            <!-- Package Description -->
-                                            <div class="col-md-12">
-                                                <label class="form-label">Package Description</label>
-                                                <textarea class="form-control" id="packageDescription" rows="4" placeholder="Enter Package Description Here" required></textarea>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <!-- End of Package Basic Information -->
-
-                            <!-- Products Selection Section -->
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <h5>Main Products</h5>
-                                    
-                                    <!-- Search input with advanced styles -->
-                                    <div class="input-group mb-3">
-                                        <input type="text" id="searchInput" class="form-control" placeholder="Search products..." aria-label="Search" aria-describedby="search-addon" />
-                                        <span class="input-group-text" id="search-addon"><i class="icofont-search"></i></span>
-                                    </div>
-
-                                    <!-- Main Products Table -->
-                                    <table id="myDataTable" class="table table-hover align-middle mb-0" style="width: 100%;">
-                                        <thead>
-                                            <tr>
-                                                <th>ProductId</th>
-                                                <th>Product Name</th>
-                                                <th>Offer</th>
-                                                <th>Price</th>
-                                                <th>Status</th>
-                                                <th>Quantity</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tableBody">
-                                            <!-- Data will be inserted here dynamically -->
-                                        </tbody>
-                                    </table>
-
-                                    <!-- Pagination Controls with page number -->
-                                    <div id="paginationControls" class="mt-3 d-flex justify-content-between">
-                                        <button id="prevPage" class="btn btn-outline-primary">Previous</button>
-                                        <span id="pageNumber" class="align-self-center"></span>
-                                        <button id="nextPage" class="btn btn-outline-primary">Next</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End of Products Selection Section -->
-
-                            <!-- Selected Products Table -->
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <h5>Selected Products</h5>
-                                    <table id="selectedProductsTable" class="table table-hover align-middle mb-0" style="width: 100%;">
-                                        <thead>
-                                            <tr>
-                                                <th>ProductId</th>
-                                                <th>Product Name</th>
-                                                <th style="text-align: center;">Quantity</th>
-                                                <th></th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="selectedProductsBody">
-                                            <!-- Selected products will be added dynamically -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <!-- End of Selected Products Table -->
-
-                            <!-- Video Upload Section -->
-                            <div class="card mb-3">
-                                <div class="card-header py-3 d-flex justify-content-between align-items-center bg-transparent border-bottom-0">
-                                    <h6 class="mb-0 fw-bold">Video Upload</h6>
-                                </div>
-                                <div class="card-body">
-                                    <form id="videoUploadForm">
-                                        <div class="row g-3 align-items-center">
-                                            <div class="col-md-12">
-                                                <label class="form-label">Product Video Upload</label>
-                                                <small class="d-block text-muted mb-2">
-                                                    Only one video is allowed. Maximum size: 10MB.
-                                                </small>
-                                                <input type="file" id="videoInput" class="form-control" accept="video/*">
-                                                <small id="errorText" class="text-danger mt-1" style="display: none;">
-                                                    Video size exceeds the 10MB limit. Please choose a smaller file.
-                                                </small>
-                                            </div>
-                                            <div class="col-md-12 mt-3" id="videoPreviewContainer" style="display: none;">
-                                                <video id="videoPreview" controls style="width: 100%; max-height: 400px;"></video>
-                                                <button type="button" id="deleteVideoButton" class="btn btn-danger mt-2">Delete Video</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <!-- End of Video Upload Section -->
-
-                            <!-- Images Upload Section -->
-                            <div class="card mb-3">
-                                <div class="card-header py-3 d-flex justify-content-between align-items-center bg-transparent border-bottom-0">
-                                    <h6 class="mb-0 fw-bold">Images</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row g-3 align-items-center">
-                                        <div class="col-md-12">
-                                            <label class="form-label">Product Images Upload</label>
-                                            <small class="d-block text-muted mb-2">Only portrait or square images, 2MB max and 2000px max-height.</small>
-                                            <input type="file" id="image-uploader" class="form-control" accept="image/*" multiple>
-                                            <div id="uploaded-images" class="mt-3 d-flex flex-wrap gap-2"></div>
-                                            <div id="file-limit-warning" class="text-danger mt-2" style="display:none;">You can only upload a maximum of 5 images.</div>
-                                            <div id="file-size-warning" class="text-danger mt-2" style="display:none;">Image size must not exceed 2MB.</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End of Images Upload Section -->
-                        </div>
-                    </div><!-- Row end  --> 
-                    
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-set-task w-sm-100 py-2 px-5 text-uppercase"
+                    id="submitButton"
+                  >
+                    Save
+                  </button>
                 </div>
-            </div>    
+              </div>
+            </div>
+            <!-- Row end  -->
 
-            <!-- Modal Custom Settings-->
-            <div id="modal"></div>
+            <div class="row g-3 mb-3">
+              <!-- Left Column: Customizations Assigned and Categories -->
+              <div class="col-xl-4 col-lg-4">
+                <div class="sticky-lg-top">
+                  <!-- Customizations Assigned Section -->
+                  <div class="card mb-3 customizations-assigned-card">
+                    <div
+                      class="card-header py-3 d-flex justify-content-between align-items-center"
+                    >
+                      <h6 class="mb-0 fw-bold">Customizations Assigned</h6>
+                      <a
+                        href="http://localhost:5500/main/dist/Assign-Package.html"
+                        class="btn btn-outline-secondary assign-customization-btn"
+                      >
+                        Assign
+                      </a>
+                    </div>
+                    <div class="card-body" id="customizationsAssignedContainer">
+                      <p class="text-muted">Loading customizations...</p>
+                    </div>
+                  </div>
+                  <!-- End of Customizations Assigned Section -->
 
+                  <!-- Categories Section -->
+                  <div class="card mb-3">
+                    <div
+                      class="card-header py-3 d-flex justify-content-between align-items-center bg-transparent border-bottom-0"
+                    >
+                      <h6 class="mb-0 fw-bold">Categories</h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <!-- Categories List (Single Selection) -->
+                        <div class="flex-column" style="width: 48%">
+                          <select
+                            id="categorySelect"
+                            size="10"
+                            class="ms w-100"
+                            style="font-size: 16px; padding: 10px"
+                          ></select>
+                        </div>
 
+                        <!-- Selected Category List -->
+                        <div class="flex-column" style="width: 48%">
+                          <h6 class="fw-bold">Selected Category</h6>
+                          <ul
+                            id="selectedCategoriesList"
+                            style="list-style-type: none; padding: 0"
+                          ></ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End of Categories Section -->
+                </div>
+              </div>
 
-        </div>      
+              <!-- Right Column: Package Information, Products, Images, Videos, Materials -->
+              <div class="col-xl-8 col-lg-8">
+                <!-- Package Basic Information -->
+                <div class="card mb-3">
+                  <div
+                    class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0"
+                  >
+                    <h6 class="mb-0 fw-bold">Basic Information</h6>
+                  </div>
+                  <div class="card-body">
+                    <form id="EditPackageForm">
+                      <div class="row g-3 align-items-center">
+                        <!-- Package Name -->
+                        <div class="col-md-6">
+                          <label class="form-label">Name</label>
+                          <input
+                            type="text"
+                            id="packageName"
+                            class="form-control"
+                            placeholder="Enter Package Name"
+                            required
+                          />
+                        </div>
 
+                        <!-- Price -->
+                        <div class="col-md-6">
+                          <label class="form-label">Price</label>
+                          <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input
+                              type="number"
+                              id="packagePrice"
+                              class="form-control"
+                              placeholder="Enter Price"
+                              min="0"
+                              step="0.01"
+                              required
+                            />
+                          </div>
+                        </div>
+
+                        <!-- Quantity -->
+                        <div class="col-md-6">
+                          <label class="form-label">Quantity</label>
+                          <input
+                            type="number"
+                            id="packageQuantity"
+                            class="form-control"
+                            placeholder="Enter Quantity"
+                            min="0"
+                            required
+                          />
+                        </div>
+
+                        <!-- Package Description -->
+                        <div class="col-md-12">
+                          <label class="form-label">Package Description</label>
+                          <textarea
+                            class="form-control"
+                            id="packageDescription"
+                            rows="4"
+                            placeholder="Enter Package Description Here"
+                            required
+                          ></textarea>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <!-- End of Package Basic Information -->
+
+                <!-- Products Selection Section -->
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <h5>Main Products</h5>
+                    <div class="input-group mb-3">
+                      <input
+                        type="text"
+                        id="searchInput"
+                        class="form-control"
+                        placeholder="Search products..."
+                        aria-label="Search"
+                        aria-describedby="search-addon"
+                      />
+                      <span class="input-group-text" id="search-addon"
+                        ><i class="icofont-search"></i
+                      ></span>
+                    </div>
+
+                    <table
+                      id="myDataTable"
+                      class="table table-hover align-middle mb-0"
+                      style="width: 100%"
+                    >
+                      <thead>
+                        <tr>
+                          <th>ProductId</th>
+                          <th>Product Name</th>
+                          <th>Offer</th>
+                          <th>Price</th>
+                          <th>Status</th>
+                          <th>Quantity</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tableBody"></tbody>
+                    </table>
+
+                    <div
+                      id="paginationControls"
+                      class="mt-3 d-flex justify-content-between"
+                    >
+                      <button id="prevPage" class="btn btn-outline-primary">
+                        Previous
+                      </button>
+                      <span id="pageNumber" class="align-self-center"></span>
+                      <button id="nextPage" class="btn btn-outline-primary">
+                        Next
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- End of Products Selection Section -->
+
+                <!-- Selected Products Table -->
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <h5>Selected Products</h5>
+                    <table
+                      id="selectedProductsTable"
+                      class="table table-hover align-middle mb-0"
+                      style="width: 100%"
+                    >
+                      <thead>
+                        <tr>
+                          <th>ProductId</th>
+                          <th>Product Name</th>
+                          <th style="text-align: center">Quantity</th>
+                          <th></th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody id="selectedProductsBody"></tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- End of Selected Products Table -->
+
+                <!-- Video Upload Section -->
+                <div class="card mb-3">
+                  <div
+                    class="card-header py-3 d-flex justify-content-between align-items-center bg-transparent border-bottom-0"
+                  >
+                    <h6 class="mb-0 fw-bold">Video Upload</h6>
+                  </div>
+                  <div class="card-body">
+                    <form id="videoUploadForm">
+                      <div class="row g-3 align-items-center">
+                        <div class="col-md-12">
+                          <label class="form-label">Product Video Upload</label>
+                          <small class="d-block text-muted mb-2">
+                            Only one video is allowed. Maximum size: 10MB.
+                          </small>
+                          <input
+                            type="file"
+                            id="videoInput"
+                            class="form-control"
+                            accept="video/*"
+                          />
+                          <small
+                            id="errorText"
+                            class="text-danger mt-1"
+                            style="display: none"
+                          >
+                            Video size exceeds the 10MB limit. Please choose a
+                            smaller file.
+                          </small>
+                        </div>
+                        <div
+                          class="col-md-12 mt-3"
+                          id="videoPreviewContainer"
+                          style="display: none"
+                        >
+                          <video
+                            id="videoPreview"
+                            controls
+                            style="width: 100%; max-height: 400px"
+                          ></video>
+                          <button
+                            type="button"
+                            id="deleteVideoButton"
+                            class="btn btn-danger mt-2"
+                          >
+                            Delete Video
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <!-- End of Video Upload Section -->
+
+                <!-- Images Upload Section -->
+                <div class="card mb-3">
+                  <div
+                    class="card-header py-3 d-flex justify-content-between align-items-center bg-transparent border-bottom-0"
+                  >
+                    <h6 class="mb-0 fw-bold">Images</h6>
+                  </div>
+                  <div class="card-body">
+                    <div class="row g-3 align-items-center">
+                      <div class="col-md-12">
+                        <label class="form-label">Product Images Upload</label>
+                        <small class="d-block text-muted mb-2"
+                          >Only portrait or square images, 2MB max and 2000px
+                          max-height.</small
+                        >
+                        <input
+                          type="file"
+                          id="image-uploader"
+                          class="form-control"
+                          accept="image/*"
+                          multiple
+                        />
+                        <div
+                          id="uploaded-images"
+                          class="mt-3 d-flex flex-wrap gap-2 position-relative"
+                        ></div>
+                        <div
+                          id="file-limit-warning"
+                          class="text-danger mt-2"
+                          style="display: none"
+                        >
+                          You can only upload a maximum of 5 images.
+                        </div>
+                        <div
+                          id="file-size-warning"
+                          class="text-danger mt-2"
+                          style="display: none"
+                        >
+                          Image size must not exceed 2MB.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End of Images Upload Section -->
+
+                <!-- Materials Assignment Section -->
+                <div class="card mb-3" id="materialsAssignmentSection">
+                  <div
+                    class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0"
+                  >
+                    <h6 class="mb-0 fw-bold">Assign Materials</h6>
+                  </div>
+                  <div class="card-body">
+                    <div id="materialsContainer"></div>
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      id="addMaterialBtn"
+                    >
+                      Add Another Material
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      id="updateMaterialsBtn"
+                    >
+                      Update Materials
+                    </button>
+                    <div id="materialsResponseMessage" class="mt-3"></div>
+                  </div>
+                </div>
+                <!-- End of Materials Assignment Section -->
+              </div>
+            </div>
+            <!-- Row end  -->
+          </div>
+        </div>
+
+        <!-- Modal Custom Settings-->
+        <div id="modal"></div>
+      </div>
     </div>
 
     <!-- Load Components -->
     <script>
-        function loadComponent(selector, url) {
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    document.querySelector(selector).innerHTML = data;
-                })
-                .catch(error => console.error(`Error loading ${url}:`, error));
-        }
+      function loadComponent(selector, url) {
+        fetch(url)
+          .then((response) => response.text())
+          .then((data) => {
+            document.querySelector(selector).innerHTML = data;
+          })
+          .catch((error) => {
+            console.error(`Error loading ${url}:`, error);
+          });
+      }
 
-        loadComponent('#sidebar', 'sidebar.html');
-        loadComponent('#header', 'header.html');
-        loadComponent('#modal', 'modal.html');
+      loadComponent("#sidebar", "sidebar.html");
+      loadComponent("#header", "header.html");
+      loadComponent("#modal", "modal.html");
     </script>
 
     <!-- Plugin JS files -->
     <script src="assets/bundles/libscripts.bundle.js"></script>
     <script src="assets/plugin/multi-select/js/jquery.multi-select.js"></script>
-    <script src="assets/plugin/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>  
+    <script src="assets/plugin/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
     <script src="assets/bundles/dropify.bundle.js"></script>
     <script src="assets/bundles/dataTables.bundle.js"></script>
 
@@ -333,6 +580,1302 @@
 
     <!-- Project JS files -->
     <script src="../js/template.js"></script>
-    <script src="assets/js/packageEdit.js"></script>
-</body>
+    <script>
+      "use strict";
+
+      // Utility function to get package ID from URL
+      function getPackageIdFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get("packageID");
+      }
+
+      const params = getPackageIdFromUrl();
+      let uploadedImagesCount = 0;
+      let selectedFiles = [];
+      let selectedCategoryId = null;
+
+      let originalMaterials = [];
+      let materialsToDelete = [];
+      let hasMaterials = false; // Flag to determine if package has materials
+
+      // Global variable to store available materials
+      let availableMaterials = [];
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        // Fetch categories
+        await fetchCategories();
+
+        // Fetch available materials
+        await fetchAvailableMaterials();
+
+        // Fetch package details
+        await fetchPackageDetails(params);
+
+        // Fetch assigned materials for the package
+        await fetchAssignedMaterials(params);
+
+        // Initialize materials buttons
+        initializeMaterialsButtons();
+
+        // Initialize product table and selection logic
+        initializeProductTableLogic();
+
+        // Initialize image and video upload logic
+        initializeImageUploader();
+        initializeVideoUploader();
+
+        // Initialize form submission
+        document
+          .getElementById("submitButton")
+          .addEventListener("click", updatePackage);
+      });
+
+      // ---------------------------- Fetch Categories ----------------------------
+      async function fetchCategories() {
+        try {
+          const authToken = sessionStorage.getItem("authToken");
+          const response = await fetch(
+            "http://localhost:5000/api/categories/subcategories",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+              },
+            }
+          );
+          const data = await response.json();
+          const categorySelect = document.getElementById("categorySelect");
+
+          data.forEach((category) => {
+            if (category.SubCategory && category.SubCategory.length > 0) {
+              const optgroup = document.createElement("optgroup");
+              optgroup.label = category.Name;
+
+              category.SubCategory.forEach((subCategory) => {
+                const option = document.createElement("option");
+                option.value = subCategory.SubCategoryID;
+                option.textContent = subCategory.Name;
+                optgroup.appendChild(option);
+              });
+
+              categorySelect.appendChild(optgroup);
+            }
+          });
+        } catch (error) {
+          console.error("Error fetching categories:", error);
+        }
+
+        const categorySelect = document.getElementById("categorySelect");
+        const selectedCategoriesList = document.getElementById(
+          "selectedCategoriesList"
+        );
+
+        categorySelect.addEventListener("change", function (event) {
+          selectedCategoriesList.innerHTML = "";
+          const selectedOption =
+            event.target.options[event.target.selectedIndex];
+          if (selectedOption) {
+            selectedCategoryId = selectedOption.value;
+            const listItem = document.createElement("li");
+            listItem.textContent = selectedOption.textContent;
+            listItem.setAttribute("data-value", selectedOption.value);
+            selectedCategoriesList.appendChild(listItem);
+          }
+        });
+
+        categorySelect.addEventListener("dblclick", function (event) {
+          const selectedOption = event.target;
+          if (selectedOption.tagName === "OPTION") {
+            selectedCategoriesList.innerHTML = "";
+            const listItem = document.createElement("li");
+            listItem.textContent = selectedOption.textContent;
+            listItem.setAttribute("data-value", selectedOption.value);
+            selectedCategoriesList.appendChild(listItem);
+          }
+        });
+
+        selectedCategoriesList.addEventListener("click", function (event) {
+          const clickedItem = event.target;
+          if (clickedItem.tagName === "LI") {
+            const value = clickedItem.getAttribute("data-value");
+            clickedItem.remove();
+            const option = categorySelect.querySelector(
+              `option[value="${value}"]`
+            );
+            if (option) {
+              option.disabled = false;
+            }
+          }
+        });
+      }
+
+      // ---------------------------- Fetch Available Materials ----------------------------
+      async function fetchAvailableMaterials() {
+        try {
+          const authToken = sessionStorage.getItem("authToken");
+          const response = await fetch(
+            "http://localhost:5000/material/material",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          if (Array.isArray(data)) {
+            availableMaterials = data.map((m) => ({ name: m.Name }));
+          } else {
+            console.error("Unexpected response format for materials:", data);
+          }
+        } catch (error) {
+          console.error("Error fetching available materials:", error);
+        }
+      }
+
+      // ---------------------------- Fetch Package Details ----------------------------
+      async function fetchPackageDetails(packageID) {
+        const apiUrl = `http://localhost:5000/api/packages/${packageID}`;
+        try {
+          const response = await fetch(apiUrl, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+              cookie: "authToken=" + sessionStorage.getItem("authToken"),
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          const data = await response.json();
+          fillInTheFields(data);
+          displayCustomizations(data.Customization);
+          displayPackageResources(data.Resource);
+        } catch (error) {
+          console.error("Error fetching package details:", error);
+          showMessage(
+            "An error occurred while fetching package details.",
+            false
+          );
+        }
+      }
+
+      // ---------------------------- Fetch Assigned Materials for Package ----------------------------
+      async function fetchAssignedMaterials(packageID) {
+        const apiUrl = `http://localhost:5000/material/package/${packageID}`;
+        try {
+          const authToken = sessionStorage.getItem("authToken");
+          const response = await fetch(apiUrl, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+            },
+          });
+
+          if (!response.ok) {
+            // If no materials, assume empty
+            hasMaterials = false;
+            return;
+          }
+
+          const data = await response.json();
+
+          if (Array.isArray(data) && data.length > 0) {
+            hasMaterials = true;
+            originalMaterials = data.map((m) => ({
+              name: m.name,
+              percentage: m.percentage,
+            }));
+            displayAssignedMaterials(originalMaterials);
+          } else {
+            hasMaterials = false;
+          }
+        } catch (error) {
+          console.error("Error fetching assigned materials:", error);
+          // If error, assume no materials assigned
+          hasMaterials = false;
+        }
+      }
+
+      function fillInTheFields(data) {
+        document.getElementById("packageName").value = data.Name;
+        document.getElementById("packagePrice").value = data.Price;
+        document.getElementById("packageQuantity").value = data.Quantity;
+        document.getElementById("packageDescription").value = data.Description;
+
+        const selectedCategoriesList = document.getElementById(
+          "selectedCategoriesList"
+        );
+        selectedCategoriesList.innerHTML = ""; // Clear existing
+        if (data.SubCategory && data.SubCategory.Name) {
+          const li = document.createElement("li");
+          li.textContent = data.SubCategory.Name;
+          li.setAttribute("data-value", data.SubCategory.SubCategoryID);
+          selectedCategoryId = data.SubCategory.SubCategoryID;
+          selectedCategoriesList.appendChild(li);
+          li.style.fontWeight = "bold";
+        }
+
+        // Display selected products
+        document.getElementById("selectedProductsBody").innerHTML = "";
+        if (data.PackageProduct && data.PackageProduct.length > 0) {
+          data.PackageProduct.forEach((product) => {
+            const row = document.createElement("tr");
+
+            const productIdCell = document.createElement("td");
+            productIdCell.innerHTML = `<strong>#${product.Product.ProductID}</strong>`;
+
+            const productNameCell = document.createElement("td");
+            productNameCell.textContent = product.Product.Name;
+
+            const quantityCell = document.createElement("td");
+            quantityCell.innerHTML = `
+                  <div class="input-group">
+                    <button class="btn btn-outline-secondary decrease-quantity">-</button>
+                    <input type="text" class="form-control text-center quantity-input" value="${product.Quantity}" readonly>
+                    <button class="btn btn-outline-secondary increase-quantity">+</button>
+                  </div>
+                `;
+
+            const mainQuantityCell = document.createElement("td");
+            mainQuantityCell.classList.add("main-quantity");
+            mainQuantityCell.textContent = product.Product.Quantity;
+
+            const actionCell = document.createElement("td");
+            actionCell.innerHTML = `
+                  <button class="btn btn-outline-danger remove-from-selected">
+                    <i class="icofont-ui-delete text-danger"></i>
+                  </button>
+                `;
+
+            actionCell
+              .querySelector(".remove-from-selected")
+              .addEventListener("click", () => {
+                row.remove();
+                // Re-enable the add button in the main table if exists
+                const mainRow = Array.from(
+                  document.getElementById("tableBody").rows
+                ).find(
+                  (r) =>
+                    r.children[1].textContent.trim() === product.Product.Name
+                );
+                if (mainRow) {
+                  mainRow.querySelector(".add-to-selected").disabled = false;
+                }
+              });
+
+            row.appendChild(productIdCell);
+            row.appendChild(productNameCell);
+            row.appendChild(quantityCell);
+            row.appendChild(mainQuantityCell);
+            row.appendChild(actionCell);
+
+            document.getElementById("selectedProductsBody").appendChild(row);
+          });
+        }
+      }
+
+      function displayCustomizations(customizations) {
+        const container = document.getElementById(
+          "customizationsAssignedContainer"
+        );
+        container.innerHTML = "";
+
+        if (!customizations || customizations.length === 0) {
+          container.innerHTML =
+            '<p class="text-muted">No customizations assigned.</p>';
+          return;
+        }
+
+        customizations.forEach((customization) => {
+          const customizationItem = document.createElement("div");
+          customizationItem.className = "customization-item";
+          customizationItem.setAttribute(
+            "data-customization-id",
+            customization.CustomizationID
+          );
+
+          customizationItem.innerHTML = `
+            <div>
+                <strong>${customization.option.name} (${customization.option.type})</strong>
+                <ul class="list-unstyled mb-0">
+                    ${customization.option.optionValues
+                      .map(
+                        (value) => `
+                        <li>${value.name}${value.value ? `: ${value.value}` : ""}</li>
+                    `
+                      )
+                      .join("")}
+                </ul>
+            </div>
+            <button class="remove-customization-btn" title="Unassign Customization">
+                Remove
+            </button>
+        `;
+
+          customizationItem
+            .querySelector(".remove-customization-btn")
+            .addEventListener("click", () => {
+              unassignCustomization(customization.CustomizationID);
+            });
+
+          container.appendChild(customizationItem);
+        });
+      }
+
+      async function unassignCustomization(customizationId) {
+        if (
+          !confirm(
+            "Are you sure you want to unassign this customization from the package?"
+          )
+        ) {
+          return;
+        }
+
+        const payload = {
+          customizationId: customizationId,
+          packageIds: [parseInt(params)],
+        };
+
+        try {
+          const authToken = sessionStorage.getItem("authToken");
+          const response = await fetch(
+            "http://localhost:5000/api/customization/package",
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+              },
+              body: JSON.stringify(payload),
+            }
+          );
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+              errorData.message || `Server error: ${response.status}`
+            );
+          }
+
+          const result = await response.json();
+
+          if (response.ok) {
+            const container = document.getElementById(
+              "customizationsAssignedContainer"
+            );
+            const customizationElement = container.querySelector(
+              `[data-customization-id="${customizationId}"]`
+            );
+            if (customizationElement) {
+              customizationElement.remove();
+            }
+
+            showMessage(
+              result.message || "Customization unassigned successfully!",
+              true
+            );
+          } else {
+            showMessage(
+              `Failed to unassign customization: ${result.message}`,
+              false
+            );
+          }
+        } catch (error) {
+          console.error("Error unassigning customization:", error);
+          showMessage(
+            "An error occurred while unassigning the customization. Please try again.",
+            false
+          );
+        }
+      }
+
+      function displayPackageResources(resources) {
+        const images = resources.filter((resource) =>
+          resource.fileType.startsWith("image/")
+        );
+        const videos = resources.filter((resource) =>
+          resource.fileType.startsWith("video/")
+        );
+
+        // Display Images
+        const uploadedImagesContainer =
+          document.getElementById("uploaded-images");
+        uploadedImagesContainer.innerHTML = "";
+        uploadedImagesCount = 0;
+        selectedFiles = [];
+
+        images.forEach((image) => {
+          displayImage(image.filePath, false);
+        });
+
+        // Display Videos
+        if (videos.length > 0) {
+          displayVideo(
+            `http://localhost:5000${videos[0].filePath.replace(/\\/g, "/")}`
+          );
+        }
+      }
+
+      // Display assigned materials
+      function displayAssignedMaterials(materials) {
+        const materialsContainer = document.getElementById("materialsContainer");
+        materialsContainer.innerHTML = "";
+
+        materials.forEach((m) => {
+          const materialItem = createMaterialItem();
+          const materialSelect = materialItem.querySelector(".material-select");
+          const percentageInput =
+            materialItem.querySelector(".material-percentage");
+
+          materialSelect.value = m.name;
+          percentageInput.value = m.percentage;
+          materialsContainer.appendChild(materialItem);
+        });
+      }
+
+      function displayImage(filePath, isFile = false) {
+        const uploadedImagesContainer =
+          document.getElementById("uploaded-images");
+        const fileLimitWarning = document.getElementById("file-limit-warning");
+        let uploadedImagesCount = uploadedImagesContainer.children.length;
+
+        if (uploadedImagesCount >= 5) {
+          fileLimitWarning.style.display = "block";
+          return;
+        }
+
+        uploadedImagesCount++;
+        const imgElement = document.createElement("img");
+        const src = isFile
+          ? URL.createObjectURL(filePath)
+          : `http://localhost:5000${filePath.replace(/\\/g, "/")}`;
+        imgElement.src = src;
+        imgElement.style.width = "100px";
+        imgElement.style.height = "100px";
+        imgElement.style.objectFit = "cover";
+        imgElement.className = "rounded border";
+
+        const removeButton = document.createElement("button");
+        removeButton.innerHTML = "&times;";
+        removeButton.className =
+          "btn btn-sm btn-danger position-absolute top-0 end-0";
+        removeButton.style.margin = "-5px";
+        removeButton.style.zIndex = "1";
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "position-relative d-inline-block";
+        wrapper.style.position = "relative";
+        wrapper.appendChild(imgElement);
+        wrapper.appendChild(removeButton);
+
+        uploadedImagesContainer.appendChild(wrapper);
+
+        removeButton.addEventListener("click", () => {
+          wrapper.remove();
+          uploadedImagesCount--;
+          fileLimitWarning.style.display = "none";
+        });
+      }
+
+      function initializeMaterialsButtons() {
+        const addMaterialBtn = document.getElementById("addMaterialBtn");
+        const updateMaterialsBtn = document.getElementById("updateMaterialsBtn");
+        const materialsContainer = document.getElementById("materialsContainer");
+
+        addMaterialBtn.addEventListener("click", function () {
+          materialsContainer.appendChild(createMaterialItem());
+        });
+
+        materialsContainer.addEventListener("click", function (e) {
+          if (e.target && e.target.classList.contains("remove-material-btn")) {
+            const item = e.target.closest(".material-item");
+            const materialSelect = item.querySelector(".material-select");
+            const selectedMaterialName = materialSelect.value;
+
+            // If the material was originally assigned, mark it for deletion
+            const orig = originalMaterials.find(
+              (m) => m.name === selectedMaterialName
+            );
+            if (orig) {
+              materialsToDelete.push(orig.name);
+            }
+
+            item.remove();
+          }
+        });
+
+        updateMaterialsBtn.addEventListener("click", async function () {
+          const materialItems = document.querySelectorAll(".material-item");
+          const newMaterials = [];
+          let totalPercentage = 0;
+          let valid = true;
+          const selectedMaterialNames = new Set();
+
+          materialItems.forEach((item) => {
+            const materialSelect = item.querySelector(".material-select");
+            const materialName = materialSelect.value.trim();
+            const percentage = parseInt(
+              item.querySelector(".material-percentage").value,
+              10
+            );
+
+            if (
+              !materialName ||
+              isNaN(percentage) ||
+              percentage < 0 ||
+              percentage > 100
+            ) {
+              valid = false;
+              return;
+            }
+
+            if (selectedMaterialNames.has(materialName)) {
+              valid = false;
+              return;
+            }
+
+            selectedMaterialNames.add(materialName);
+            totalPercentage += percentage;
+            newMaterials.push({ name: materialName, percentage });
+          });
+
+          if (!valid) {
+            alert(
+              "Please ensure all materials are selected with a valid percentage between 0 and 100, and no duplicates are present."
+            );
+            return;
+          }
+
+          if (totalPercentage !== 100) {
+            alert(
+              "Total percentage of materials must equal 100%. Currently, it is " +
+                totalPercentage +
+                "%."
+            );
+            return;
+          }
+
+          const authToken = sessionStorage.getItem("authToken");
+
+          if (hasMaterials) {
+            // Update existing materials using PUT
+            try {
+              const updateResponse = await fetch(
+                "http://localhost:5000/material/package/update",
+                {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                    ...(authToken
+                      ? { Authorization: `Bearer ${authToken}` }
+                      : {}),
+                  },
+                  body: JSON.stringify({
+                    PackageID: parseInt(params),
+                    Materials: newMaterials,
+                  }),
+                }
+              );
+
+              if (!updateResponse.ok) {
+                const errorData = await updateResponse.json();
+                throw new Error(
+                  errorData.message || `Server error: ${updateResponse.status}`
+                );
+              }
+
+              const updateData = await updateResponse.json();
+
+              if (updateData.success) {
+                showMessage(
+                  updateData.message || "Materials updated successfully!",
+                  true
+                );
+                originalMaterials = [...newMaterials];
+                materialsToDelete = [];
+              } else {
+                showMessage(
+                  updateData.message || "Failed to update materials.",
+                  false
+                );
+              }
+            } catch (error) {
+              console.error("Error updating materials:", error);
+              showMessage(
+                "An error occurred while updating materials. Please try again.",
+                false
+              );
+            }
+
+            // Handle deletion of specific materials
+            if (materialsToDelete.length > 0) {
+              try {
+                const deleteResponse = await fetch(
+                  "http://localhost:5000/material/package/delete",
+                  {
+                    method: "DELETE",
+                    headers: {
+                      "Content-Type": "application/json",
+                      ...(authToken
+                        ? { Authorization: `Bearer ${authToken}` }
+                        : {}),
+                    },
+                    body: JSON.stringify({
+                      PackageID: parseInt(params),
+                      MaterialNames: materialsToDelete,
+                    }),
+                  }
+                );
+
+                if (!deleteResponse.ok) {
+                  const errorData = await deleteResponse.json();
+                  throw new Error(
+                    errorData.message ||
+                      `Server error: ${deleteResponse.status}`
+                  );
+                }
+
+                const deleteData = await deleteResponse.json();
+
+                if (deleteData.success) {
+                  showMessage(
+                    deleteData.message || "Materials removed successfully!",
+                    true
+                  );
+                  originalMaterials = originalMaterials.filter(
+                    (m) => !materialsToDelete.includes(m.name)
+                  );
+                  materialsToDelete = [];
+                } else {
+                  showMessage(
+                    deleteData.message || "Failed to remove materials.",
+                    false
+                  );
+                }
+              } catch (error) {
+                console.error("Error deleting materials:", error);
+                showMessage(
+                  "An error occurred while deleting materials. Please try again.",
+                  false
+                );
+              }
+            }
+          } else {
+            // Assign new materials using POST
+            try {
+              const assignResponse = await fetch(
+                "http://localhost:5000/material/package",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+                  },
+                  body: JSON.stringify({
+                    PackageID: parseInt(params),
+                    Materials: newMaterials,
+                  }),
+                }
+              );
+
+              if (!assignResponse.ok) {
+                const errorData = await assignResponse.json();
+                throw new Error(
+                  errorData.message || `Server error: ${assignResponse.status}`
+                );
+              }
+
+              const assignData = await assignResponse.json();
+
+              if (assignData.success) {
+                showMessage(
+                  assignData.message || "Materials assigned successfully!",
+                  true
+                );
+                originalMaterials = [...newMaterials];
+                hasMaterials = true;
+                materialsToDelete = [];
+              } else {
+                showMessage(
+                  assignData.message || "Failed to assign materials.",
+                  false
+                );
+              }
+            } catch (error) {
+              console.error("Error assigning materials:", error);
+              showMessage(
+                "An error occurred while assigning materials. Please try again.",
+                false
+              );
+            }
+          }
+        });
+      }
+
+      function createMaterialItem() {
+        const materialItem = document.createElement("div");
+        materialItem.className = "material-item row";
+
+        const materialOptions = availableMaterials
+          .map(
+            (material) =>
+              `<option value="${material.name}">${material.name}</option>`
+          )
+          .join("");
+
+        materialItem.innerHTML = `
+          <div class="col-md-5">
+            <label class="form-label">Material</label>
+            <select class="form-select material-select" required>
+              <option value="">Select Material</option>
+              ${materialOptions}
+            </select>
+          </div>
+          <div class="col-md-5">
+            <label class="form-label">Percentage</label>
+            <input type="number" class="form-control material-percentage" placeholder="Enter Percentage" min="0" max="100" required>
+          </div>
+          <div class="col-md-2 d-flex align-items-end">
+            <button type="button" class="btn btn-danger remove-material-btn">Remove</button>
+          </div>
+        `;
+
+        return materialItem;
+      }
+
+      // ---------------------------- Product Table Logic ----------------------------
+      function initializeProductTableLogic() {
+        const mainTable = document.getElementById("tableBody");
+        const selectedProductsTable = document.getElementById(
+          "selectedProductsBody"
+        );
+        const searchInput = document.getElementById("searchInput");
+        const prevPageButton = document.getElementById("prevPage");
+        const nextPageButton = document.getElementById("nextPage");
+        const pageNumber = document.getElementById("pageNumber");
+
+        const rowsPerPage = 10;
+        let currentPage = 1;
+        let products = [];
+        let filteredProducts = [];
+
+        const authToken = sessionStorage.getItem("authToken");
+        fetch("http://localhost:5000/api/GetAllProducts", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            products = data;
+            filteredProducts = products;
+            renderTable();
+          })
+          .catch((error) => console.error("Error fetching data:", error));
+
+        function renderTable() {
+          mainTable.innerHTML = "";
+
+          const start = (currentPage - 1) * rowsPerPage;
+          const end = start + rowsPerPage;
+          const pageProducts = filteredProducts.slice(start, end);
+
+          pageProducts.forEach((product) => {
+            const row = document.createElement("tr");
+
+            const productId = product.ProductID;
+            const productName = product.Name;
+            const offerStatus =
+              product.Offer?.IsActive === false ? "Available" : "Not Available";
+            const price = `$${parseFloat(product.Price).toFixed(2)}`;
+            const status =
+              product.Status === "in stock"
+                ? "In Stock"
+                : product.Status === "out of stock"
+                ? "Out of Stock"
+                : "Running Low";
+            const quantity = product.Quantity;
+
+            row.innerHTML = `
+                <td><strong>#${productId}</strong></td>
+                <td>${productName}</td>
+                <td><span class="badge bg-${
+                  offerStatus === "Available" ? "success" : "danger"
+                }">${offerStatus}</span></td>
+                <td>${price}</td>
+                <td><span class="badge bg-${
+                  status === "In Stock"
+                    ? "success"
+                    : status === "Out of Stock"
+                    ? "danger"
+                    : "warning"
+                }">${status}</span></td>
+                <td class="main-quantity">${quantity}</td>
+                <td>
+                    <button class="btn btn-outline-primary add-to-selected" ${
+                      quantity <= 0 ? "disabled" : ""
+                    }>
+                        <i class="icofont-plus text-primary"></i>
+                    </button>
+                </td>
+            `;
+            mainTable.appendChild(row);
+          });
+
+          updatePaginationControls();
+          updatePageNumber();
+        }
+
+        function updatePaginationControls() {
+          prevPageButton.disabled = currentPage === 1;
+          nextPageButton.disabled =
+            currentPage * rowsPerPage >= filteredProducts.length;
+        }
+
+        function updatePageNumber() {
+          const totalPages = Math.ceil(filteredProducts.length / rowsPerPage);
+          pageNumber.textContent = `Page ${currentPage} of ${totalPages}`;
+        }
+
+        searchInput.addEventListener("input", function () {
+          const searchTerm = searchInput.value.toLowerCase();
+          filteredProducts = products.filter((product) => {
+            return (
+              product.Name.toLowerCase().includes(searchTerm) ||
+              product.ProductID.toString().includes(searchTerm)
+            );
+          });
+          currentPage = 1;
+          renderTable();
+        });
+
+        prevPageButton.addEventListener("click", function () {
+          if (currentPage > 1) {
+            currentPage--;
+            renderTable();
+          }
+        });
+
+        nextPageButton.addEventListener("click", function () {
+          if (currentPage * rowsPerPage < filteredProducts.length) {
+            currentPage++;
+            renderTable();
+          }
+        });
+
+        mainTable.addEventListener("click", function (event) {
+          if (event.target.closest(".add-to-selected")) {
+            const row = event.target.closest("tr");
+            const productName = row.children[1].textContent.trim();
+            const quantityCell = row.querySelector(".main-quantity");
+            let mainQuantity = parseInt(quantityCell.textContent, 10);
+
+            if (mainQuantity > 0) {
+              const existingRow = Array.from(selectedProductsTable.rows).find(
+                (r) => r.children[1].textContent.trim() === productName
+              );
+
+              if (existingRow) {
+                const quantityInput =
+                  existingRow.querySelector(".quantity-input");
+                quantityInput.value = parseInt(quantityInput.value, 10) + 1;
+                mainQuantity -= 1;
+              } else {
+                const clonedRow = document.createElement("tr");
+
+                const productIdCell = document.createElement("td");
+                const product = products.find((p) => p.Name === productName);
+                productIdCell.innerHTML = `<strong>#${product.ProductID}</strong>`;
+
+                const productNameCell = document.createElement("td");
+                productNameCell.textContent = productName;
+
+                const quantityCellClone = document.createElement("td");
+                quantityCellClone.innerHTML = `
+                        <div class="input-group">
+                            <button class="btn btn-outline-secondary decrease-quantity">-</button>
+                            <input type="text" class="form-control text-center quantity-input" value="1" readonly>
+                            <button class="btn btn-outline-secondary increase-quantity">+</button>
+                        </div>
+                    `;
+
+                const actionCell = document.createElement("td");
+                actionCell.innerHTML = `
+                        <button class="btn btn-outline-danger remove-from-selected">
+                            <i class="icofont-ui-delete text-danger"></i>
+                        </button>
+                    `;
+
+                actionCell
+                  .querySelector(".remove-from-selected")
+                  .addEventListener("click", () => {
+                    const selectedQuantity = parseInt(
+                      clonedRow.querySelector(".quantity-input").value,
+                      10
+                    );
+                    mainQuantity += selectedQuantity;
+                    quantityCell.textContent = mainQuantity;
+                    clonedRow.remove();
+                    row.querySelector(".add-to-selected").disabled = false;
+                  });
+
+                row.querySelector(".add-to-selected").disabled = true;
+
+                clonedRow.appendChild(productIdCell);
+                clonedRow.appendChild(productNameCell);
+                clonedRow.appendChild(quantityCellClone);
+                clonedRow.appendChild(actionCell);
+
+                selectedProductsTable.appendChild(clonedRow);
+              }
+
+              quantityCell.textContent = mainQuantity;
+              if (mainQuantity <= 0) {
+                row.querySelector(".add-to-selected").disabled = true;
+              }
+            }
+          }
+        });
+
+        selectedProductsTable.addEventListener("click", function (event) {
+          const target = event.target;
+
+          if (target.closest(".decrease-quantity")) {
+            const row = target.closest("tr");
+            const quantityInput = row.querySelector(".quantity-input");
+            const currentQuantity = parseInt(quantityInput.value, 10);
+            const productName = row.children[1].textContent.trim();
+
+            if (currentQuantity > 1) {
+              quantityInput.value = currentQuantity - 1;
+              const mainRow = Array.from(
+                document.getElementById("tableBody").rows
+              ).find((r) => r.children[1].textContent.trim() === productName);
+
+              if (mainRow) {
+                const mainQuantityCell =
+                  mainRow.querySelector(".main-quantity");
+                let mainQuantity = parseInt(mainQuantityCell.textContent, 10);
+                mainQuantity += 1;
+                mainQuantityCell.textContent = mainQuantity;
+
+                if (mainQuantity > 0) {
+                  mainRow.querySelector(".add-to-selected").disabled = false;
+                }
+              }
+            }
+          }
+
+          if (target.closest(".increase-quantity")) {
+            const row = target.closest("tr");
+            const quantityInput = row.querySelector(".quantity-input");
+            const currentQuantity = parseInt(quantityInput.value, 10);
+            const productName = row.children[1].textContent.trim();
+
+            const mainRow = Array.from(
+              document.getElementById("tableBody").rows
+            ).find((r) => r.children[1].textContent.trim() === productName);
+
+            if (mainRow) {
+              const mainQuantityCell = mainRow.querySelector(".main-quantity");
+              let mainQuantity = parseInt(mainQuantityCell.textContent, 10);
+
+              if (mainQuantity > 0) {
+                quantityInput.value = currentQuantity + 1;
+                mainQuantity -= 1;
+                mainQuantityCell.textContent = mainQuantity;
+
+                if (mainQuantity <= 0) {
+                  mainRow.querySelector(".add-to-selected").disabled = true;
+                }
+              }
+            }
+          }
+        });
+
+        selectedProductsTable.addEventListener("click", function (event) {
+          if (event.target.closest(".remove-from-selected")) {
+            const row = event.target.closest("tr");
+            const productName = row.children[1].textContent.trim();
+            const quantityInput = row.querySelector(".quantity-input");
+            const selectedQuantity = parseInt(quantityInput.value, 10);
+
+            const mainRow = Array.from(
+              document.getElementById("tableBody").rows
+            ).find((r) => r.children[1].textContent.trim() === productName);
+
+            if (mainRow) {
+              const mainQuantityCell = mainRow.querySelector(".main-quantity");
+              let mainQuantity = parseInt(mainQuantityCell.textContent, 10);
+              mainQuantity += selectedQuantity;
+              mainQuantityCell.textContent = mainQuantity;
+
+              if (mainQuantity > 0) {
+                mainRow.querySelector(".add-to-selected").disabled = false;
+              }
+            }
+
+            row.remove();
+          }
+        });
+      }
+
+      // ---------------------------- Image Uploader ----------------------------
+      function initializeImageUploader() {
+        const imageUploader = document.getElementById("image-uploader");
+        const uploadedImagesContainer =
+          document.getElementById("uploaded-images");
+        const fileLimitWarning = document.getElementById("file-limit-warning");
+        const fileSizeWarning = document.getElementById("file-size-warning");
+        uploadedImagesCount = uploadedImagesContainer.children.length;
+        selectedFiles = [];
+
+        imageUploader.addEventListener("change", function (event) {
+          const files = event.target.files;
+          let validFiles = [];
+          let sizeExceeded = false;
+
+          Array.from(files).forEach((file) => {
+            if (file.size > 2 * 1024 * 1024) {
+              sizeExceeded = true;
+            } else {
+              validFiles.push(file);
+            }
+          });
+
+          if (sizeExceeded) {
+            fileSizeWarning.style.display = "block";
+          } else {
+            fileSizeWarning.style.display = "none";
+          }
+
+          if (uploadedImagesCount + validFiles.length > 5) {
+            fileLimitWarning.style.display = "block";
+            event.target.value = "";
+            return;
+          }
+
+          fileLimitWarning.style.display = "none";
+
+          validFiles.forEach((file) => {
+            uploadedImagesCount++;
+            selectedFiles.push(file);
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              const imgElement = document.createElement("img");
+              imgElement.src = e.target.result;
+              imgElement.style.width = "100px";
+              imgElement.style.height = "100px";
+              imgElement.style.objectFit = "cover";
+              imgElement.className = "rounded border uploaded-image";
+
+              const removeButton = document.createElement("button");
+              removeButton.innerHTML = "&times;";
+              removeButton.className =
+                "btn btn-sm btn-danger position-absolute top-0 end-0";
+              removeButton.style.margin = "-5px";
+              removeButton.style.zIndex = "1";
+
+              const wrapper = document.createElement("div");
+              wrapper.className = "position-relative d-inline-block";
+              wrapper.style.position = "relative";
+              wrapper.appendChild(imgElement);
+              wrapper.appendChild(removeButton);
+
+              uploadedImagesContainer.appendChild(wrapper);
+
+              removeButton.addEventListener("click", () => {
+                wrapper.remove();
+                uploadedImagesCount--;
+                selectedFiles = selectedFiles.filter((f) => f !== file);
+                fileLimitWarning.style.display = "none";
+              });
+            };
+            reader.readAsDataURL(file);
+          });
+
+          event.target.value = "";
+        });
+      }
+
+      // ---------------------------- Video Uploader ----------------------------
+      function initializeVideoUploader() {
+        const videoInput = document.getElementById("videoInput");
+        const videoPreviewContainer = document.getElementById(
+          "videoPreviewContainer"
+        );
+        const videoPreview = document.getElementById("videoPreview");
+        const errorText = document.getElementById("errorText");
+        const deleteVideoButton = document.getElementById("deleteVideoButton");
+
+        videoInput.addEventListener("change", function (event) {
+          const file = event.target.files[0];
+          if (!file) return;
+
+          if (file.size > 10 * 1024 * 1024) {
+            errorText.style.display = "block";
+            this.value = "";
+            return;
+          }
+
+          errorText.style.display = "none";
+          const fileURL = URL.createObjectURL(file);
+          displayVideo(fileURL);
+        });
+
+        deleteVideoButton.addEventListener("click", function () {
+          videoInput.value = "";
+          videoPreview.src = "";
+          videoPreviewContainer.style.display = "none";
+          errorText.style.display = "none";
+        });
+      }
+
+      function displayVideo(videoUrl) {
+        const videoPreview = document.getElementById("videoPreview");
+        const videoPreviewContainer = document.getElementById(
+          "videoPreviewContainer"
+        );
+        videoPreview.src = videoUrl;
+        videoPreviewContainer.style.display = "block";
+      }
+
+      // ---------------------------- Update Package ----------------------------
+      async function updatePackage(e) {
+        e.preventDefault();
+
+        try {
+          const name = document.getElementById("packageName").value.trim();
+          const description = document
+            .getElementById("packageDescription")
+            .value.trim();
+          const price = parseFloat(
+            document.getElementById("packagePrice").value
+          );
+          const packageQuantity = parseInt(
+            document.getElementById("packageQuantity").value,
+            10
+          );
+
+          const subCategoryId = selectedCategoryId;
+
+          if (
+            !name ||
+            !description ||
+            isNaN(price) ||
+            isNaN(packageQuantity) ||
+            !subCategoryId
+          ) {
+            showMessage("Please fill out all fields correctly.", false);
+            return;
+          }
+
+          const selectedProducts = [];
+          document
+            .querySelectorAll("#selectedProductsBody tr")
+            .forEach((row) => {
+              const productName = row.children[1].textContent.trim();
+              const productQuantity = parseInt(
+                row.querySelector(".quantity-input").value,
+                10
+              );
+              selectedProducts.push({
+                productName,
+                quantity: productQuantity,
+              });
+            });
+
+          const formData = new FormData();
+          formData.append("Name", name);
+          formData.append("Description", description);
+          formData.append("Price", price);
+          formData.append("Quantity", packageQuantity);
+          formData.append("SubCategoryId", subCategoryId);
+          formData.append("products", JSON.stringify(selectedProducts));
+
+          selectedFiles.forEach((file) => {
+            formData.append("images", file);
+          });
+
+          const videoFile = document.getElementById("videoInput").files[0];
+          if (videoFile) {
+            formData.append("videos", videoFile);
+          }
+
+          const authToken = sessionStorage.getItem("authToken");
+          const response = await fetch(
+            `http://localhost:5000/api/packages/${params}`,
+            {
+              method: "PUT",
+              headers: {
+                ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+              },
+              body: formData,
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+          }
+
+          const result = await response.json();
+          console.log("Success:", result);
+
+          localStorage.setItem(
+            "responseMessage",
+            "Package updated successfully!"
+          );
+          localStorage.setItem("responseSuccess", "true");
+
+          window.location.reload();
+        } catch (error) {
+          console.error("Error submitting the package:", error);
+          showMessage(
+            "An error occurred while updating the package. Check the console for details.",
+            false
+          );
+        }
+      }
+
+      // ---------------------------- Show Message ----------------------------
+      function showMessage(message, isSuccess) {
+        const responseMessage = document.getElementById("responseMessage");
+        responseMessage.style.display = "block";
+        responseMessage.innerHTML = `<div class="alert ${
+          isSuccess ? "alert-success" : "alert-danger"
+        }">${message}</div>`;
+        setTimeout(() => {
+          responseMessage.style.display = "none";
+        }, 5000);
+      }
+
+      // ---------------------------- Handle Response Messages on Load ----------------------------
+      window.addEventListener("load", () => {
+        const message = localStorage.getItem("responseMessage");
+        const isSuccess = localStorage.getItem("responseSuccess") === "true";
+
+        if (message) {
+          showMessage(message, isSuccess);
+          localStorage.removeItem("responseMessage");
+          localStorage.removeItem("responseSuccess");
+        }
+      });
+    </script>
+  </body>
 </html>

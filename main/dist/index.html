@@ -1,51 +1,47 @@
-
 <!doctype html>
 <html class="no-js" lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>::Fantasize::  Dashboard </title>
+    <title>::Fantasize:: Dashboard</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
 
-    <!-- plugin css file  -->
+    <!-- Plugin CSS files -->
     <link rel="stylesheet" href="assets/plugin/datatables/responsive.dataTables.min.css">
     <link rel="stylesheet" href="assets/plugin/datatables/dataTables.bootstrap5.min.css">
 
-    <!-- project css file  -->
+    <!-- Project CSS file -->
     <link rel="stylesheet" href="assets/css/ebazar.style.min.css">
 </head>
 <body>
     <div id="ebazar-layout" class="theme-blue">
         
-        <!-- sidebar -->
+        <!-- Sidebar -->
         <div id="sidebar"></div>
 
-
-        <!-- main body area -->
+        <!-- Main Body Area -->
         <div class="main px-lg-4 px-md-4">
 
             <!-- Body: Header -->
-                <div id="header"></div>
+            <div id="header"></div>
 
-
-            <!-- Body: Body -->
+            <!-- Body: Content -->
             <div class="body d-flex py-3">
                 <div class="container-xxl">
-
-                   
+                    <!-- Statistics Cards -->
                     <div class="row g-3">
                         <div class="col-lg-12 col-md-12">
-                            
                             <div class="tab-content mt-1">
                                 <div class="tab-pane fade show active" id="summery-today">
                                     <div class="row g-1 g-sm-3 mb-3 row-deck">
+                                        <!-- Customers Card -->
                                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
                                             <div class="card">
                                                 <div class="card-body py-xl-4 py-3 d-flex flex-wrap align-items-center justify-content-between">
                                                     <div class="left-info">
                                                         <span class="text-muted">Customers</span>
-                                                        <div><span class="fs-6 fw-bold me-2" id="total_users"></span></div>
+                                                        <div><span class="fs-6 fw-bold me-2" id="total_users">0</span></div>
                                                     </div>
                                                     <div class="right-icon">
                                                         <i class="icofont-student-alt fs-3 color-light-orange"></i>
@@ -53,12 +49,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Orders Card -->
                                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
                                             <div class="card">
                                                 <div class="card-body py-xl-4 py-3 d-flex flex-wrap align-items-center justify-content-between">
                                                     <div class="left-info">
-                                                        <span class="text-muted">Order</span>
-                                                        <div><span class="fs-6 fw-bold me-2" id="total_orders">2314</span></div>
+                                                        <span class="text-muted">Orders</span>
+                                                        <div><span class="fs-6 fw-bold me-2" id="total_orders">0</span></div>
                                                     </div>
                                                     <div class="right-icon">
                                                         <i class="icofont-shopping-cart fs-3 color-lavender-purple"></i>
@@ -66,12 +63,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Avg Sale Card -->
                                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
                                             <div class="card">
                                                 <div class="card-body py-xl-4 py-3 d-flex flex-wrap align-items-center justify-content-between">
                                                     <div class="left-info">
                                                         <span class="text-muted">Avg Sale</span>
-                                                        <div><span class="fs-6 fw-bold me-2" id="avg_price">$1770</span></div>
+                                                        <div><span class="fs-6 fw-bold me-2" id="avg_price">$0.00</span></div>
                                                     </div>
                                                     <div class="right-icon">
                                                         <i class="icofont-sale-discount fs-3 color-santa-fe"></i>
@@ -79,12 +77,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Avg Item Sale Card -->
                                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
                                             <div class="card">
                                                 <div class="card-body py-xl-4 py-3 d-flex flex-wrap align-items-center justify-content-between">
                                                     <div class="left-info">
                                                         <span class="text-muted">Avg Item Sale</span>
-                                                        <div><span class="fs-6 fw-bold me-2" id="AverageSale"></span></div>
+                                                        <div><span class="fs-6 fw-bold me-2" id="AverageSale">$0.00</span></div>
                                                     </div>
                                                     <div class="right-icon">
                                                         <i class="icofont-calculator-alt-2 fs-3 color-danger"></i>
@@ -92,12 +91,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Total Sale Card -->
                                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
                                             <div class="card">
                                                 <div class="card-body py-xl-4 py-3 d-flex flex-wrap align-items-center justify-content-between">
                                                     <div class="left-info">
                                                         <span class="text-muted">Total Sale</span>
-                                                        <div><span class="fs-6 fw-bold me-2" id="TotalSale"></span></div>
+                                                        <div><span class="fs-6 fw-bold me-2" id="TotalSale">$0.00</span></div>
                                                     </div>
                                                     <div class="right-icon">
                                                         <i class="icofont-calculator-alt-1 fs-3 color-lightblue"></i>
@@ -105,12 +105,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Active Users Card -->
                                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
                                             <div class="card">
                                                 <div class="card-body py-xl-4 py-3 d-flex flex-wrap align-items-center justify-content-between">
                                                     <div class="left-info">
                                                         <span class="text-muted">Active Users</span>
-                                                        <div><span class="fs-6 fw-bold me-2" id="active_users"></span></div>
+                                                        <div><span class="fs-6 fw-bold me-2" id="active_users">0</span></div>
                                                     </div>
                                                     <div class="right-icon">
                                                         <i class="icofont-users-social fs-3 color-light-success"></i>
@@ -118,12 +119,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Total Categories Card -->
                                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
                                             <div class="card">
                                                 <div class="card-body py-xl-4 py-3 d-flex flex-wrap align-items-center justify-content-between">
                                                     <div class="left-info">
                                                         <span class="text-muted">Total Categories</span>
-                                                        <div><span class="fs-6 fw-bold me-2" id="total_categories">184511</span></div>
+                                                        <div><span class="fs-6 fw-bold me-2" id="total_categories">0</span></div>
                                                     </div>
                                                     <div class="right-icon">
                                                         <i class="icofont-chart-flow-2 fs-3 color-light-orange"></i>
@@ -131,12 +133,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Total Subcategories Card -->
                                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
                                             <div class="card">
                                                 <div class="card-body py-xl-4 py-3 d-flex flex-wrap align-items-center justify-content-between">
                                                     <div class="left-info">
                                                         <span class="text-muted">Total Subcategories</span>
-                                                        <div><span class="fs-6 fw-bold me-2" id="total_subcategories">184511</span></div>
+                                                        <div><span class="fs-6 fw-bold me-2" id="total_subcategories">0</span></div>
                                                     </div>
                                                     <div class="right-icon">
                                                         <i class="icofont-chart-flow-1 fs-3" style="color: #FFB6C1;"></i>
@@ -144,12 +147,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Total Products Card -->
                                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
                                             <div class="card">
                                                 <div class="card-body py-xl-4 py-3 d-flex flex-wrap align-items-center justify-content-between">
                                                     <div class="left-info">
                                                         <span class="text-muted">Total Products</span>
-                                                        <div><span class="fs-6 fw-bold me-2" id="total_products">184511</span></div>
+                                                        <div><span class="fs-6 fw-bold me-2" id="total_products">0</span></div>
                                                     </div>
                                                     <div class="right-icon">
                                                         <i class="icofont-bag fs-3 color-light-orange"></i>
@@ -157,12 +161,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Total Packages Card -->
                                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
                                             <div class="card">
                                                 <div class="card-body py-xl-4 py-3 d-flex flex-wrap align-items-center justify-content-between">
                                                     <div class="left-info">
                                                         <span class="text-muted">Total Packages</span>
-                                                        <div><span class="fs-6 fw-bold me-2" id="total_packages">184511</span></div>
+                                                        <div><span class="fs-6 fw-bold me-2" id="total_packages">0</span></div>
                                                     </div>
                                                     <div class="right-icon">
                                                         <i class="icofont-package fs-3" style="color: #FF6666;"></i>
@@ -170,12 +175,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Total Active Offers Card -->
                                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
                                             <div class="card">
                                                 <div class="card-body py-xl-4 py-3 d-flex flex-wrap align-items-center justify-content-between">
                                                     <div class="left-info">
                                                         <span class="text-muted">Total Active Offers</span>
-                                                        <div><span class="fs-6 fw-bold me-2" id="total_active_offers">184511</span></div>
+                                                        <div><span class="fs-6 fw-bold me-2" id="total_active_offers">0</span></div>
                                                     </div>
                                                     <div class="right-icon">
                                                         <i class="icofont-wink-smile fs-3" style="color: green;"></i>
@@ -183,12 +189,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Avg Review Rating Card -->
                                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
                                             <div class="card">
                                                 <div class="card-body py-xl-4 py-3 d-flex flex-wrap align-items-center justify-content-between">
                                                     <div class="left-info">
                                                         <span class="text-muted">Avg Review Rating</span>
-                                                        <div><span class="fs-6 fw-bold me-2" id="calculateGlobalAverageRating"></span></div>
+                                                        <div><span class="fs-6 fw-bold me-2" id="calculateGlobalAverageRating">0</span></div>
                                                     </div>
                                                     <div class="right-icon">
                                                         <i class="icofont-star fs-3 color-lightyellow"></i>
@@ -196,92 +203,111 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                                          
-                                        </div>
-                                    </div> <!-- row end -->
+                                    </div> <!-- Row end -->
                                 </div>
-                                
                             </div>
-                        </div>
-                    </div><!-- Row end  -->
+                        </div><!-- Row end  -->
 
-                  
-                   
-                
-                        <div class="col-lg-8 col-md-12">
-                            <div class="card">
-                                <div class="card-header py-3 d-flex justify-content-between align-items-center bg-transparent border-bottom-0">
-                                    <h6 class="m-0 fw-bold">Avg Expense Costs</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="h2 mb-0" id="avgCosts">$1105.5</div>
-                                    <span class="text-muted small">Avg Expense Costs All Month</span>
-                                    <div id="apex-expense"></div>  
+                        <!-- Avg Expense Costs and Chart -->
+                        <div class="row g-3 mb-3" style="margin: 0.5%;">
+                            <div class="col-lg-8 col-md-12">
+                                <div class="card">
+                                    <div class="card-header py-3 d-flex justify-content-between align-items-center bg-transparent border-bottom-0">
+                                        <h6 class="m-0 fw-bold">Avg Expense Costs</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="h2 mb-0" id="avgCosts">$0.00</div>
+                                        <span class="text-muted small">Avg Expense Costs All Month</span>
+                                        <div id="apex-expense"></div>  
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                    </div><!-- Row end  -->
+                        </div><!-- Row end  -->
 
-                    <div class="row g-3 mb-3" style="margin: 0.5%;"> 
-                        <div class="col-md-12">
-                            <div class="card"> 
-                                <div class="card-body"> 
-                                    <table id="myDataTable" class="table table-hover align-middle mb-0" style="width: 100%;">  
-                                        <thead>
-                                            <tr>
-                                                <th>Order-Id</th>
-                                                <th>Customer Name</th>
-                                                <th>Price</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                           
-                                        </tbody>
-                                    </table>
+                        <!-- Recent Orders Table -->
+                        <div class="row g-3 mb-3" style="margin: 0.5%;"> 
+                            <div class="col-md-12">
+                                <div class="card"> 
+                                    <div class="card-body"> 
+                                        <h6 class="m-0 fw-bold">Recent Orders</h6>
+                                        <table id="myDataTable" class="table table-hover align-middle mb-0" style="width: 100%;">  
+                                            <thead>
+                                                <tr>
+                                                    <th>Order-Id</th>
+                                                    <th>Customer Name</th>
+                                                    <th>Price</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Dynamic Content -->
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div> <!-- Row end  -->
-                    
+                        </div> <!-- Row end  -->
+
+                        <!-- Top Products Table -->
+                        <div class="row g-3 mb-3" style="margin: 0.5%;">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="m-0 fw-bold">Top Products</h6>
+                                        <table id="topProductsTable" class="table table-hover align-middle mb-0" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product Name</th>
+                                                    <th>Total Quantity</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Dynamic Content -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- Row end -->
+
+                    </div>
                 </div>
-            </div>
-        
-            <!-- Modal Custom Settings-->
-            <div id="modal"></div>
-
             
+                <!-- Modal Custom Settings-->
+                <div id="modal"></div>
+                
+            </div>
         </div>
-    
-    </div>
 
-    <script>
-        function loadComponent(selector, url) {
-      fetch(url)
-          .then(response => response.text())
-          .then(data => {
-              document.querySelector(selector).innerHTML = data;
-          });
-  }
+        <!-- Load Components -->
+        <script>
+            function loadComponent(selector, url) {
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        document.querySelector(selector).innerHTML = data;
+                    })
+                    .catch(error => {
+                        console.error(`Error loading ${url}:`, error);
+                    });
+            }
 
-  loadComponent('#sidebar', 'sidebar.html');
-  loadComponent('#header', 'header.html');
-  loadComponent('#modal', 'modal.html');
+            loadComponent('#sidebar', 'sidebar.html');
+            loadComponent('#header', 'header.html');
+            loadComponent('#modal', 'modal.html');
+        </script>
 
-</script>
-    <!-- Jquery Core Js -->
-    <script src="assets/bundles/libscripts.bundle.js"></script>
+        <!-- Jquery Core Js -->
+        <script src="assets/bundles/libscripts.bundle.js"></script>
 
-    <!-- Plugin Js -->
-    <script src="assets/bundles/apexcharts.bundle.js"></script>
-    <script src="assets/bundles/dataTables.bundle.js"></script>  
+        <!-- Plugin Js -->
+        <script src="assets/bundles/apexcharts.bundle.js"></script>
+        <script src="assets/bundles/dataTables.bundle.js"></script>  
 
-    <!-- Jquery Page Js -->
-    <script src="../js/template.js"></script>
-    <script src="../js/page/index.js"></script>
-    <script src="assets/js/indexDashboard.js"></script>
-
-</body>
-</html> 
+        <!-- Jquery Page Js -->
+        <script src="../js/template.js"></script>
+        <script src="../js/page/index.js"></script>
+        <!-- Ensure that the custom JS is loaded after all dependencies -->
+        <script src="assets/js/indexDashboard.js"></script>
+    </body>
+</html>
