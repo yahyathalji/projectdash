@@ -1,0 +1,266 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>::Fantasize:: Notification Settings</title>   
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Plugin CSS Files -->
+    <link rel="stylesheet" href="assets/plugin/datatables/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="assets/plugin/datatables/dataTables.bootstrap5.min.css">
+
+    <!-- Project CSS File -->
+    <link rel="stylesheet" href="assets/css/ebazar.style.min.css">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="ebazar-layout" class="theme-blue">
+        
+        <!-- Sidebar -->
+        <div id="sidebar"></div>
+
+        <!-- Main Body Area -->
+        <div class="main px-lg-4 px-md-4">
+
+            <!-- Header -->
+            <div id="header"></div>
+
+            <!-- Main Container -->
+            <div class="container-xxl">
+                <!-- Save Settings Button -->
+                <div class="col-12 mt-2 text-end">
+                    <button type="button" class="btn btn-primary px-4" id="saveSettingsBtn">
+                        <i class="fa fa-save me-2"></i> Save Settings
+                    </button>
+                </div>
+                <!-- Loading Spinner -->
+                <div id="loadingSpinner" style="display: none; text-align: center; margin-top: 20px;">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+
+                <!-- Notification Type Card -->
+                <div class="card mb-4" style="margin: 0.5%">
+                    <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                        <h6 class="mb-0 fw-bold">Notification Type</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-check mb-3">
+                                    <input type="radio" class="form-check-input" id="emailNotif" name="notif-type" value="email">
+                                    <label class="form-check-label" for="emailNotif">
+                                        Email Notifications
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="pushNotif" name="notif-type" value="push">
+                                    <label class="form-check-label" for="pushNotif">
+                                        Push Notifications
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email Notification Form -->
+                <div class="card mb-4" style="margin: 0.5%" id="emailFormCard" style="display: none;">
+                    <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                        <h6 class="mb-0 fw-bold">Email Notification</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Title</label>
+                                <input type="text" class="form-control" id="emailTitle" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Body</label>
+                                <textarea class="form-control" id="emailBody" rows="3" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Push Notification Form -->
+                <div class="card mb-4" style="margin: 0.5%" id="pushFormCard" style="display: none;">
+                    <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                        <h6 class="mb-0 fw-bold">Push Notification</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Title</label>
+                                <input type="text" class="form-control" id="pushTitle" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Body</label>
+                                <textarea class="form-control" id="pushBody" rows="3" required></textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Image URL</label>
+                                <input type="url" class="form-control" id="pushImageUrl" placeholder="https://example.com/image.jpg" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+             
+            <!-- Modal Custom Settings -->
+            <div id="modal"></div>
+        </div>
+    </div>
+
+    <script>
+        function loadComponent(selector, url) {
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.querySelector(selector).innerHTML = data;
+                });
+        }
+
+        loadComponent('#sidebar', 'sidebar.html');
+        loadComponent('#header', 'header.html');
+        loadComponent('#modal', 'modal.html');
+    </script>
+
+    <!-- Jquery Core Js -->
+    <script src="assets/bundles/libscripts.bundle.js"></script>
+
+    <!-- Plugin Js -->
+    <script src="assets/bundles/dataTables.bundle.js"></script>  
+
+    <!-- Jquery Page Js -->
+    <script src="../js/template.js"></script>
+
+    <!-- Font Awesome JS (for icons) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+    <!-- Notification Settings Specific JS -->
+    <script>
+        $(document).ready(function() {
+            // Function to check authToken
+            function checkAuth() {
+                const authToken = sessionStorage.getItem('authToken');
+                if (!authToken) {
+                    window.location.href = 'auth-signin.html';
+                }
+                return authToken;
+            }
+
+            const authToken = checkAuth();
+
+            // Handle Notification Type Selection
+            $('input[name="notif-type"]').on('change', function() {
+                const selectedType = $(this).val();
+                if (selectedType === 'email') {
+                    $('#pushFormCard').hide();
+                    $('#emailFormCard').show();
+                } else if (selectedType === 'push') {
+                    $('#emailFormCard').hide();
+                    $('#pushFormCard').show();
+                }
+            });
+
+            // Handle Save Settings Button Click
+            $('#saveSettingsBtn').on('click', function() {
+                const selectedType = $('input[name="notif-type"]:checked').val();
+
+                if (!selectedType) {
+                    alert('Please select a notification type.');
+                    return;
+                }
+
+                if (selectedType === 'email') {
+                    const title = $('#emailTitle').val().trim();
+                    const body = $('#emailBody').val().trim();
+
+                    if (!title || !body) {
+                        alert('Please fill in all required fields for Email Notification.');
+                        return;
+                    }
+
+                    const emailData = {
+                        title: title,
+                        body: body
+                    };
+
+                    $.ajax({
+                        url: 'http://localhost:5000/notifications/send',
+                        method: 'POST',
+                        contentType: 'application/json',
+                        headers: {
+                            'Authorization': `Bearer ${authToken}`
+                        },
+                        data: JSON.stringify(emailData),
+                        success: function(response) {
+                            alert('Email notification sent successfully.');
+                            // Optionally, reset the form
+                            $('#emailFormCard').hide();
+                            $('input[name="notif-type"]').prop('checked', false);
+                            $('#emailFormCard input, #emailFormCard textarea').val('');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error sending email notification:', error);
+                            if (xhr.status === 401) {
+                                alert('Unauthorized. Redirecting to login.');
+                                window.location.href = 'auth-signin.html';
+                            } else {
+                                alert('Failed to send email notification. Please try again.');
+                            }
+                        }
+                    });
+                } else if (selectedType === 'push') {
+                    const title = $('#pushTitle').val().trim();
+                    const body = $('#pushBody').val().trim();
+                    const imageUrl = $('#pushImageUrl').val().trim();
+
+                    if (!title || !body || !imageUrl) {
+                        alert('Please fill in all required fields for Push Notification.');
+                        return;
+                    }
+
+                    const pushData = {
+                        title: title,
+                        body: body,
+                        imageUrl: imageUrl
+                    };
+
+                    $.ajax({
+                        url: 'http://localhost:5000/notifications/sendPush',
+                        method: 'POST',
+                        contentType: 'application/json',
+                        headers: {
+                            'Authorization': `Bearer ${authToken}`
+                        },
+                        data: JSON.stringify(pushData),
+                        success: function(response) {
+                            alert('Push notification sent successfully.');
+                            // Optionally, reset the form
+                            $('#pushFormCard').hide();
+                            $('input[name="notif-type"]').prop('checked', false);
+                            $('#pushFormCard input, #pushFormCard textarea').val('');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error sending push notification:', error);
+                            if (xhr.status === 401) {
+                                alert('Unauthorized. Redirecting to login.');
+                                window.location.href = 'auth-signin.html';
+                            } else {
+                                alert('Failed to send push notification. Please try again.');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

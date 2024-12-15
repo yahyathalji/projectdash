@@ -1,119 +1,258 @@
- <!-- sidebar -->
- <div class="sidebar px-4 py-4 py-md-4 me-0">
-    <div class="d-flex flex-column h-100">
-        <a href="index.html" class="mb-0 brand-icon">
-            <span class="logo-icon">
-                <img src="favicon.ico" rel="icon" type="image/x-icon">
-            </span>
-            <span class="logo-text">Fantasize</span>
+<!-- sidebar -->
+<div class="sidebar px-4 py-4 py-md-4 me-0">
+  <div class="d-flex flex-column h-100">
+    <a href="index.html" class="mb-0 brand-icon">
+      <span class="logo-icon">
+        <img src="favicon.ico" rel="icon" type="image/x-icon" />
+      </span>
+      <span class="logo-text">Fantasize</span>
+    </a>
+    <!-- Menu: main ul -->
+    <ul class="menu-list flex-grow-1 mt-3">
+      <li>
+        <a class="m-link" href="index.html"
+          ><i class="icofont-home fs-5"></i> <span>Dashboard</span></a
+        >
+      </li>
+      <li class="collapsed">
+        <a
+          class="m-link"
+          data-bs-toggle="collapse"
+          data-bs-target="#menu-product"
+          href="#"
+        >
+          <i class="icofont-truck-loaded fs-5"></i> <span>Products</span>
+          <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span
+        ></a>
+        <!-- Menu: Sub menu ul -->
+        <ul class="sub-menu collapse" id="menu-product">
+          <li><a class="ms-link" href="product-add.html">Product Add</a></li>
+          <li><a class="ms-link" href="product-list.html">Product List</a></li>
+        </ul>
+      </li>
+      <li class="collapsed">
+        <a
+          class="m-link"
+          data-bs-toggle="collapse"
+          data-bs-target="#menu-package"
+          href="#"
+        >
+          <i class="icofont-box fs-5"></i>
+          <span>Packages</span>
+          <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span>
         </a>
-        <!-- Menu: main ul -->
-        <ul class="menu-list flex-grow-1 mt-3">
-            <li><a class="m-link" href="index.html"><i class="icofont-home fs-5"></i> <span>Dashboard</span></a></li>
-            <li class="collapsed">
-                <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-product" href="#">
-                    <i class="icofont-truck-loaded fs-5"></i> <span>Products</span> <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span></a>
-                    <!-- Menu: Sub menu ul -->
-                    <ul class="sub-menu collapse" id="menu-product">
-                        <li><a class="ms-link" href="product-add.html">Product Add</a></li>
-                        <li><a class="ms-link" href="product-list.html">Product List</a></li>
-                    </ul>
-            </li>
-            <li class="collapsed">
-                <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-package" href="#">
-                    <i class="icofont-box fs-5"></i> 
-                    <span>Packages</span> 
-                    <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span>
-                </a>
-                <!-- Menu: Sub menu ul -->
-                <ul class="sub-menu collapse" id="menu-package">
-                    <li><a class="ms-link" href="package-add.html">Package Add</a></li>
-                    <li><a class="ms-link" href="package-list.html">Package List</a></li>
-                </ul>
-            </li>
-            
-            <li class="collapsed">
-                <a class="m-link" data-bs-toggle="collapse" data-bs-target="#categoriesMenu" href="#">
-                    <i class="icofont-chart-flow fs-5"></i>
-                    <span>Categories/SubCategory</span>
-                    <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span>
-                </a>
-                <!-- Menu: Sub menu ul -->
-                <ul class="sub-menu collapse" id="categoriesMenu">
-                    <li><a class="ms-link" href="categorie-list.html">Categories List</a></li>
-                    <li><a class="ms-link" href="categories-add.html">Categories Add</a></li>
-            
-                    <li class="collapsed">
-                        <a class="m-link" data-bs-toggle="collapse" data-bs-target="#subCategoriesMenu" href="#">
-                            <i class="icofont-chart-flow fs-5"></i>
-                            <span>SubCategory</span>
-                            <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span>
-                        </a>
-                        <!-- Menu: Sub menu ul -->
-                        <ul class="sub-menu collapse" id="subCategoriesMenu">
-                            <li><a class="ms-link" href="SubCategory-list.html">SubCategory List</a></li>
-                            <li><a class="ms-link" href="SubCategory-add.html">SubCategory Add</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            
-            <li class="collapsed">
-                <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-order" href="#">
-                <i class="icofont-notepad fs-5"></i> <span>Orders</span> <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span></a>
-                <!-- Menu: Sub menu ul -->
-                <ul class="sub-menu collapse" id="menu-order">
-                    <li><a class="ms-link" href="order-list.html">Orders List</a></li>
-                    <li><a class="ms-link" href="order-details.html">Order Details</a></li>
-                </ul>
-            </li>
-            <li class="collapsed">
-                <a class="m-link" data-bs-toggle="collapse" data-bs-target="#customers-info" href="#">
-                <i class="icofont-funky-man fs-5"></i> <span>Customers</span> <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span></a>
-                <!-- Menu: Sub menu ul -->
-                <ul class="sub-menu collapse" id="customers-info">
-                    <li><a class="ms-link" href="customers.html">Customers List</a></li>
-                    <!-- <li><a class="ms-link" href="customer-detail.html">Customers Details</a></li> -->
-                </ul>
-            </li>
-            <li class="collapsed">
-                <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-sale" href="#">
-                <i class="icofont-sale-discount fs-5"></i> <span>Offers</span> <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span></a>
-                <!-- Menu: Sub menu ul -->
-                <ul class="sub-menu collapse" id="menu-sale">
-                    <li><a class="ms-link" href="offer-list.html">Offers List</a></li>
-                    <li><a class="ms-link" href="Offer-add.html">Offer Add</a></li>
-                </ul>
-            </li>
-            <li class="collapsed">
-                <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-customization" href="#">
-                    <i class="icofont-settings fs-5"></i> 
-                    <span>Customization</span> 
-                    <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span>
-                </a>
-                <!-- Menu: Sub menu ul -->
-                <ul class="sub-menu collapse" id="menu-customization">
-                    <li><a class="ms-link" href="Customization-List.html">Customization List</a></li>
-                    <li><a class="ms-link" href="Add-Customization.html">Add Customization</a></li>
-                    <!-- <li><a class="ms-link" href="Edit-Customization.html">Edit Customization</a></li> -->
-                    <li><a class="ms-link" href="Assign-Product.html">Assign Product</a></li>
-                    <li><a class="ms-link" href="Assign-Package.html">Assign Package</a></li>
-                </ul>
-            </li>
-            
-            <li class="collapsed">
-                <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-Notifications" href="#"><i
-                        class="icofont-notification"></i> <span>Notifications</span> <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span></a>
-                <!-- Menu: Sub menu ul -->
-                <ul class="sub-menu collapse" id="menu-Notifications">
-                    <li><a class="ms-link" href="all-notifications.html">All Notifications</a></li>
-                    <!-- <li><a class="ms-link" href="read-notifications.html">Create Notification</a></li> -->
-                </ul>
-            </li>
+        <!-- Menu: Sub menu ul -->
+        <ul class="sub-menu collapse" id="menu-package">
+          <li><a class="ms-link" href="package-add.html">Package Add</a></li>
+          <li><a class="ms-link" href="package-list.html">Package List</a></li>
+        </ul>
+      </li>
 
-        <!-- Menu: menu collepce btn -->
-        <button type="button" class="btn btn-link sidebar-mini-btn text-light">
-            <span class="ms-2"><i class="icofont-bubble-right"></i></span>
-        </button>
-    </div>
-</div>  
+      <li class="collapsed">
+        <a
+          class="m-link"
+          data-bs-toggle="collapse"
+          data-bs-target="#categoriesMenu"
+          href="#"
+        >
+          <i class="icofont-chart-flow fs-5"></i>
+          <span>Categories/SubCategory</span>
+          <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span>
+        </a>
+        <!-- Menu: Sub menu ul -->
+        <ul class="sub-menu collapse" id="categoriesMenu">
+          <li>
+            <a class="ms-link" href="categorie-list.html">Categories List</a>
+          </li>
+          <li>
+            <a class="ms-link" href="categories-add.html">Categories Add</a>
+          </li>
+
+          <li class="collapsed">
+            <a
+              class="m-link"
+              data-bs-toggle="collapse"
+              data-bs-target="#subCategoriesMenu"
+              href="#"
+            >
+              <i class="icofont-chart-flow fs-5"></i>
+              <span>SubCategory</span>
+              <span
+                class="arrow icofont-rounded-down ms-auto text-end fs-5"
+              ></span>
+            </a>
+            <!-- Menu: Sub menu ul -->
+            <ul class="sub-menu collapse" id="subCategoriesMenu">
+              <li>
+                <a class="ms-link" href="SubCategory-list.html"
+                  >SubCategory List</a
+                >
+              </li>
+              <li>
+                <a class="ms-link" href="SubCategory-add.html"
+                  >SubCategory Add</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+
+      <li class="collapsed">
+        <a
+          class="m-link"
+          data-bs-toggle="collapse"
+          data-bs-target="#menu-order"
+          href="#"
+        >
+          <i class="icofont-notepad fs-5"></i> <span>Orders</span>
+          <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span
+        ></a>
+        <!-- Menu: Sub menu ul -->
+        <ul class="sub-menu collapse" id="menu-order">
+          <li><a class="ms-link" href="order-list.html">Orders List</a></li>
+          <li>
+            <a class="ms-link" href="order-details.html">Order Details</a>
+          </li>
+        </ul>
+      </li>
+      <li class="collapsed">
+        <a
+          class="m-link"
+          data-bs-toggle="collapse"
+          data-bs-target="#customers-info"
+          href="#"
+        >
+          <i class="icofont-funky-man fs-5"></i> <span>Customers</span>
+          <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span
+        ></a>
+        <!-- Menu: Sub menu ul -->
+        <ul class="sub-menu collapse" id="customers-info">
+          <li><a class="ms-link" href="customers.html">Customers List</a></li>
+          <!-- <li><a class="ms-link" href="customer-detail.html">Customers Details</a></li> -->
+        </ul>
+      </li>
+      <li class="collapsed">
+        <a
+          class="m-link"
+          data-bs-toggle="collapse"
+          data-bs-target="#menu-sale"
+          href="#"
+        >
+          <i class="icofont-sale-discount fs-5"></i> <span>Offers</span>
+          <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span
+        ></a>
+        <!-- Menu: Sub menu ul -->
+        <ul class="sub-menu collapse" id="menu-sale">
+          <li><a class="ms-link" href="offer-list.html">Offers List</a></li>
+          <li><a class="ms-link" href="Offer-add.html">Offer Add</a></li>
+        </ul>
+      </li>
+      <li class="collapsed">
+        <a
+          class="m-link"
+          data-bs-toggle="collapse"
+          data-bs-target="#menu-customization"
+          href="#"
+        >
+          <i class="icofont-settings fs-5"></i>
+          <span>Customization</span>
+          <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span>
+        </a>
+        <!-- Menu: Sub menu ul -->
+        <ul class="sub-menu collapse" id="menu-customization">
+          <li>
+            <a class="ms-link" href="Customization-List.html"
+              >Customization List</a
+            >
+          </li>
+          <li>
+            <a class="ms-link" href="Add-Customization.html"
+              >Add Customization</a
+            >
+          </li>
+          <!-- <li><a class="ms-link" href="Edit-Customization.html">Edit Customization</a></li> -->
+          <li>
+            <a class="ms-link" href="Assign-Product.html">Assign Product</a>
+          </li>
+          <li>
+            <a class="ms-link" href="Assign-Package.html">Assign Package</a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="collapsed">
+        <a
+          class="m-link"
+          data-bs-toggle="collapse"
+          data-bs-target="#menu-Notifications"
+          href="#"
+          ><i class="icofont-notification"></i> <span>Notifications</span>
+          <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span
+        ></a>
+        <!-- Menu: Sub menu ul -->
+        <ul class="sub-menu collapse" id="menu-Notifications">
+          <li>
+            <a class="ms-link" href="all-notifications.html"
+              >All Notifications</a
+            >
+          </li>
+          <!-- <li><a class="ms-link" href="read-notifications.html">Create Notification</a></li> -->
+        </ul>
+
+        <ul class="sub-menu collapse" id="menu-Notifications">
+          <li>
+            <a class="ms-link" href="notification.html">
+              Notification Management</a
+            >
+          </li>
+        </ul>
+      </li>
+
+      <li class="collapsed">
+        <a
+          class="m-link"
+          data-bs-toggle="collapse"
+          data-bs-target="#menu-material-brand"
+          href="#"
+          ><i class="icofont-notification"></i> <span>Material & Brand</span>
+          <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span
+        ></a>
+        <!-- Menu: Sub menu ul -->
+        <ul class="sub-menu collapse" id="menu-material-brand">
+          <li>
+            <a class="ms-link" href="material.html"
+              >Material Management</a
+            >
+          </li>
+            <li>
+              <a class="ms-link" href="brand.html"> Brand Management</a>
+            </li>
+        </ul>
+
+    
+
+      <!-- General tab-->
+      <li class="collapsed">
+        <a
+          class="m-link"
+          data-bs-toggle="collapse"
+          data-bs-target="#menu-general"
+          href="#"
+        >
+          <i class="icofont-ui fs-5"></i> <span>General</span>
+          <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span>
+        </a>
+        <!-- Menu: Sub menu ul -->
+        <ul class="sub-menu collapse" id="menu-general">
+          <li><a class="ms-link" href="general.html">General</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <!-- Menu: menu collepce btn -->
+    <button type="button" class="btn btn-link sidebar-mini-btn text-light">
+      <span class="ms-2"><i class="icofont-bubble-right"></i></span>
+    </button>
+  </div>
+</div>

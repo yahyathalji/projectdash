@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>::Fantasize:: General</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/ebazar.style.min.css">
+    <link rel="stylesheet" href="assets/plugin/datatables/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="ebazar-layout" class="theme-blue">
+        <!-- Sidebar -->
+        <div class="sidebar px-4 py-4 py-md-5 me-0" id="sidebar"></div>
+
+        <!-- Main Body Area -->
+        <div class="main px-lg-4 px-md-4">
+            <!-- Header -->
+            <div class="header" id="header"></div>
+
+            <!-- Main Container -->
+            <div class="container-xxl">
+                <!-- General Settings Card -->
+                <div class="card mb-4">
+                    <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                        <h6 class="mb-0 fw-bold">General Settings</h6>
+                        <button type="button" class="btn btn-primary" id="editSettingsBtn">
+                            <i class="fas fa-edit me-2"></i>Edit Settings
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <form id="generalSettingsForm">
+                            <div class="row g-3">
+                                <!-- Contact Us Section -->
+                                <div class="col-12">
+                                    <h6 class="border-bottom pb-2">Contact Us Information</h6>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="contactEmail" required disabled>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Phone</label>
+                                    <input type="text" class="form-control" id="contactPhone" required disabled>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="contactAddress" required disabled>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Website</label>
+                                    <input type="url" class="form-control" id="contactWebsite" required disabled>
+                                </div>
+
+                                <!-- About Us Section -->
+                                <div class="col-12">
+                                    <h6 class="border-bottom pb-2">About Us Information</h6>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Title</label>
+                                    <input type="text" class="form-control" id="aboutTitle" required disabled>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Description</label>
+                                    <textarea class="form-control" id="aboutDescription" rows="4" required disabled></textarea>
+                                </div>
+
+                                <!-- Form Buttons -->
+                                <div class="col-12" id="formButtons" style="display: none;">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save me-2"></i>Save Changes
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" id="cancelEditBtn">
+                                        <i class="fas fa-times me-2"></i>Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Contact Form Submissions Card -->
+                <div class="card">
+                    <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                        <h6 class="mb-0 fw-bold">Contact Form Submissions</h6>
+                    </div>
+                    <div class="card-body">
+                        <table id="contactFormsTable" class="table table-hover align-middle mb-0" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Subject</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Contact form submissions will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Message Modal -->
+    <div class="modal fade" id="viewMessageModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Contact Form Message</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <strong>From:</strong> <span id="modalName"></span>
+                        <br>
+                        <strong>Email:</strong> <span id="modalEmail"></span>
+                        <br>
+                        <strong>Subject:</strong> <span id="modalSubject"></span>
+                        <br>
+                        <strong>Date:</strong> <span id="modalDate"></span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Message:</strong>
+                        <p id="modalMessage" class="mt-2"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="assets/bundles/dataTables.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Check authentication and initialize application
+        document.addEventListener('DOMContentLoaded', async function() {
+            const authToken = sessionStorage.getItem('authToken');
+            if (!authToken) {
+                window.location.href = 'auth-signin.html';
+                return;
+            }
+
+            try {
+                await loadComponents();
+                initializeGeneralSettings(authToken);
+                initializeContactForms(authToken);
+            } catch (error) {
+                console.error('Initialization error:', error);
+                alert('Failed to initialize the application. Please refresh the page.');
+            }
+        });
+
+        // Load components
+        async function loadComponents() {
+            try {
+                const [sidebarResponse, headerResponse] = await Promise.all([
+                    fetch('sidebar.html'),
+                    fetch('header.html')
+                ]);
+
+                if (!sidebarResponse.ok || !headerResponse.ok) {
+                    throw new Error('Failed to load components');
+                }
+
+                const [sidebarContent, headerContent] = await Promise.all([
+                    sidebarResponse.text(),
+                    headerResponse.text()
+                ]);
+
+                document.getElementById('sidebar').innerHTML = sidebarContent;
+                document.getElementById('header').innerHTML = headerContent;
+            } catch (error) {
+                console.error('Error loading components:', error);
+                throw error;
+            }
+        }
+
+        // Initialize General Settings
+        function initializeGeneralSettings(authToken) {
+            const form = document.getElementById('generalSettingsForm');
+            const editBtn = document.getElementById('editSettingsBtn');
+            const cancelBtn = document.getElementById('cancelEditBtn');
+            const formButtons = document.getElementById('formButtons');
+            const inputs = form.querySelectorAll('input, textarea');
+
+            // Load current settings
+            async function loadSettings() {
+                try {
+                    const response = await fetch('http://localhost:5000/general/get', {
+                        headers: {
+                            'Authorization': `Bearer ${authToken}`
+                        }
+                    });
+
+                    if (!response.ok) throw new Error('Failed to load settings');
+
+                    const data = await response.json();
+                    
+                    // Populate Contact Us fields
+                    document.getElementById('contactEmail').value = data.ContactUS.email;
+                    document.getElementById('contactPhone').value = data.ContactUS.phone;
+                    document.getElementById('contactAddress').value = data.ContactUS.address;
+                    document.getElementById('contactWebsite').value = data.ContactUS.website;
+
+                    // Populate About Us fields
+                    document.getElementById('aboutTitle').value = data.AboutUS.title;
+                    document.getElementById('aboutDescription').value = data.AboutUS.description;
+                } catch (error) {
+                    console.error('Error loading settings:', error);
+                    alert('Failed to load settings. Please try again.');
+                }
+            }
+
+            // Enable editing
+            editBtn.addEventListener('click', () => {
+                inputs.forEach(input => input.disabled = false);
+                formButtons.style.display = 'block';
+                editBtn.style.display = 'none';
+            });
+
+            // Cancel editing
+            cancelBtn.addEventListener('click', () => {
+                inputs.forEach(input => input.disabled = true);
+                formButtons.style.display = 'none';
+                editBtn.style.display = 'block';
+                loadSettings(); // Reset to original values
+            });
+
+            // Handle form submission
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const formData = {
+                    ContactUS: {
+                        email: document.getElementById('contactEmail').value,
+                        phone: document.getElementById('contactPhone').value,
+                        address: document.getElementById('contactAddress').value,
+                        website: document.getElementById('contactWebsite').value
+                    },
+                    AboutUS: {
+                        title: document.getElementById('aboutTitle').value,
+                        description: document.getElementById('aboutDescription').value
+                    }
+                };
+
+                try {
+                    const response = await fetch('http://localhost:5000/general/update', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${authToken}`
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    if (!response.ok) throw new Error('Failed to update settings');
+
+                    alert('Settings updated successfully');
+                    inputs.forEach(input => input.disabled = true);
+                    formButtons.style.display = 'none';
+                    editBtn.style.display = 'block';
+                } catch (error) {
+                    console.error('Error updating settings:', error);
+                    alert('Failed to update settings. Please try again.');
+                }
+            });
+
+            // Initial load
+            loadSettings();
+        }
+
+        // Initialize Contact Forms Table
+        function initializeContactForms(authToken) {
+            const contactFormsTable = $('#contactFormsTable').DataTable({
+                responsive: true,
+                ajax: {
+                    url: 'http://localhost:5000/general/contactUs',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    dataSrc: ''
+                },
+                columns: [
+                    { data: 'ContactUsID' },
+                    { data: 'Name' },
+                    { data: 'Email' },
+                    { data: 'Subject' },
+                    { 
+                        data: 'CreatedAt',
+                        render: function(data) {
+                            return new Date(data).toLocaleDateString();
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function(data) {
+                            return `<button class="btn btn-sm btn-primary view-message" data-id="${data.ContactUsID}">
+                                        <i class="fas fa-eye me-1"></i>View
+                                   </button>`;
+                        }
+                    }
+                ]
+            });
+
+            // Handle view message
+            $('#contactFormsTable').on('click', '.view-message', async function() {
+                const id = $(this).data('id');
+                try {
+                    const response = await fetch(`http://localhost:5000/general/contactUs/${id}`, {
+                        headers: {
+                            'Authorization': `Bearer ${authToken}`
+                        }
+                    });
+
+                    if (!response.ok) throw new Error('Failed to load message');
+
+                    const data = await response.json();
+                    
+                    // Populate modal
+                    document.getElementById('modalName').textContent = data.Name;
+                    document.getElementById('modalEmail').textContent = data.Email;
+                    document.getElementById('modalSubject').textContent = data.Subject;
+                    document.getElementById('modalMessage').textContent = data.Message;
+                    document.getElementById('modalDate').textContent = new Date(data.CreatedAt).toLocaleString();
+
+                    // Show modal
+                    new bootstrap.Modal(document.getElementById('viewMessageModal')).show();
+                } catch (error) {
+                    console.error('Error loading message:', error);
+                    alert('Failed to load message details. Please try again.');
+                }
+            });
+
+            // Handle session expiry
+            $(document).ajaxError(function(event, jqXHR) {
+                if (jqXHR.status === 401 || jqXHR.status === 403) {
+                    alert('Session expired. Please sign in again.');
+                    window.location.href = 'auth-signin.html';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
