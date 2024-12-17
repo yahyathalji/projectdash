@@ -547,7 +547,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     return {
                         name: option.name,
                         value: option.value,
-                        fileName: option.fileName || "",
+                        filePath: option.filePath || "",
                         isSelected: false
                     };
                 })

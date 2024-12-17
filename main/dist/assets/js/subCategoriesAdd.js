@@ -45,26 +45,29 @@ $(document).ready(function() {
         }
 
         const categoryId = parentCategoryId; 
-        $.ajax({
-            url: `http://localhost:5000/api/categories/${categoryId}/subcategories`,
+        fetch(`http://localhost:5000/api/categories/${categoryId}/subcategories`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
-                cookie: 'authToken=' + sessionStorage.getItem('authToken')
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
             },
-            data: {
-                Name: name,
-                IsActive: isActive,
-                ParentCategoryId: parentCategoryId
-            },
-
-            success: function(response) {
-                $('#message').text('Subcategory added successfully!').removeClass('text-danger').addClass('text-success');
-            },
-            error: function(error) {
-                $('#message').text('Failed to add subcategory. Please try again.').removeClass('text-success').addClass('text-danger');
+            body: JSON.stringify({
+            Name: name,
+            IsActive: isActive,
+            ParentCategoryId: parentCategoryId
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+            throw new Error('Network response was not ok');
             }
+            return response.json();
+        })
+        .then(data => {
+            $('#message').text('Subcategory added successfully!').removeClass('text-danger').addClass('text-success');
+        })
+        .catch(error => {
+            $('#message').text('Failed to add subcategory. Please try again.').removeClass('text-success').addClass('text-danger');
         });
     });
 });

@@ -26,7 +26,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
       console.log("Token:", token);
       // Parse JWT token to get user role
       sessionStorage.setItem("authToken", token);
-      // decode the token
+      // decode the token 
       const decodedToken = JSON.parse(atob(token.split(".")[1]));
       console.log("Decoded Token:", decodedToken);
       // store the role in session storage

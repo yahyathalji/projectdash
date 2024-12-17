@@ -2,7 +2,7 @@
 class UserProfileManager {
     constructor(navbarElement) {
         this.navbar = navbarElement;
-        this.authToken = sessionStorage.getItem('auth'); // Changed from 'authToken' to 'auth'
+        this.authToken = sessionStorage.getItem('authToken'); // Changed from 'authToken' to 'auth'
         this.defaultImage = 'assets/images/profile_av.svg';
         this.apiBaseUrl = 'http://localhost:5000'; // Update this if needed
         this.initializeEventListeners();
@@ -214,9 +214,9 @@ class UserProfileManager {
      * Handles the signout process by clearing the auth token and redirecting to the signin page.
      */
     handleSignout() {
-        sessionStorage.removeItem('auth'); // Changed from 'authToken' to 'auth'
+        sessionStorage.removeItem('authToken'); // Changed from 'authToken' to 'auth'
         sessionStorage.removeItem('email'); // Remove 'email' if stored
-        window.location.href = 'auth-signin.html';
+        window.location.href = '../../auth-signin.html';
     }
 }
 

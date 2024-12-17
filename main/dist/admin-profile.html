@@ -316,6 +316,7 @@
 
     <!-- Custom JavaScript -->
     <script>
+        
         // Base URL for API
         const BASE_URL = 'http://localhost:5000';
 
@@ -800,7 +801,7 @@
                 Method: document.getElementById('MethodModal').value.trim(),
                 CardType: document.getElementById('CardTypeModal').value.trim(),
                 CardNumber: document.getElementById('CardNumberModal').value.trim(),
-                ExpirationDate: document.getElementById('ExpiryDateModal').value,
+                ExpiryDate: document.getElementById('ExpiryDateModal').value,
                 CVV: parseInt(document.getElementById('CVVModal').value.trim()),
                 CardholderName: document.getElementById('CardholderNameModal').value.trim()
             };
@@ -819,6 +820,8 @@
                         body: JSON.stringify(paymentData)
                     });
                 } else {
+
+                    console.log(paymentData);
                     // Create new payment method
                     response = await fetch(`${BASE_URL}/api/user/create_payment_method_user`, {
                         method: 'POST',
