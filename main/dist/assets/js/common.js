@@ -1,10 +1,10 @@
-
 class UserProfileManager {
     constructor(navbarElement) {
         this.navbar = navbarElement;
-        this.authToken = sessionStorage.getItem('authToken'); // Changed from 'authToken' to 'auth'
+        this.authToken = sessionStorage.getItem('authToken');
         this.defaultImage = 'assets/images/profile_av.svg';
-        this.apiBaseUrl = 'http://localhost:5000'; // Update this if needed
+        this.apiBaseUrl = 'http://localhost:5000/api/getusers';
+        this.userDataKey = 'userData'; // Key for storing user data in sessionStorage
         this.initializeEventListeners();
     }
 
@@ -51,15 +51,178 @@ class UserProfileManager {
         }
 
         try {
-            const userData = this.parseJwt(this.authToken);
-            this.updateProfileText(userData);
-            await this.loadProfileImage(userData.userProfilePicture);
+            let userData = this.getStoredUserData();
+
+            if (!userData) {
+                console.log('No user data in sessionStorage, fetching from API');
+                const userId = this.getUserIdFromToken(this.authToken);
+                userData = await this.fetchUserData(userId);
+                this.storeUserData(userData);
+            } else {
+                console.log('User data retrieved from sessionStorage');
+            }
+
+            this.updateProfile(userData);
             await this.loadComponents();
             console.log('UserProfileManager initialized successfully');
         } catch (error) {
             console.error('Initialization error:', error);
             this.setDefaultProfileValues();
         }
+    }
+
+    /**
+     * Extracts the userId from the JWT token.
+     * @param {string} token - The JWT token.
+     * @returns {string} The userId.
+     */
+    getUserIdFromToken(token) {
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            return payload.payload.userId;
+        } catch (error) {
+            console.error('Error extracting userId from token:', error);
+            throw new Error('Invalid token');
+        }
+    }
+
+    /**
+     * Fetches user data from the API.
+     * @param {string} userId - The user ID.
+     * @returns {Object} The user data.
+     */
+    async fetchUserData(userId) {
+        const apiUrl = `${this.apiBaseUrl}/${userId}`;
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${this.authToken}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`API request failed with status ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Stores user data in sessionStorage.
+     * @param {Object} userData - The user data to store.
+     */
+    storeUserData(userData) {
+        try {
+            sessionStorage.setItem(this.userDataKey, JSON.stringify(userData));
+            console.log('User data stored in sessionStorage');
+        } catch (error) {
+            console.error('Error storing user data in sessionStorage:', error);
+        }
+    }
+
+    /**
+     * Retrieves user data from sessionStorage.
+     * @returns {Object|null} The user data or null if not found.
+     */
+    getStoredUserData() {
+        try {
+            const data = sessionStorage.getItem(this.userDataKey);
+            return data ? JSON.parse(data) : null;
+        } catch (error) {
+            console.error('Error retrieving user data from sessionStorage:', error);
+            return null;
+        }
+    }
+
+    /**
+     * Updates the profile information in the DOM.
+     * @param {Object} userData - The user data from the API or sessionStorage.
+     */
+    updateProfile(userData) {
+        if (!userData) {
+            console.warn('No user data provided');
+            this.setDefaultProfileValues();
+            return;
+        }
+
+        const { Username, UserProfilePicture } = userData;
+
+        // Update username
+        const profileUserName = this.navbar.querySelector('#profileUserName');
+        const profileUserNameSmall = this.navbar.querySelector('#profileUserNameSmall');
+        if (profileUserName) {
+            profileUserName.textContent = Username || 'User';
+        } else {
+            console.warn('Element with id profileUserName not found');
+        }
+
+        if (profileUserNameSmall) {
+            profileUserNameSmall.textContent = Username || 'User';
+        } else {
+            console.warn('Element with id profileUserNameSmall not found');
+        }
+
+        // Update email and role if needed (from token)
+        const tokenPayload = this.parseJwt(this.authToken);
+        const profileEmail = this.navbar.querySelector('#profileEmail');
+        const profileRole = this.navbar.querySelector('#profileRole');
+        if (profileEmail) {
+            profileEmail.textContent = tokenPayload.email || 'user@example.com';
+        } else {
+            console.warn('Element with id profileEmail not found');
+        }
+
+        if (profileRole) {
+            profileRole.textContent = `${tokenPayload.role || 'User'} Profile`;
+        } else {
+            console.warn('Element with id profileRole not found');
+        }
+
+        // Update profile images
+        this.updateProfileImages(UserProfilePicture);
+    }
+
+    /**
+     * Updates the profile images in the DOM.
+     * @param {Object} profilePicture - The user's profile picture information.
+     */
+    updateProfileImages(profilePicture) {
+        if (!profilePicture || !profilePicture.filePath) {
+            console.log('No profile picture information available. Using default image.');
+            this.setDefaultProfileImages();
+            return;
+        }
+
+        // Normalize filePath to use forward slashes
+        const normalizedFilePath = profilePicture.filePath.replace(/\\/g, '/');
+
+        // Construct the full URL for the profile image
+        const profileImageUrl = `${this.apiBaseUrl.replace('/api/getusers', '')}/${normalizedFilePath}`;
+
+        console.log(`Loading profile image from: ${profileImageUrl}`);
+
+        const imageElements = ['profileImage', 'profileImageSmall'];
+
+        imageElements.forEach(elementId => {
+            const imgElement = this.navbar.querySelector(`#${elementId}`);
+            if (imgElement) {
+                imgElement.onerror = () => {
+                    console.warn(`Failed to load image: ${profileImageUrl}. Using default image.`);
+                    imgElement.src = this.defaultImage;
+                    imgElement.onerror = null; // Prevent infinite loop if default image also fails
+                };
+                imgElement.src = profileImageUrl;
+            } else {
+                console.warn(`Image element with id ${elementId} not found`);
+            }
+        });
     }
 
     /**
@@ -84,6 +247,68 @@ class UserProfileManager {
         }
     }
 
+    /**
+     * Sets default profile values when user data is unavailable.
+     */
+    setDefaultProfileValues() {
+        const defaultValues = {
+            userName: 'User',
+            email: 'user@example.com',
+            role: 'User'
+        };
+
+        const profileUserName = this.navbar.querySelector('#profileUserName');
+        const profileUserNameSmall = this.navbar.querySelector('#profileUserNameSmall');
+        const profileEmail = this.navbar.querySelector('#profileEmail');
+        const profileRole = this.navbar.querySelector('#profileRole');
+
+        if (profileUserName) {
+            profileUserName.textContent = defaultValues.userName;
+        }
+
+        if (profileUserNameSmall) {
+            profileUserNameSmall.textContent = defaultValues.userName;
+        }
+
+        if (profileEmail) {
+            profileEmail.textContent = defaultValues.email;
+        }
+
+        if (profileRole) {
+            profileRole.textContent = `${defaultValues.role} Profile`;
+        }
+
+        this.setDefaultProfileImages();
+    }
+
+    /**
+     * Sets the profile images to the default image.
+     */
+    setDefaultProfileImages() {
+        const imageElements = ['profileImage', 'profileImageSmall'];
+        imageElements.forEach(elementId => {
+            const imgElement = this.navbar.querySelector(`#${elementId}`);
+            if (imgElement) {
+                imgElement.src = this.defaultImage;
+            } else {
+                console.warn(`Image element with id ${elementId} not found`);
+            }
+        });
+    }
+
+    /**
+     * Handles the signout process by clearing the auth token and user data, then redirecting to the signin page.
+     */
+    handleSignout() {
+        sessionStorage.removeItem('authToken');
+        sessionStorage.removeItem(this.userDataKey); // Clear stored user data
+        // Remove other session items if necessary
+        window.location.href = 'auth-signin.html';
+    }
+
+    /**
+     * Loads additional components like the sidebar.
+     */
     async loadComponents() {
         try {
             const sidebarResponse = await fetch('sidebar.html');
@@ -108,115 +333,6 @@ class UserProfileManager {
             console.error('Error loading components:', error);
             // Optionally, handle the error further or rethrow
         }
-    }
-
-    /**
-     * Loads the user's profile image.
-     * @param {Object} profilePicture - The user's profile picture information.
-     */
-    async loadProfileImage(profilePicture) {
-        if (!profilePicture || !profilePicture.filePath) {
-            console.log('No profile picture information available. Using default image.');
-            this.setDefaultProfileImages();
-            return;
-        }
-
-        // Normalize filePath to use forward slashes
-        const normalizedFilePath = profilePicture.filePath.replace(/\\/g, '/');
-
-        // Construct the full URL for the profile image
-        const profileImageUrl = `${this.apiBaseUrl}/${normalizedFilePath}`;
-
-        console.log(`Loading profile image from: ${profileImageUrl}`);
-
-        const imageElements = ['profileImage', 'profileImageSmall'];
-
-        imageElements.forEach(elementId => {
-            const imgElement = this.navbar.querySelector(`#${elementId}`);
-            if (imgElement) {
-                imgElement.onerror = () => {
-                    console.warn(`Failed to load image: ${profileImageUrl}. Using default image.`);
-                    imgElement.src = this.defaultImage;
-                    imgElement.onerror = null; // Prevent infinite loop if default image also fails
-                };
-                imgElement.src = profileImageUrl;
-            } else {
-                console.warn(`Image element with id ${elementId} not found`);
-            }
-        });
-    }
-
-    /**
-     * Updates the profile text elements with user data.
-     * @param {Object} userData - The user data extracted from the JWT payload.
-     */
-    updateProfileText(userData) {
-        const profileUserName = this.navbar.querySelector('#profileUserName');
-        const profileUserNameSmall = this.navbar.querySelector('#profileUserNameSmall');
-        const profileEmail = this.navbar.querySelector('#profileEmail');
-        const profileRole = this.navbar.querySelector('#profileRole');
-
-        if (profileUserName) {
-            profileUserName.textContent = userData.userName || 'User';
-        } else {
-            console.warn('Element with id profileUserName not found');
-        }
-
-        if (profileUserNameSmall) {
-            profileUserNameSmall.textContent = userData.userName || 'User';
-        } else {
-            console.warn('Element with id profileUserNameSmall not found');
-        }
-
-        if (profileEmail) {
-            profileEmail.textContent = userData.email || 'user@example.com';
-        } else {
-            console.warn('Element with id profileEmail not found');
-        }
-
-        if (profileRole) {
-            profileRole.textContent = `${userData.role || 'User'} Profile`;
-        } else {
-            console.warn('Element with id profileRole not found');
-        }
-    }
-
-    /**
-     * Sets default profile values when user data is unavailable.
-     */
-    setDefaultProfileValues() {
-        const defaultValues = {
-            userName: 'User',
-            email: 'user@example.com',
-            role: 'User'
-        };
-
-        this.updateProfileText(defaultValues);
-        this.setDefaultProfileImages();
-    }
-
-    /**
-     * Sets the profile images to the default image.
-     */
-    setDefaultProfileImages() {
-        const imageElements = ['profileImage', 'profileImageSmall'];
-        imageElements.forEach(elementId => {
-            const imgElement = this.navbar.querySelector(`#${elementId}`);
-            if (imgElement) {
-                imgElement.src = this.defaultImage;
-            } else {
-                console.warn(`Image element with id ${elementId} not found`);
-            }
-        });
-    }
-
-    /**
-     * Handles the signout process by clearing the auth token and redirecting to the signin page.
-     */
-    handleSignout() {
-        sessionStorage.removeItem('authToken'); // Changed from 'authToken' to 'auth'
-        sessionStorage.removeItem('email'); // Remove 'email' if stored
-        window.location.href = '../../auth-signin.html';
     }
 }
 

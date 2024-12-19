@@ -1,313 +1,576 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>::Fantasize:: Admin Profile</title>   
-    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>::Fantasize:: Admin Profile</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <!-- Favicon-->
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css"
+    />
 
     <!-- Project CSS File -->
-    <link rel="stylesheet" href="assets/css/ebazar.style.min.css">
-</head>
-<body>
+    <link rel="stylesheet" href="assets/css/ebazar.style.min.css" />
+  </head>
+  <body>
     <div id="ebazar-layout" class="theme-blue">
-        
-        <!-- Sidebar -->
-        <div id="sidebar"></div>
+      <!-- Sidebar -->
+      <div id="sidebar"></div>
 
+      <!-- Main Body Area -->
+      <div class="main px-lg-4 px-md-4">
+        <!-- Body: Header -->
+        <div id="header"></div>
 
-        <!-- Main Body Area -->
-        <div class="main px-lg-4 px-md-4">
-
-            <!-- Body: Header -->
-            <div id="header"></div>
-
-
-            <!-- Body: Body -->
-            <div class="body d-flex py-3">
-                <div class="container-xxl">
-                    <div class="row align-items-center">
-                        <div class="border-0 mb-4">
-                            <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
-                                <h3 class="fw-bold mb-0">Admin Profile</h3>
-                                <button class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#authchange">Change Password</button>
-                            </div>
-                        </div>
-                    </div> <!-- Row end  -->
-                    <div class="row g-3">
-                        <div class="col-xl-4 col-lg-5 col-md-12">
-                            <!-- Profile Card -->
-                            <div class="card profile-card flex-column mb-3">
-                               
-                                <div class="card-body d-flex profile-fulldeatil flex-column">
-                                    <div class="profile-block text-center w220 mx-auto">
-                                        <a href="#">
-                                            <img src="assets/images/lg/avatar4.svg" alt="Profile Picture" class="avatar xl rounded img-thumbnail shadow-sm" id="UserProfilePicture">
-                                        </a>
-                                        <div class="about-info d-flex align-items-center mt-3 justify-content-center flex-column">
-                                            <span class="text-muted" style="font-size: x-small;" id="userId"></span>
-                                        </div>
-                                    </div>
-                                    <div class="profile-info w-100 text-center">
-                                        <h6 class="mb-0 mt-2 fw-bold d-block fs-6" id="userAdmin"></h6>
-                                        <div class="row g-2 pt-2 justify-content-center">
-                                            <div class="col-xl-12">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="icofont-ui-touch-phone"></i>
-                                                    <span class="ms-2" id="PhoneNumber"></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-12">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="icofont-email"></i>
-                                                    <span class="ms-2" id="Email"></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-12">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="icofont-birthday-cake"></i>
-                                                    <span class="ms-2" id="dateofbirth"></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-12">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="icofont-gender-male"></i>
-                                                    <span class="ms-2" id="Gender"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            
-                            <!-- Address Card -->
-                            <div class="card mb-3">
-                                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                                    <h6 class="mb-0 fw-bold">Addresses</h6>
-                                    <button class="btn btn-sm btn-primary" onclick="openAddAddressModal()">Add Address</button>
-                                </div>
-                                <div class="card-body">
-                                    <ul class="list-group" id="AddressesList">
-                                        <!-- Addresses will be populated here -->
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Payment Methods Card -->
-                            <div class="card mb-3">
-                                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                                    <h6 class="mb-0 fw-bold">Payment Methods</h6>
-                                    <button class="btn btn-sm btn-primary" onclick="openAddPaymentMethodModal()">Add Payment Method</button>
-                                </div>
-                                <div class="card-body">
-                                    <ul class="list-group" id="PaymentMethodsList">
-                                        <!-- Payment Methods will be populated here -->
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-xl-8 col-lg-7 col-md-12">
-                            <!-- Profile Settings Card -->
-                            <div class="card mb-3">
-                                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                                    <h6 class="mb-0 fw-bold">Profile Settings</h6>
-                                </div>
-                                <div class="card-body">
-                                    <form id="profileForm" class="row g-3">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="form-label">User Name</label>
-                                                <input class="form-control" type="text" id="Username" required>
-                                            </div>
-                                        </div>
-                                      
-                                        <div class="col-md-4 col-sm-12">
-                                            <div class="form-group">
-                                                <label class="form-label">Mobile Number</label>
-                                                <input class="form-control" type="text" id="PhoneNumberInput" required>
-                                            </div>
-                                        </div>
-                                       
-                                        <div class="col-md-10 col-sm-12">
-                                            <label class="form-label">Email</label>
-                                            <div class="input-group">
-                                                <input type="email" class="form-control" id="EmailInput" required>
-                                            </div>
-                                        </div>
-                                        
-                                        <hr class="my-4">
-                                        
-                                       
-                                        <div class="col-sm-6 col-md-10 col-lg-5">
-                                            <div class="form-group">
-                                                <label class="form-label">DOB</label>
-                                                <input class="form-control" type="date" id="DOBInput" required>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-12 mt-4">
-                                            <button type="submit" class="btn btn-primary text-uppercase px-5">SAVE</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                           
-                        </div>
-                    </div>
+        <!-- Body: Body -->
+        <div class="body d-flex py-3">
+          <div class="container-xxl">
+            <div class="row align-items-center">
+              <div class="border-0 mb-4">
+                <div
+                  class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap"
+                >
+                  <h3 class="fw-bold mb-0">Admin Profile</h3>
+                  <button
+                    class="btn btn-secondary btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#authchange"
+                  >
+                    Change Password
+                  </button>
                 </div>
+              </div>
             </div>
-        
-            <!-- Modal Custom Settings-->
-            <div id="modal"></div>
-
-
-            <!-- Edit Password Modal -->
-            <div class="modal fade" id="authchange" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title fw-bold" id="authchangeLabel">Edit Password</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <!-- Row end  -->
+            <div class="row g-3">
+              <div class="col-xl-4 col-lg-5 col-md-12">
+                <!-- Profile Card -->
+                <div class="card profile-card flex-column mb-3">
+                  <div class="card-body d-flex profile-fulldeatil flex-column">
+                    <div class="profile-block text-center w220 mx-auto">
+                      <a href="#">
+                        <img
+                          src="assets/images/lg/avatar4.svg"
+                          alt="Profile Picture"
+                          class="avatar xl rounded img-thumbnail shadow-sm"
+                          id="UserProfilePicture"
+                        />
+                      </a>
+                      <div
+                        class="about-info d-flex align-items-center mt-3 justify-content-center flex-column"
+                      >
+                        <span
+                          class="text-muted"
+                          style="font-size: x-small"
+                          id="userId"
+                        ></span>
+                      </div>
                     </div>
-                    <div class="modal-body">
-                        
-                        <div class="deadline-form">
-                            <form id="passwordForm">
-                                <div class="row g-3 mb-3">
-                                    <div class="col-sm-12">
-                                        <label for="oldPassword" class="form-label">Old Password</label>
-                                        <input type="password" class="form-control" id="oldPassword" required>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <label for="newPassword" class="form-label">New Password</label>
-                                        <input type="password" class="form-control" id="newPassword" required>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                        <input type="password" class="form-control" id="confirmPassword" required>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Done</button>
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                </div>
-                            </form>
+                    <div class="profile-info w-100 text-center">
+                      <h6
+                        class="mb-0 mt-2 fw-bold d-block fs-6"
+                        id="userAdmin"
+                      ></h6>
+                      <div class="row g-2 pt-2 justify-content-center">
+                        <div class="col-xl-12">
+                          <div class="d-flex align-items-center">
+                            <i class="icofont-ui-touch-phone"></i>
+                            <span class="ms-2" id="PhoneNumber"></span>
+                          </div>
                         </div>
-                        
+                        <div class="col-xl-12">
+                          <div class="d-flex align-items-center">
+                            <i class="icofont-email"></i>
+                            <span class="ms-2" id="Email"></span>
+                          </div>
+                        </div>
+                        <div class="col-xl-12">
+                          <div class="d-flex align-items-center">
+                            <i class="icofont-birthday-cake"></i>
+                            <span class="ms-2" id="dateofbirth"></span>
+                          </div>
+                        </div>
+                        <div class="col-xl-12">
+                          <div class="d-flex align-items-center">
+                            <i class="icofont-gender-male"></i>
+                            <span class="ms-2" id="Gender"></span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    
+                  </div>
                 </div>
+
+                <!-- Address Card -->
+                <div class="card mb-3">
+                  <div
+                    class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0"
+                  >
+                    <h6 class="mb-0 fw-bold">Addresses</h6>
+                    <button
+                      class="btn btn-sm btn-primary"
+                      onclick="openAddAddressModal()"
+                    >
+                      Add Address
+                    </button>
+                  </div>
+                  <div class="card-body">
+                    <ul class="list-group" id="AddressesList">
+                      <!-- Addresses will be populated here -->
+                    </ul>
+                  </div>
                 </div>
+
+                <!-- Payment Methods Card -->
+                <div class="card mb-3">
+                  <div
+                    class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0"
+                  >
+                    <h6 class="mb-0 fw-bold">Payment Methods</h6>
+                    <button
+                      class="btn btn-sm btn-primary"
+                      onclick="openAddPaymentMethodModal()"
+                    >
+                      Add Payment Method
+                    </button>
+                  </div>
+                  <div class="card-body">
+                    <ul class="list-group" id="PaymentMethodsList">
+                      <!-- Payment Methods will be populated here -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-8 col-lg-7 col-md-12">
+                <!-- Profile Settings Card -->
+                <div class="card mb-3">
+                  <div
+                    class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0"
+                  >
+                    <h6 class="mb-0 fw-bold">Profile Settings</h6>
+                  </div>
+                  <div class="card-body">
+                    <form id="profileForm" class="row g-3">
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label class="form-label">User Name</label>
+                          <input
+                            class="form-control"
+                            type="text"
+                            id="Username"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                          <label class="form-label">Mobile Number</label>
+                          <input
+                            class="form-control"
+                            type="text"
+                            id="PhoneNumberInput"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-md-10 col-sm-12">
+                        <label class="form-label">Email</label>
+                        <div class="input-group">
+                          <input
+                            type="email"
+                            class="form-control"
+                            id="EmailInput"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <hr class="my-4" />
+
+                      <div class="col-sm-6 col-md-10 col-lg-5">
+                        <div class="form-group">
+                          <label class="form-label">DOB</label>
+                          <input
+                            class="form-control"
+                            type="date"
+                            id="DOBInput"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-12 mt-4">
+                        <button
+                          type="submit"
+                          class="btn btn-primary text-uppercase px-5"
+                        >
+                          SAVE
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
 
-            <!-- Add/Edit Address Modal -->
-            <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title fw-bold" id="addressModalLabel">Add Address</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="addressForm">
-                                <input type="hidden" id="AddressID">
-                                <div class="mb-3">
-                                    <label for="AddressLineModal" class="form-label">Address Line</label>
-                                    <input type="text" class="form-control" id="AddressLineModal" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="CityModal" class="form-label">City</label>
-                                    <input type="text" class="form-control" id="CityModal" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="StateModal" class="form-label">State</label>
-                                    <input type="text" class="form-control" id="StateModal" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="CountryModal" class="form-label">Country</label>
-                                    <input type="text" class="form-control" id="CountryModal" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="PostalCodeModal" class="form-label">Postal Code</label>
-                                    <input type="text" class="form-control" id="PostalCodeModal" required>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-primary" id="saveAddressBtn">Save</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Modal Custom Settings-->
+        <div id="modal"></div>
 
-            <!-- Add/Edit Payment Method Modal -->
-            <div class="modal fade" id="paymentMethodModal" tabindex="-1" aria-labelledby="paymentMethodModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title fw-bold" id="paymentMethodModalLabel">Add Payment Method</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="paymentMethodForm">
-                                <input type="hidden" id="PaymentMethodID">
-                                <div class="mb-3">
-                                    <label for="MethodModal" class="form-label">Method</label>
-                                    <select class="form-select" id="MethodModal" required>
-                                        <option value="">Select Method</option>
-                                        <option value="Cash">Cash</option>
-                                        <option value="Credit Card">Credit Card</option>
-                                        <option value="Debit Card">Debit Card</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="CardTypeModal" class="form-label">Card Type</label>
-                                    <input type="text" class="form-control" id="CardTypeModal" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="CardNumberModal" class="form-label">Card Number</label>
-                                    <input type="text" class="form-control" id="CardNumberModal" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="ExpiryDateModal" class="form-label">Expiry Date</label>
-                                    <input type="date" class="form-control" id="ExpiryDateModal" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="CVVModal" class="form-label">CVV</label>
-                                    <input type="number" class="form-control" id="CVVModal" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="CardholderNameModal" class="form-label">Cardholder Name</label>
-                                    <input type="text" class="form-control" id="CardholderNameModal" required>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-primary" id="savePaymentMethodBtn">Save</button>
-                                </div>
-                            </form>
-                        </div>
+        <!-- Edit Password Modal -->
+        <div
+          class="modal fade"
+          id="authchange"
+          tabindex="-1"
+          aria-hidden="true"
+        >
+          <div
+            class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable"
+          >
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="authchangeLabel">
+                  Edit Password
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="deadline-form">
+                  <form id="passwordForm">
+                    <div class="row g-3 mb-3">
+                      <div class="col-sm-12">
+                        <label for="oldPassword" class="form-label"
+                          >Old Password</label
+                        >
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="oldPassword"
+                          required
+                        />
+                      </div>
+                      <div class="col-sm-12">
+                        <label for="newPassword" class="form-label"
+                          >New Password</label
+                        >
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="newPassword"
+                          required
+                        />
+                      </div>
+                      <div class="col-sm-12">
+                        <label for="confirmPassword" class="form-label"
+                          >Confirm Password</label
+                        >
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="confirmPassword"
+                          required
+                        />
+                      </div>
                     </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Done
+                      </button>
+                      <button type="submit" class="btn btn-primary">
+                        Save
+                      </button>
+                    </div>
+                  </form>
                 </div>
+              </div>
             </div>
-   
-        </div>  
+          </div>
+        </div>
+
+        <!-- Add/Edit Address Modal -->
+        <div
+          class="modal fade"
+          id="addressModal"
+          tabindex="-1"
+          aria-labelledby="addressModalLabel"
+          aria-hidden="true"
+        >
+          <div
+            class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable"
+          >
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="addressModalLabel">
+                  Add Address
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form id="addressForm">
+                  <input type="hidden" id="AddressID" />
+                  <div class="mb-3">
+                    <label for="AddressLineModal" class="form-label"
+                      >Address Line</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="AddressLineModal"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="CityModal" class="form-label">City</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="CityModal"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="StateModal" class="form-label">State</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="StateModal"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="CountryModal" class="form-label">Country</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="CountryModal"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="PostalCodeModal" class="form-label"
+                      >Postal Code</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="PostalCodeModal"
+                      required
+                    />
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      id="saveAddressBtn"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add/Edit Payment Method Modal -->
+        <div
+          class="modal fade"
+          id="paymentMethodModal"
+          tabindex="-1"
+          aria-labelledby="paymentMethodModalLabel"
+          aria-hidden="true"
+        >
+          <div
+            class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable"
+          >
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="paymentMethodModalLabel">
+                  Add Payment Method
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form id="paymentMethodForm">
+                  <input type="hidden" id="PaymentMethodID" />
+                  <div class="mb-3">
+                    <label for="MethodModal" class="form-label">Method</label>
+                    <select class="form-select" id="MethodModal" required>
+                      <option value="">Select Method</option>
+                      <option value="Cash">Cash</option>
+                      <option value="Credit Card">Credit Card</option>
+                      <option value="Debit Card">Debit Card</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="CardTypeModal" class="form-label"
+                      >Card Type</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="CardTypeModal"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="CardNumberModal" class="form-label"
+                      >Card Number</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="CardNumberModal"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="ExpiryDateModal" class="form-label"
+                      >Expiry Date</label
+                    >
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="ExpiryDateModal"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="CVVModal" class="form-label">CVV</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="CVVModal"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="CardholderNameModal" class="form-label"
+                      >Cardholder Name</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="CardholderNameModal"
+                      required
+                    />
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      id="savePaymentMethodBtn"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <script src="assets/js/common.js"></script>
+
+    <script>
+      /**
+       * Loads a component into the specified selector.
+       * @param {string} selector - The CSS selector where the component will be loaded.
+       * @param {string} url - The URL of the component to load.
+       * @returns {Promise} - Resolves when the component is loaded.
+       */
+      function loadComponent(selector, url) {
+        return fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`Failed to load ${url}: ${response.statusText}`);
+            }
+            return response.text();
+          })
+          .then((data) => {
+            const element = document.querySelector(selector);
+            if (element) {
+              element.innerHTML = data;
+              console.log(`Loaded ${url} into ${selector}`);
+            } else {
+              console.warn(`Selector ${selector} not found`);
+            }
+          })
+          .catch((error) => {
+            console.error(`Error loading ${url}:`, error);
+          });
+      }
+
+      // Load components sequentially
+      Promise.all([
+        loadComponent("#sidebar", "sidebar.html"),
+        loadComponent("#header", "header.html"),
+        loadComponent("#modal", "modal.html"),
+      ])
+        .then(() => {
+          // Initialize UserProfileManager after components are loaded
+          const userProfileManager = new UserProfileManager();
+          userProfileManager.initialize().catch((error) => {
+            console.error("Failed to initialize UserProfileManager:", error);
+          });
+        })
+        .catch((error) => {
+          console.error("Error loading components:", error);
+        });
+    </script>
 
     <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
-            integrity="sha256-K+0e/7RPIh9B6W8G+cVgjc9e4dMECQQcQZJXDxoDLYU=" 
-            crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-K+0e/7RPIh9B6W8G+cVgjc9e4dMECQQcQZJXDxoDLYU="
+      crossorigin="anonymous"
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Jquery Core Js -->
     <script src="assets/bundles/libscripts.bundle.js"></script>
 
@@ -316,134 +579,151 @@
 
     <!-- Custom JavaScript -->
     <script>
-        
-        // Base URL for API
-        const BASE_URL = 'http://localhost:5000';
+      // Base URL for API
+      const BASE_URL = "http://localhost:5000";
 
-        // Retrieve authToken from sessionStorage
-        const authToken = sessionStorage.getItem('authToken');
+      // Retrieve authToken from sessionStorage
+      const authToken = sessionStorage.getItem("authToken");
 
-        if (!authToken) {
-            alert('Unauthorized! Please log in.');
-            window.location.href = 'auth-signin.html'; // Redirect to login page
+      if (!authToken) {
+        alert("Unauthorized! Please log in.");
+        window.location.href = "auth-signin.html"; // Redirect to login page
+      }
+
+      // Decode JWT to get userId
+      function parseJwt(token) {
+        try {
+          const base64Url = token.split(".")[1];
+          const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+          const jsonPayload = decodeURIComponent(
+            atob(base64)
+              .split("")
+              .map(function (c) {
+                return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+              })
+              .join("")
+          );
+          return JSON.parse(jsonPayload);
+        } catch (e) {
+          console.error("Invalid JWT token");
+          return null;
         }
+      }
 
-        // Decode JWT to get userId
-        function parseJwt (token) {
-            try {
-                const base64Url = token.split('.')[1];
-                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                }).join(''));
-                return JSON.parse(jsonPayload);
-            } catch (e) {
-                console.error('Invalid JWT token');
-                return null;
+      const decodedToken = parseJwt(authToken);
+      const userId = decodedToken?.payload?.userId;
+
+      if (!userId) {
+        alert("Invalid token! Please log in again.");
+        window.location.href = "auth-signin.html";
+      }
+
+      // Function to fetch and populate user details
+      async function fetchUserDetails() {
+        try {
+          const response = await fetch(
+            `${BASE_URL}/api/get_user_detail/${userId}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`,
+              },
             }
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch user details");
+          }
+
+          const userData = await response.json();
+          populateUserDetails(userData);
+        } catch (error) {
+          console.error(error);
+          alert("Error fetching user details.");
         }
+      }
 
-        const decodedToken = parseJwt(authToken);
-        const userId = decodedToken?.payload?.userId;
+      // Function to populate user details into the DOM
+      function populateUserDetails(data) {
+        // Profile Information
+        document.getElementById("userId").innerText = `User ID: ${data.UserID}`;
+        document.getElementById("userAdmin").innerText = data.Username.trim();
+        document.getElementById("PhoneNumber").innerText = data.PhoneNumber;
+        document.getElementById("Email").innerText = data.Email;
+        document.getElementById("dateofbirth").innerText = data.dateofbirth;
+        document.getElementById("Gender").innerText = data.Gender;
 
-        if (!userId) {
-            alert('Invalid token! Please log in again.');
-            window.location.href = 'auth-signin.html';
-        }
+        // Profile Picture
+        const profilePic = data.UserProfilePicture
+          ? `${BASE_URL}/${data.UserProfilePicture.filePath.replace(
+              /\\/g,
+              "/"
+            )}`
+          : "assets/images/lg/avatar4.svg";
+        document.getElementById("UserProfilePicture").src = profilePic;
 
-        // Function to fetch and populate user details
-        async function fetchUserDetails() {
-            try {
-                const response = await fetch(`${BASE_URL}/api/get_user_detail/${userId}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authToken}`
-                    }
-                });
+        // Populate Profile Form
+        document.getElementById("Username").value = data.Username.trim();
+        document.getElementById("PhoneNumberInput").value = data.PhoneNumber;
+        document.getElementById("EmailInput").value = data.Email;
+        document.getElementById("DOBInput").value = formatDateForInput(
+          data.dateofbirth
+        );
+      }
 
-                if (!response.ok) {
-                    throw new Error('Failed to fetch user details');
-                }
+      // Utility function to format date for input[type="date"]
+      function formatDateForInput(dateStr) {
+        // Assuming dateStr is in "YYYY-MM-DD" or similar format
+        const date = new Date(dateStr);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      }
 
-                const userData = await response.json();
-                populateUserDetails(userData);
-            } catch (error) {
-                console.error(error);
-                alert('Error fetching user details.');
+      // Function to fetch and populate addresses
+      async function fetchAddresses() {
+        try {
+          const response = await fetch(
+            `${BASE_URL}/api/user/get_address_user`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`,
+              },
             }
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch addresses");
+          }
+
+          const addresses = await response.json();
+          populateAddresses(addresses);
+        } catch (error) {
+          console.error(error);
+          alert("Error fetching addresses.");
+        }
+      }
+
+      // Function to populate addresses into the DOM
+      function populateAddresses(addresses) {
+        const addressesList = document.getElementById("AddressesList");
+        addressesList.innerHTML = "";
+
+        if (addresses.length === 0) {
+          addressesList.innerHTML =
+            '<li class="list-group-item">No addresses found.</li>';
+          return;
         }
 
-        // Function to populate user details into the DOM
-        function populateUserDetails(data) {
-            // Profile Information
-            document.getElementById('userId').innerText = `User ID: ${data.UserID}`;
-            document.getElementById('userAdmin').innerText = data.Username.trim();
-            document.getElementById('PhoneNumber').innerText = data.PhoneNumber;
-            document.getElementById('Email').innerText = data.Email;
-            document.getElementById('dateofbirth').innerText = data.dateofbirth;
-            document.getElementById('Gender').innerText = data.Gender;
-
-            // Profile Picture
-            const profilePic = data.UserProfilePicture
-                ? `${BASE_URL}/${data.UserProfilePicture.filePath.replace(/\\/g, '/')}`
-                : 'assets/images/lg/avatar4.svg';
-            document.getElementById('UserProfilePicture').src = profilePic;
-
-            // Populate Profile Form
-            document.getElementById('Username').value = data.Username.trim();
-            document.getElementById('PhoneNumberInput').value = data.PhoneNumber;
-            document.getElementById('EmailInput').value = data.Email;
-            document.getElementById('DOBInput').value = formatDateForInput(data.dateofbirth);
-        }
-
-        // Utility function to format date for input[type="date"]
-        function formatDateForInput(dateStr) {
-            // Assuming dateStr is in "YYYY-MM-DD" or similar format
-            const date = new Date(dateStr);
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        }
-
-        // Function to fetch and populate addresses
-        async function fetchAddresses() {
-            try {
-                const response = await fetch(`${BASE_URL}/api/user/get_address_user`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authToken}`
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch addresses');
-                }
-
-                const addresses = await response.json();
-                populateAddresses(addresses);
-            } catch (error) {
-                console.error(error);
-                alert('Error fetching addresses.');
-            }
-        }
-
-        // Function to populate addresses into the DOM
-        function populateAddresses(addresses) {
-            const addressesList = document.getElementById('AddressesList');
-            addressesList.innerHTML = '';
-
-            if (addresses.length === 0) {
-                addressesList.innerHTML = '<li class="list-group-item">No addresses found.</li>';
-                return;
-            }
-
-            addresses.forEach(address => {
-                const listItem = document.createElement('li');
-                listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-                listItem.innerHTML = `
+        addresses.forEach((address) => {
+          const listItem = document.createElement("li");
+          listItem.className =
+            "list-group-item d-flex justify-content-between align-items-center";
+          listItem.innerHTML = `
                     <div>
                         <strong>${address.AddressLine}</strong><br>
                         ${address.City}, ${address.State}, ${address.Country} - ${address.PostalCode}
@@ -453,453 +733,828 @@
                         <button class="btn btn-sm btn-danger" onclick="deleteAddress(${address.AddressID})">Delete</button>
                     </div>
                 `;
-                addressesList.appendChild(listItem);
-            });
+          addressesList.appendChild(listItem);
+        });
+      }
+
+      // Function to fetch and populate payment methods
+      async function fetchPaymentMethods() {
+        try {
+          const response = await fetch(
+            `${BASE_URL}/api/user/get_payment_method_user`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`,
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch payment methods");
+          }
+
+          const paymentMethods = await response.json();
+          populatePaymentMethods(paymentMethods);
+        } catch (error) {
+          console.error(error);
+          alert("Error fetching payment methods.");
+        }
+      }
+
+      // Function to populate payment methods into the DOM
+      function populatePaymentMethods(paymentMethods) {
+        const paymentList = document.getElementById("PaymentMethodsList");
+        paymentList.innerHTML = "";
+
+        if (paymentMethods.length === 0) {
+          paymentList.innerHTML =
+            '<li class="list-group-item">No payment methods found.</li>';
+          return;
         }
 
-        // Function to fetch and populate payment methods
-        async function fetchPaymentMethods() {
-            try {
-                const response = await fetch(`${BASE_URL}/api/user/get_payment_method_user`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authToken}`
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch payment methods');
-                }
-
-                const paymentMethods = await response.json();
-                populatePaymentMethods(paymentMethods);
-            } catch (error) {
-                console.error(error);
-                alert('Error fetching payment methods.');
-            }
-        }
-
-        // Function to populate payment methods into the DOM
-        function populatePaymentMethods(paymentMethods) {
-            const paymentList = document.getElementById('PaymentMethodsList');
-            paymentList.innerHTML = '';
-
-            if (paymentMethods.length === 0) {
-                paymentList.innerHTML = '<li class="list-group-item">No payment methods found.</li>';
-                return;
-            }
-
-            paymentMethods.forEach(method => {
-                const listItem = document.createElement('li');
-                listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-                listItem.innerHTML = `
+        paymentMethods.forEach((method) => {
+          const listItem = document.createElement("li");
+          listItem.className =
+            "list-group-item d-flex justify-content-between align-items-center";
+          listItem.innerHTML = `
                     <div>
-                        <strong>${method.Method}</strong> (${method.CardType})<br>
+                        <strong>${method.Method}</strong> (${
+            method.CardType
+          })<br>
                         Cardholder Name: ${method.CardholderName}<br>
                         Card Number: ${maskCardNumber(method.CardNumber)}<br>
                         Expiry: ${method.ExpirationDate}
                     </div>
                     <div>
-                        <button class="btn btn-sm btn-warning me-2" onclick="openEditPaymentMethodModal(${method.PaymentMethodID})">Edit</button>
-                        <button class="btn btn-sm btn-danger" onclick="deletePaymentMethod(${method.PaymentMethodID})">Delete</button>
+                        <button class="btn btn-sm btn-warning me-2" onclick="openEditPaymentMethodModal(${
+                          method.PaymentMethodID
+                        })">Edit</button>
+                        <button class="btn btn-sm btn-danger" onclick="deletePaymentMethod(${
+                          method.PaymentMethodID
+                        })">Delete</button>
                     </div>
                 `;
-                paymentList.appendChild(listItem);
+          paymentList.appendChild(listItem);
+        });
+      }
+
+      // Utility function to mask card numbers
+      function maskCardNumber(cardNumber) {
+        // Mask all but last 4 digits
+        return cardNumber.replace(/\d(?=\d{4})/g, "*");
+      }
+
+      // Function to handle profile form submission
+      document
+        .getElementById("profileForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const updatedData = {
+            userId: userId,
+            Username: document.getElementById("Username").value.trim(),
+            Email: document.getElementById("EmailInput").value.trim(),
+            PhoneNumber: document
+              .getElementById("PhoneNumberInput")
+              .value.trim(),
+            dateofbirth: document.getElementById("DOBInput").value,
+          };
+
+          try {
+            const response = await fetch(`${BASE_URL}/api/update_user`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`,
+              },
+              body: JSON.stringify(updatedData),
             });
-        }
 
-        // Utility function to mask card numbers
-        function maskCardNumber(cardNumber) {
-            // Mask all but last 4 digits
-            return cardNumber.replace(/\d(?=\d{4})/g, "*");
-        }
-
-        // Function to handle profile form submission
-        document.getElementById('profileForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const updatedData = {
-                userId: userId,
-                Username: document.getElementById('Username').value.trim(),
-                Email: document.getElementById('EmailInput').value.trim(),
-                PhoneNumber: document.getElementById('PhoneNumberInput').value.trim(),
-                dateofbirth: document.getElementById('DOBInput').value
-            };
-
-            try {
-                const response = await fetch(`${BASE_URL}/api/update_user`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authToken}`
-                    },
-                    body: JSON.stringify(updatedData)
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Failed to update profile');
-                }
-
-                const result = await response.json();
-                alert('Profile updated successfully!');
-                fetchUserDetails(); // Refresh user details
-            } catch (error) {
-                console.error(error);
-                alert('Error updating profile: ' + error.message);
+            if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(errorData.message || "Failed to update profile");
             }
+
+            const result = await response.json();
+            alert("Profile updated successfully!");
+            fetchUserDetails(); // Refresh user details
+          } catch (error) {
+            console.error(error);
+            alert("Error updating profile: " + error.message);
+          }
         });
 
-        // Function to handle password form submission
-        document.getElementById('passwordForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+      // Function to handle password form submission
+      document
+        .getElementById("passwordForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
 
-            const oldPassword = document.getElementById('oldPassword').value.trim();
-            const newPassword = document.getElementById('newPassword').value.trim();
-            const confirmPassword = document.getElementById('confirmPassword').value.trim();
+          const oldPassword = document
+            .getElementById("oldPassword")
+            .value.trim();
+          const newPassword = document
+            .getElementById("newPassword")
+            .value.trim();
+          const confirmPassword = document
+            .getElementById("confirmPassword")
+            .value.trim();
 
-            if (newPassword !== confirmPassword) {
-                alert('New password and confirm password do not match.');
-                return;
+          if (newPassword !== confirmPassword) {
+            alert("New password and confirm password do not match.");
+            return;
+          }
+
+          const payload = {
+            oldPassword: oldPassword,
+            newPassword: newPassword,
+          };
+
+          try {
+            const response = await fetch(`${BASE_URL}/api/update_password`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`,
+              },
+              body: JSON.stringify(payload),
+            });
+
+            if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(errorData.message || "Failed to update password");
             }
 
-            const payload = {
-                oldPassword: oldPassword,
-                newPassword: newPassword
-            };
-
-            try {
-                const response = await fetch(`${BASE_URL}/api/update_password`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authToken}`
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Failed to update password');
-                }
-
-                const result = await response.json();
-                alert('Password updated successfully!');
-                // Optionally, close the modal
-                const passwordModal = bootstrap.Modal.getInstance(document.getElementById('authchange'));
-                passwordModal.hide();
-                // Reset the form
-                document.getElementById('passwordForm').reset();
-            } catch (error) {
-                console.error(error);
-                alert('Error updating password: ' + error.message);
-            }
+            const result = await response.json();
+            alert("Password updated successfully!");
+            // Optionally, close the modal
+            const passwordModal = bootstrap.Modal.getInstance(
+              document.getElementById("authchange")
+            );
+            passwordModal.hide();
+            // Reset the form
+            document.getElementById("passwordForm").reset();
+          } catch (error) {
+            console.error(error);
+            alert("Error updating password: " + error.message);
+          }
         });
 
-        // Function to open edit profile modal (if needed)
-        function openEditProfileModal() {
-            // Implement modal opening logic if separate from the main form
-            // For simplicity, we'll focus on the main form for profile updates
-            alert('Edit Profile functionality is handled in the main form.');
-        }
+      // Function to open edit profile modal (if needed)
+      function openEditProfileModal() {
+        // Implement modal opening logic if separate from the main form
+        // For simplicity, we'll focus on the main form for profile updates
+        alert("Edit Profile functionality is handled in the main form.");
+      }
 
-        // Function to open add address modal
-        function openAddAddressModal() {
-            // Reset the address form
-            document.getElementById('addressForm').reset();
-            document.getElementById('AddressID').value = '';
-            document.getElementById('addressModalLabel').innerText = 'Add Address';
-            const addressModal = new bootstrap.Modal(document.getElementById('addressModal'));
-            addressModal.show();
-        }
+      // Function to open add address modal
+      function openAddAddressModal() {
+        // Reset the address form
+        document.getElementById("addressForm").reset();
+        document.getElementById("AddressID").value = "";
+        document.getElementById("addressModalLabel").innerText = "Add Address";
+        const addressModal = new bootstrap.Modal(
+          document.getElementById("addressModal")
+        );
+        addressModal.show();
+      }
 
-        // Function to open edit address modal
-        async function openEditAddressModal(addressId) {
-            try {
-                // Fetch the address details
-                const response = await fetch(`${BASE_URL}/api/user/get_address_user`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authToken}`,
-                        'cookie': `authToken=${authToken}`
-                        
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch addresses');
-                }
-
-                const addresses = await response.json();
-                const address = addresses.find(addr => addr.AddressID === addressId);
-
-                if (!address) {
-                    alert('Address not found.');
-                    return;
-                }
-
-                // Populate the form with address details
-                document.getElementById('AddressID').value = address.AddressID;
-                document.getElementById('AddressLineModal').value = address.AddressLine;
-                document.getElementById('CityModal').value = address.City;
-                document.getElementById('StateModal').value = address.State;
-                document.getElementById('CountryModal').value = address.Country;
-                document.getElementById('PostalCodeModal').value = address.PostalCode;
-
-                document.getElementById('addressModalLabel').innerText = 'Edit Address';
-
-                const addressModal = new bootstrap.Modal(document.getElementById('addressModal'));
-                addressModal.show();
-            } catch (error) {
-                console.error(error);
-                alert('Error fetching address details.');
+      // Function to open edit address modal
+      async function openEditAddressModal(addressId) {
+        try {
+          // Fetch the address details
+          const response = await fetch(
+            `${BASE_URL}/api/user/get_address_user`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`,
+                cookie: `authToken=${authToken}`,
+              },
             }
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch addresses");
+          }
+
+          const addresses = await response.json();
+          const address = addresses.find(
+            (addr) => addr.AddressID === addressId
+          );
+
+          if (!address) {
+            alert("Address not found.");
+            return;
+          }
+
+          // Populate the form with address details
+          document.getElementById("AddressID").value = address.AddressID;
+          document.getElementById("AddressLineModal").value =
+            address.AddressLine;
+          document.getElementById("CityModal").value = address.City;
+          document.getElementById("StateModal").value = address.State;
+          document.getElementById("CountryModal").value = address.Country;
+          document.getElementById("PostalCodeModal").value = address.PostalCode;
+
+          document.getElementById("addressModalLabel").innerText =
+            "Edit Address";
+
+          const addressModal = new bootstrap.Modal(
+            document.getElementById("addressModal")
+          );
+          addressModal.show();
+        } catch (error) {
+          console.error(error);
+          alert("Error fetching address details.");
         }
+      }
 
-        // Function to handle address form submission (create or update)
-        document.getElementById('addressForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+      // Function to handle address form submission (create or update)
+      document
+        .getElementById("addressForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
 
-            const addressId = document.getElementById('AddressID').value;
-            const addressData = {
-                AddressLine: document.getElementById('AddressLineModal').value.trim(),
-                City: document.getElementById('CityModal').value.trim(),
-                State: document.getElementById('StateModal').value.trim(),
-                Country: document.getElementById('CountryModal').value.trim(),
-                PostalCode: document.getElementById('PostalCodeModal').value.trim()
-            };
+          const addressId = document.getElementById("AddressID").value;
+          const addressData = {
+            AddressLine: document
+              .getElementById("AddressLineModal")
+              .value.trim(),
+            City: document.getElementById("CityModal").value.trim(),
+            State: document.getElementById("StateModal").value.trim(),
+            Country: document.getElementById("CountryModal").value.trim(),
+            PostalCode: document.getElementById("PostalCodeModal").value.trim(),
+          };
 
-            try {
-                let response;
-                if (addressId) {
-                    // Update existing address
-                    addressData.AddressId = parseInt(addressId);
-                    response = await fetch(`${BASE_URL}/api/user/update_address_user`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${authToken}`
-                        },
-                        body: JSON.stringify(addressData)
-                    });
-                } else {
-                    // Create new address
-                    response = await fetch(`${BASE_URL}/api/user/create_address_user`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${authToken}`
-                        },
-                        body: JSON.stringify(addressData)
-                    });
+          try {
+            let response;
+            if (addressId) {
+              // Update existing address
+              addressData.AddressId = parseInt(addressId);
+              response = await fetch(
+                `${BASE_URL}/api/user/update_address_user`,
+                {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${authToken}`,
+                  },
+                  body: JSON.stringify(addressData),
                 }
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Failed to save address');
+              );
+            } else {
+              // Create new address
+              response = await fetch(
+                `${BASE_URL}/api/user/create_address_user`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${authToken}`,
+                  },
+                  body: JSON.stringify(addressData),
                 }
-
-                const result = await response.json();
-                alert(`Address ${addressId ? 'updated' : 'added'} successfully!`);
-                const addressModal = bootstrap.Modal.getInstance(document.getElementById('addressModal'));
-                addressModal.hide();
-                fetchAddresses(); // Refresh addresses list
-            } catch (error) {
-                console.error(error);
-                alert('Error saving address: ' + error.message);
+              );
             }
+
+            if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(errorData.message || "Failed to save address");
+            }
+
+            const result = await response.json();
+            alert(`Address ${addressId ? "updated" : "added"} successfully!`);
+            const addressModal = bootstrap.Modal.getInstance(
+              document.getElementById("addressModal")
+            );
+            addressModal.hide();
+            fetchAddresses(); // Refresh addresses list
+          } catch (error) {
+            console.error(error);
+            alert("Error saving address: " + error.message);
+          }
         });
 
-        // Function to delete an address
-        async function deleteAddress(addressId) {
-            if (!confirm('Are you sure you want to delete this address?')) return;
+      // Function to delete an address
+      async function deleteAddress(addressId) {
+        if (!confirm("Are you sure you want to delete this address?")) return;
 
-            try {
-                const response = await fetch(`${BASE_URL}/api/user/delete_address_user/${addressId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authToken}`
-                    }
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Failed to delete address');
-                }
-
-                alert('Address deleted successfully!');
-                fetchAddresses(); // Refresh addresses list
-            } catch (error) {
-                console.error(error);
-                alert('Error deleting address: ' + error.message);
+        try {
+          const response = await fetch(
+            `${BASE_URL}/api/user/delete_address_user/${addressId}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`,
+              },
             }
+          );
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Failed to delete address");
+          }
+
+          alert("Address deleted successfully!");
+          fetchAddresses(); // Refresh addresses list
+        } catch (error) {
+          console.error(error);
+          alert("Error deleting address: " + error.message);
         }
+      }
 
-        // Function to open add payment method modal
-        function openAddPaymentMethodModal() {
-            // Reset the payment method form
-            document.getElementById('paymentMethodForm').reset();
-            document.getElementById('PaymentMethodID').value = '';
-            document.getElementById('paymentMethodModalLabel').innerText = 'Add Payment Method';
-            const paymentMethodModal = new bootstrap.Modal(document.getElementById('paymentMethodModal'));
-            paymentMethodModal.show();
-        }
+      // Function to open add payment method modal
+      function openAddPaymentMethodModal() {
+        // Reset the payment method form
+        document.getElementById("paymentMethodForm").reset();
+        document.getElementById("PaymentMethodID").value = "";
+        document.getElementById("paymentMethodModalLabel").innerText =
+          "Add Payment Method";
+        const paymentMethodModal = new bootstrap.Modal(
+          document.getElementById("paymentMethodModal")
+        );
+        paymentMethodModal.show();
+      }
 
-        // Function to open edit payment method modal
-        async function openEditPaymentMethodModal(paymentMethodId) {
-            try {
-                // Fetch the payment methods
-                const response = await fetch(`${BASE_URL}/api/user/get_payment_method_user`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authToken}`,
-                        'cookie': `authToken=${authToken}`
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch payment methods');
-                }
-
-                const paymentMethods = await response.json();
-                const method = paymentMethods.find(pm => pm.PaymentMethodID === paymentMethodId);
-
-                if (!method) {
-                    alert('Payment method not found.');
-                    return;
-                }
-
-                // Populate the form with payment method details
-                document.getElementById('PaymentMethodID').value = method.PaymentMethodID;
-                document.getElementById('MethodModal').value = method.Method;
-                document.getElementById('CardTypeModal').value = method.CardType;
-                document.getElementById('CardNumberModal').value = method.CardNumber;
-                document.getElementById('ExpiryDateModal').value = method.ExpirationDate;
-                document.getElementById('CVVModal').value = method.CVV;
-                document.getElementById('CardholderNameModal').value = method.CardholderName;
-
-                document.getElementById('paymentMethodModalLabel').innerText = 'Edit Payment Method';
-
-                const paymentMethodModal = new bootstrap.Modal(document.getElementById('paymentMethodModal'));
-                paymentMethodModal.show();
-            } catch (error) {
-                console.error(error);
-                alert('Error fetching payment method details.');
+      // Function to open edit payment method modal
+      async function openEditPaymentMethodModal(paymentMethodId) {
+        try {
+          // Fetch the payment methods
+          const response = await fetch(
+            `${BASE_URL}/api/user/get_payment_method_user`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`,
+                cookie: `authToken=${authToken}`,
+              },
             }
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch payment methods");
+          }
+
+          const paymentMethods = await response.json();
+          const method = paymentMethods.find(
+            (pm) => pm.PaymentMethodID === paymentMethodId
+          );
+
+          if (!method) {
+            alert("Payment method not found.");
+            return;
+          }
+
+          // Populate the form with payment method details
+          document.getElementById("PaymentMethodID").value =
+            method.PaymentMethodID;
+          document.getElementById("MethodModal").value = method.Method;
+          document.getElementById("CardTypeModal").value = method.CardType;
+          document.getElementById("CardNumberModal").value = method.CardNumber;
+          document.getElementById("ExpiryDateModal").value =
+            method.ExpirationDate;
+          document.getElementById("CVVModal").value = method.CVV;
+          document.getElementById("CardholderNameModal").value =
+            method.CardholderName;
+
+          document.getElementById("paymentMethodModalLabel").innerText =
+            "Edit Payment Method";
+
+          const paymentMethodModal = new bootstrap.Modal(
+            document.getElementById("paymentMethodModal")
+          );
+          paymentMethodModal.show();
+        } catch (error) {
+          console.error(error);
+          alert("Error fetching payment method details.");
         }
+      }
 
-        // Function to handle payment method form submission (create or update)
-        document.getElementById('paymentMethodForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+      // Function to handle payment method form submission (create or update)
+      document
+        .getElementById("paymentMethodForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
 
-            const paymentMethodId = document.getElementById('PaymentMethodID').value;
-            const paymentData = {
-                Method: document.getElementById('MethodModal').value.trim(),
-                CardType: document.getElementById('CardTypeModal').value.trim(),
-                CardNumber: document.getElementById('CardNumberModal').value.trim(),
-                ExpiryDate: document.getElementById('ExpiryDateModal').value,
-                CVV: parseInt(document.getElementById('CVVModal').value.trim()),
-                CardholderName: document.getElementById('CardholderNameModal').value.trim()
-            };
+          const paymentMethodId =
+            document.getElementById("PaymentMethodID").value;
+          const paymentData = {
+            Method: document.getElementById("MethodModal").value.trim(),
+            CardType: document.getElementById("CardTypeModal").value.trim(),
+            CardNumber: document.getElementById("CardNumberModal").value.trim(),
+            ExpiryDate: document.getElementById("ExpiryDateModal").value,
+            CVV: parseInt(document.getElementById("CVVModal").value.trim()),
+            CardholderName: document
+              .getElementById("CardholderNameModal")
+              .value.trim(),
+          };
 
-            try {
-                let response;
-                if (paymentMethodId) {
-                    // Update existing payment method
-                    paymentData.PaymentMethodID = parseInt(paymentMethodId);
-                    response = await fetch(`${BASE_URL}/api/user/update_payment_method_user`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${authToken}`
-                        },
-                        body: JSON.stringify(paymentData)
-                    });
-                } else {
-
-                    console.log(paymentData);
-                    // Create new payment method
-                    response = await fetch(`${BASE_URL}/api/user/create_payment_method_user`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${authToken}`
-                        },
-                        body: JSON.stringify(paymentData)
-                    });
+          try {
+            let response;
+            if (paymentMethodId) {
+              // Update existing payment method
+              paymentData.PaymentMethodID = parseInt(paymentMethodId);
+              response = await fetch(
+                `${BASE_URL}/api/user/update_payment_method_user`,
+                {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${authToken}`,
+                  },
+                  body: JSON.stringify(paymentData),
                 }
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Failed to save payment method');
+              );
+            } else {
+              console.log(paymentData);
+              // Create new payment method
+              response = await fetch(
+                `${BASE_URL}/api/user/create_payment_method_user`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${authToken}`,
+                  },
+                  body: JSON.stringify(paymentData),
                 }
-
-                const result = await response.json();
-                alert(`Payment method ${paymentMethodId ? 'updated' : 'added'} successfully!`);
-                const paymentMethodModal = bootstrap.Modal.getInstance(document.getElementById('paymentMethodModal'));
-                paymentMethodModal.hide();
-                fetchPaymentMethods(); // Refresh payment methods list
-            } catch (error) {
-                console.error(error);
-                alert('Error saving payment method: ' + error.message);
+              );
             }
+
+            if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(
+                errorData.message || "Failed to save payment method"
+              );
+            }
+
+            const result = await response.json();
+            alert(
+              `Payment method ${
+                paymentMethodId ? "updated" : "added"
+              } successfully!`
+            );
+            const paymentMethodModal = bootstrap.Modal.getInstance(
+              document.getElementById("paymentMethodModal")
+            );
+            paymentMethodModal.hide();
+            fetchPaymentMethods(); // Refresh payment methods list
+          } catch (error) {
+            console.error(error);
+            alert("Error saving payment method: " + error.message);
+          }
         });
 
-        // Function to delete a payment method
-        async function deletePaymentMethod(paymentMethodId) {
-            if (!confirm('Are you sure you want to delete this payment method?')) return;
+      // Function to delete a payment method
+      async function deletePaymentMethod(paymentMethodId) {
+        if (!confirm("Are you sure you want to delete this payment method?"))
+          return;
 
-            try {
-                const response = await fetch(`${BASE_URL}/api/user/delete_payment_method_user`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authToken}`
-                    },
-                    body: JSON.stringify({ PaymentMethodID: paymentMethodId })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Failed to delete payment method');
-                }
-
-                alert('Payment method deleted successfully!');
-                fetchPaymentMethods(); // Refresh payment methods list
-            } catch (error) {
-                console.error(error);
-                alert('Error deleting payment method: ' + error.message);
+        try {
+          const response = await fetch(
+            `${BASE_URL}/api/user/delete_payment_method_user`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`,
+              },
+              body: JSON.stringify({ PaymentMethodID: paymentMethodId }),
             }
+          );
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+              errorData.message || "Failed to delete payment method"
+            );
+          }
+
+          alert("Payment method deleted successfully!");
+          fetchPaymentMethods(); // Refresh payment methods list
+        } catch (error) {
+          console.error(error);
+          alert("Error deleting payment method: " + error.message);
         }
+      }
 
-        // Initial data fetch on page load
-        window.addEventListener('DOMContentLoaded', (event) => {
-            fetchUserDetails();
-            fetchAddresses();
-            fetchPaymentMethods();
-        });
+      // Initial data fetch on page load
+      window.addEventListener("DOMContentLoaded", (event) => {
+        fetchUserDetails();
+        fetchAddresses();
+        fetchPaymentMethods();
+      });
 
-        // Function to load sidebar and header components
-        function loadComponent(selector, url) {
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    document.querySelector(selector).innerHTML = data;
-                })
-                .catch(error => {
-                    console.error(`Error loading ${url}:`, error);
-                });
-        }
-
-        loadComponent('#sidebar', 'sidebar.html');
-        loadComponent('#header', 'header.html');
-        // loadComponent('#modal', 'modal.html'); // Not used in this implementation
-
+      // Function to load sidebar and header components
     </script>
 
-</body>
+    <!-- Include this script after loading all components -->
+    <script>
+      class UserProfileManager {
+        constructor() {
+          this.authToken = sessionStorage.getItem("authToken");
+          this.defaultImage = "assets/images/profile_av.svg";
+          this.apiBaseUrl = "http://localhost:5000"; // Update if needed
+          this.userDataKey = "userData"; // Key for storing user data in sessionStorage
+        }
+
+        /**
+         * Initializes the UserProfileManager.
+         */
+        async initialize() {
+          console.log("Initializing UserProfileManager");
+          if (!this.authToken) {
+            console.log("No authToken found, redirecting to signin");
+            this.handleSignout();
+            return;
+          }
+
+          if (this.isTokenExpired(this.authToken)) {
+            console.log("Auth token is expired, redirecting to signin");
+            this.handleSignout();
+            return;
+          }
+
+          try {
+            let userData = this.getStoredUserData();
+
+            if (!userData) {
+              console.log("No user data in sessionStorage, fetching from API");
+              const userId = this.getUserIdFromToken(this.authToken);
+              userData = await this.fetchUserData(userId);
+              this.storeUserData(userData);
+            } else {
+              console.log("User data retrieved from sessionStorage");
+            }
+
+            this.updateProfile(userData);
+            console.log("UserProfileManager initialized successfully");
+          } catch (error) {
+            console.error("Initialization error:", error);
+            this.setDefaultProfileValues();
+          }
+        }
+
+        /**
+         * Checks if the JWT token is expired.
+         * @param {string} token - The JWT token.
+         * @returns {boolean} True if expired, false otherwise.
+         */
+        isTokenExpired(token) {
+          try {
+            const payload = JSON.parse(atob(token.split(".")[1]));
+            const currentTime = Math.floor(Date.now() / 1000);
+            return payload.exp && payload.exp < currentTime;
+          } catch (error) {
+            console.error("Error checking token expiry:", error);
+            return true; // Treat as expired if unable to parse
+          }
+        }
+
+        /**
+         * Extracts the userId from the JWT token.
+         * @param {string} token - The JWT token.
+         * @returns {string} The userId.
+         */
+        getUserIdFromToken(token) {
+          try {
+            const payload = JSON.parse(atob(token.split(".")[1]));
+            return payload.payload.userId;
+          } catch (error) {
+            console.error("Error extracting userId from token:", error);
+            throw new Error("Invalid token");
+          }
+        }
+
+        /**
+         * Fetches user data from the API.
+         * @param {string} userId - The user ID.
+         * @returns {Object} The user data.
+         */
+        async fetchUserData(userId) {
+          const apiUrl = `${this.apiBaseUrl}/api/getusers/${userId}`;
+          try {
+            const response = await fetch(apiUrl, {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${this.authToken}`,
+                "Content-Type": "application/json",
+              },
+            });
+
+            if (!response.ok) {
+              throw new Error(
+                `API request failed with status ${response.status}`
+              );
+            }
+
+            const data = await response.json();
+            return data;
+          } catch (error) {
+            console.error("Error fetching user data:", error);
+            throw error;
+          }
+        }
+
+        /**
+         * Stores user data in sessionStorage.
+         * @param {Object} userData - The user data to store.
+         */
+        storeUserData(userData) {
+          try {
+            sessionStorage.setItem(this.userDataKey, JSON.stringify(userData));
+            sessionStorage.setItem("auth", this.authToken); // Aligning with sidebar.js
+            sessionStorage.setItem(
+              "email",
+              userData.email || "user@example.com"
+            ); // Aligning with sidebar.js
+            console.log("User data stored in sessionStorage");
+          } catch (error) {
+            console.error("Error storing user data in sessionStorage:", error);
+          }
+        }
+
+        /**
+         * Retrieves user data from sessionStorage.
+         * @returns {Object|null} The user data or null if not found.
+         */
+        getStoredUserData() {
+          try {
+            const data = sessionStorage.getItem(this.userDataKey);
+            return data ? JSON.parse(data) : null;
+          } catch (error) {
+            console.error(
+              "Error retrieving user data from sessionStorage:",
+              error
+            );
+            return null;
+          }
+        }
+
+        /**
+         * Updates the profile information in the DOM.
+         * @param {Object} userData - The user data from the API or sessionStorage.
+         */
+        updateProfile(userData) {
+          if (!userData) {
+            console.warn("No user data provided");
+            this.setDefaultProfileValues();
+            return;
+          }
+
+          const { Username, UserProfilePicture } = userData;
+
+          // Update username
+          const profileUserName = document.getElementById("profileUserName");
+          const profileUserNameSmall = document.getElementById(
+            "profileUserNameSmall"
+          );
+          if (profileUserName) {
+            profileUserName.textContent = Username || "User";
+          } else {
+            console.warn("Element with id profileUserName not found");
+          }
+
+          if (profileUserNameSmall) {
+            profileUserNameSmall.textContent = Username || "User";
+          } else {
+            console.warn("Element with id profileUserNameSmall not found");
+          }
+
+          // Update email and role if needed (from userData or token)
+          const profileEmail = document.getElementById("profileEmail");
+          const profileRole = document.getElementById("profileRole");
+          if (profileEmail) {
+            profileEmail.textContent = userData.email || "user@example.com";
+          } else {
+            console.warn("Element with id profileEmail not found");
+          }
+
+          if (profileRole) {
+            profileRole.textContent = `${userData.role || "User"} Profile`;
+          } else {
+            console.warn("Element with id profileRole not found");
+          }
+
+          // Update profile images
+          this.updateProfileImages(UserProfilePicture);
+        }
+
+        /**
+         * Updates the profile images in the DOM.
+         * @param {Object} profilePicture - The user's profile picture information.
+         */
+        updateProfileImages(profilePicture) {
+          if (!profilePicture || !profilePicture.filePath) {
+            console.log(
+              "No profile picture information available. Using default image."
+            );
+            this.setDefaultProfileImages();
+            return;
+          }
+
+          // Normalize filePath to use forward slashes
+          const normalizedFilePath = profilePicture.filePath.replace(
+            /\\/g,
+            "/"
+          );
+
+          // Construct the full URL for the profile image
+          const profileImageUrl = `${this.apiBaseUrl}/${normalizedFilePath}`;
+
+          console.log(`Loading profile image from: ${profileImageUrl}`);
+
+          const imageElements = ["profileImage", "profileImageSmall"];
+
+          imageElements.forEach((elementId) => {
+            const imgElement = document.getElementById(elementId);
+            if (imgElement) {
+              imgElement.onerror = () => {
+                console.warn(
+                  `Failed to load image: ${profileImageUrl}. Using default image.`
+                );
+                imgElement.src = this.defaultImage;
+                imgElement.onerror = null; // Prevent infinite loop if default image also fails
+              };
+              imgElement.src = profileImageUrl;
+            } else {
+              console.warn(`Image element with id ${elementId} not found`);
+            }
+          });
+        }
+
+        /**
+         * Sets default profile values when user data is unavailable.
+         */
+        setDefaultProfileValues() {
+          const defaultValues = {
+            userName: "User",
+            email: "user@example.com",
+            role: "User",
+          };
+
+          const profileUserName = document.getElementById("profileUserName");
+          const profileUserNameSmall = document.getElementById(
+            "profileUserNameSmall"
+          );
+          const profileEmail = document.getElementById("profileEmail");
+          const profileRole = document.getElementById("profileRole");
+
+          if (profileUserName) {
+            profileUserName.textContent = defaultValues.userName;
+          }
+
+          if (profileUserNameSmall) {
+            profileUserNameSmall.textContent = defaultValues.userName;
+          }
+
+          if (profileEmail) {
+            profileEmail.textContent = defaultValues.email;
+          }
+
+          if (profileRole) {
+            profileRole.textContent = `${defaultValues.role} Profile`;
+          }
+
+          this.setDefaultProfileImages();
+        }
+
+        /**
+         * Sets the profile images to the default image.
+         */
+        setDefaultProfileImages() {
+          const imageElements = ["profileImage", "profileImageSmall"];
+          imageElements.forEach((elementId) => {
+            const imgElement = document.getElementById(elementId);
+            if (imgElement) {
+              imgElement.src = this.defaultImage;
+            } else {
+              console.warn(`Image element with id ${elementId} not found`);
+            }
+          });
+        }
+
+        /**
+         * Handles the signout process by clearing the auth token and user data, then redirecting to the signin page.
+         */
+        handleSignout() {
+          sessionStorage.removeItem("authToken");
+          sessionStorage.removeItem(this.userDataKey); // Clear stored user data
+          sessionStorage.removeItem("auth"); // Aligning with sidebar.js
+          sessionStorage.removeItem("email"); // Aligning with sidebar.js
+          // Remove other session items if necessary
+          window.location.href = "auth-signin.html";
+        }
+      }
+
+      // Initialize when the document is ready
+      // (Already handled in the loadComponent Promise chain)
+    </script>
+  </body>
 </html>

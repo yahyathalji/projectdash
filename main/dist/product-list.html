@@ -1,334 +1,464 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>::Fantasize::  Products List </title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
-    
-    <!--plugin css file -->
-    <link rel="stylesheet" href="assets/plugin/nouislider/nouislider.min.css">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>::Fantasize:: Products List</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <!-- Favicon-->
 
-    <!-- project css file  -->
-    <link rel="stylesheet" href="assets/css/ebazar.style.min.css">
-</head>
-<body>
+    <!-- Plugin CSS file -->
+    <link rel="stylesheet" href="assets/plugin/nouislider/nouislider.min.css" />
+
+    <!-- Project CSS file -->
+    <link rel="stylesheet" href="assets/css/ebazar.style.min.css" />
+  </head>
+  <body>
     <div id="ebazar-layout" class="theme-blue">
-        
-        <!-- sidebar -->
-        <div id="sidebar"></div>
-        <!-- main body area -->
-        <div class="main px-lg-4 px-md-4"> 
+      <!-- Sidebar -->
+      <div id="sidebar"></div>
+      <!-- Main body area -->
+      <div class="main px-lg-4 px-md-4">
+        <!-- Body: Header -->
+        <div id="header"></div>
 
-            <!-- Body: Header -->
-            <div id="header"></div>
-
-            <!-- Body: Body -->
-            <div class="body d-flex py-3">
-                <div class="container-xxl">
-                    <div class="row align-items-center">
-                        <div class="border-0 mb-4">
-                            <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
-                                <h3 class="fw-bold mb-0">Products</h3>
-                                
-                            </div>
-                        </div>
-                    </div> <!-- Row end  -->
-                    <div class="row g-3 mb-3">
-                        <div class="col-md-12 col-lg-4 col-xl-4 col-xxl-3">
-                            <div class="sticky-lg-top">
-                                <div class="card mb-3">
-                                    <div class="reset-block">
-                                        <div class="filter-title">
-                                            <h4 class="title">Filter</h4>
-                                        </div>
-                                        <div class="filter-btn">
-                                            <a class="btn btn-primary" href="#">Reset</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card mb-3">
-                                    <div class="categories">
-                                        <div class="filter-title">
-                                            <a class="title" data-bs-toggle="collapse" href="#category" role="button" aria-expanded="true">Categories</a>
-                                        </div>
-                                        <div class="collapse show" id="category" >
-                                            <div class="filter-search">
-                                                <form action="#">
-                                                    <input type="text" placeholder="Search" class="form-control">
-                                                    <button><i class="lni lni-search-alt"></i></button>
-                                                </form>
-                                            </div>
-                                            <div class="filter-category">
-                                                <ul class="category-list">
-                                                    <li><a href="#" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" class="collapsed">Game accessories</a>
-                                                        <ul id="collapseOne" class="sub-category collapse" data-parent="#category" >
-                                                            <li><a href="#">PlayStation 4</a></li>
-                                                            <li><a href="#">Oculus VR</a></li>
-                                                            <li><a href="#">Remote</a></li>
-                                                            <li><a href="#">Lighting Keyborad</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a class="collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseTwo">Bags</a>
-                                                        <ul id="collapseTwo" class="sub-category collapse" data-parent="#category">
-                                                            <li><a href="#">School Bags</a></li>
-                                                            <li><a href="#">Traveling Bags</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a class="collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseThree">Flower Port</a>
-                                                        <ul id="collapseThree" class="sub-category collapse" data-parent="#category">
-                                                            <li><a href="#">Woodan Port</a></li>
-                                                            <li><a href="#">Pattern Port</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a class="collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseFour">Watch</a>
-                                                        <ul id="collapseFour" class="sub-category collapse" data-parent="#category">
-                                                            <li><a href="#">Wall Clock</a></li>
-                                                            <li><a href="#">Smart Watch</a></li>
-                                                            <li><a href="#">Rado Watch</a></li>
-                                                            <li><a href="#">Fasttrack Watch</a></li>
-                                                            <li><a href="#">Noise Watch</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a class="collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseFive">Accessories</a>
-                                                        <ul id="collapseFive" class="sub-category collapse" data-parent="#category">
-                                                            <li><a href="#">Note Diaries</a></li>
-                                                            <li><a href="#">Fold Diaries</a></li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card mb-3">
-                                    <div class="size-block">
-                                        <div class="filter-title">
-                                            <a class="title" data-bs-toggle="collapse" href="#size" role="button" aria-expanded="true">Select Size</a>
-                                        </div>
-                                        <div class="collapse show" id="size" >
-                                            <div class="filter-size" id="filter-size-1">
-                                                <ul>
-                                                    <li>XS</li>
-                                                    <li>S</li>
-                                                    <li class="">M</li>
-                                                    <li>L</li>
-                                                    <li>XL</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card mb-3">
-                                    <div class="color-block">
-                                        <div class="filter-title">
-                                            <a class="title" data-bs-toggle="collapse" href="#color" role="button" aria-expanded="false">Select Color</a>
-                                        </div>
-                                        <div class="collapse show" id="color">
-                                            <div class="filter-color">
-                                                <ul>
-                                                    <li>
-                                                        <div class="color-check">
-                                                            <p><span style="background-color: #4114e4;"></span> <strong>Blue</strong></p>
-                
-                                                            <input type="checkbox" id="color-1">
-                                                            <label for="color-1"><span></span></label>                                            
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="color-check">
-                                                            <p><span style="background-color: #E14C7B;"></span> <strong>Red</strong></p>
-                
-                                                            <input type="checkbox" id="color-2">
-                                                            <label for="color-2"><span></span></label>                                            
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="color-check">
-                                                            <p><span style="background-color: #7CB637;"></span> <strong>Green</strong></p>
-                
-                                                            <input type="checkbox" id="color-3">
-                                                            <label for="color-3"><span></span></label>                                            
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="color-check">
-                                                            <p><span style="background-color: #161359;"></span> <strong>Dark</strong></p>
-                
-                                                            <input type="checkbox" id="color-4">
-                                                            <label for="color-4"><span></span></label>                                            
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card mb-3">
-                                    <div class="price-range-block">
-                                        <div class="filter-title">
-                                            <a class="title" data-bs-toggle="collapse" href="#pricingTwo" role="button" aria-expanded="false">Pricing Range</a>
-                                        </div>
-                                        <div class="collapse show" id="pricingTwo">
-                                            <div class="price-range">
-                                                <div class="price-amount flex-wrap">
-                                                    <div class="amount-input mt-1">
-                                                        <label class="fw-bold">Minimum Price</label>
-                                                        <input type="text" id="minAmount2" class="form-control">
-                                                    </div>
-                                                    <div class="amount-input mt-1">
-                                                        <label class="fw-bold">Maximum Price</label>
-                                                        <input type="text" id="maxAmount2" class="form-control">
-                                                    </div>                                    
-                                                </div>
-                                                <div id="slider-range2" class="slider-range noUi-target noUi-ltr noUi-horizontal noUi-txt-dir-ltr"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="rating-block">
-                                        <div class="filter-title">
-                                            <a class="title" data-bs-toggle="collapse" href="#rating" role="button" aria-expanded="false">Select Rating</a>
-                                        </div>
-                                        <div class="collapse show" id="rating">
-                                            <div class="filter-rating">
-                                                <ul>
-                                                    <li>
-                                                        <div class="rating-check">
-                                                            <input type="checkbox" id="rating-5">
-                                                            <label for="rating-5"><span></span>
-                                                                
-                                                            </label>
-                                                            <p>
-                                                                <i class="icofont-star"></i>
-                                                                <i class="icofont-star"></i>
-                                                                <i class="icofont-star"></i>
-                                                                <i class="icofont-star"></i>
-                                                                <i class="icofont-star"></i>
-                                                            </p>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="rating-check">
-                                                            <input type="checkbox" id="rating-4">
-                                                            <label for="rating-4"><span></span></label>
-                                                            <p>
-                                                                <i class="icofont-star"></i>
-                                                                <i class="icofont-star"></i>
-                                                                <i class="icofont-star"></i>
-                                                                <i class="icofont-star"></i>
-                                                            </p>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="rating-check">
-                                                            <input type="checkbox" id="rating-3">
-                                                            <label for="rating-3"><span></span></label>
-                                                            <p>
-                                                                <i class="icofont-star"></i>
-                                                                <i class="icofont-star"></i>
-                                                                <i class="icofont-star"></i>
-                                                            </p>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="rating-check">
-                                                            <input type="checkbox" id="rating-2">
-                                                            <label for="rating-2"><span></span></label>
-                                                            <p>
-                                                                <i class="icofont-star"></i>
-                                                                <i class="icofont-star"></i>
-                                                            </p>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="rating-check">
-                                                            <input type="checkbox" id="rating-1">
-                                                            <label for="rating-1"><span></span></label>
-                                                            <p>
-                                                                <i class="icofont-star"></i>
-                                                            </p>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-12 col-lg-8 col-xl-8 col-xxl-9">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search for products...">
-                                        <table id="myDataTable" class="table table-hover align-middle mb-0" style="width: 100%;">
-                                            <thead>
-                                                <tr>
-                                                    <th>ProductId</th> <!-- ProductId is now the first column -->
-                                                    <th>Product Name</th> <!-- Product Name is now the second column -->
-                                                    <th>Offer</th>
-                                                    <th>Price</th>
-                                                    <th>Status</th>
-                                                    <th>Rating</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="tableBody">
-                                                <!-- Dynamic Rows will be inserted here -->
-                                            </tbody>
-                                        </table>
-                        
-                                        <!-- Pagination Controls -->
-                                        <nav aria-label="Page navigation">
-                                            <ul class="pagination justify-content-center" id="paginationControls">
-                                                <!-- Pagination buttons will be inserted here -->
-                                            </ul>
-                                        </nav>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-
-                    </div> <!-- Row end  -->
+        <!-- Body: Body -->
+        <div class="body d-flex py-3">
+          <div class="container-xxl">
+            <div class="row align-items-center">
+              <div class="border-0 mb-4">
+                <div
+                  class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap"
+                >
+                  <h3 class="fw-bold mb-0">Products</h3>
                 </div>
+              </div>
             </div>
-        
-            <!-- Modal Custom Settings-->
-            <div id="modal"></div>
+            <!-- Row end  -->
 
-            
-        </div> 
+            <div class="row g-3 mb-3">
+              <!-- Removed the filter sidebar by omitting the left column -->
 
+              <!-- Product Listing Section -->
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-body">
+                    <!-- Search Input -->
+                    <input
+                      type="text"
+                      id="searchInput"
+                      class="form-control mb-3"
+                      placeholder="Search for products..."
+                    />
+
+                    <!-- Products Table -->
+                    <table
+                      id="myDataTable"
+                      class="table table-hover align-middle mb-0"
+                      style="width: 100%"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Product ID</th>
+                          <th>Product Name</th>
+                          <th>Offer</th>
+                          <th>Price</th>
+                          <th>Status</th>
+                          <th>Rating</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tableBody">
+                        <!-- Dynamic Rows will be inserted here -->
+                      </tbody>
+                    </table>
+
+                    <!-- Pagination Controls -->
+                    <nav aria-label="Page navigation">
+                      <ul
+                        class="pagination justify-content-center"
+                        id="paginationControls"
+                      >
+                        <!-- Pagination buttons will be inserted here -->
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+              <!-- Product Listing Section End -->
+            </div>
+            <!-- Row end  -->
+          </div>
+        </div>
+
+        <!-- Modal Custom Settings-->
+        <div id="modal"></div>
+      </div>
     </div>
-    <script>
-        function loadComponent(selector, url) {
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    document.querySelector(selector).innerHTML = data;
-                });
-        }
 
-        loadComponent('#sidebar', 'sidebar.html');
-        loadComponent('#header', 'header.html');
-        loadComponent('#modal', 'modal.html');
+    <!-- Load Components -->
+    <script>
+      /**
+       * Loads a component into the specified selector.
+       * @param {string} selector - The CSS selector where the component will be loaded.
+       * @param {string} url - The URL of the component to load.
+       * @returns {Promise} - Resolves when the component is loaded.
+       */
+      function loadComponent(selector, url) {
+        return fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`Failed to load ${url}: ${response.statusText}`);
+            }
+            return response.text();
+          })
+          .then((data) => {
+            const element = document.querySelector(selector);
+            if (element) {
+              element.innerHTML = data;
+              console.log(`Loaded ${url} into ${selector}`);
+            } else {
+              console.warn(`Selector ${selector} not found`);
+            }
+          })
+          .catch((error) => {
+            console.error(`Error loading ${url}:`, error);
+          });
+      }
+
+      // Load components sequentially
+      Promise.all([
+        loadComponent("#sidebar", "sidebar.html"),
+        loadComponent("#header", "header.html"),
+        loadComponent("#modal", "modal.html"),
+      ])
+        .then(() => {
+          // Initialize UserProfileManager after components are loaded
+          const userProfileManager = new UserProfileManager();
+          userProfileManager.initialize().catch((error) => {
+            console.error("Failed to initialize UserProfileManager:", error);
+          });
+        })
+        .catch((error) => {
+          console.error("Error loading components:", error);
+        });
     </script>
 
     <!-- Jquery Core Js -->
     <script src="assets/bundles/libscripts.bundle.js"></script>
 
-    <!-- Jquery Plugin --> 
+    <!-- Jquery Plugin -->
     <script src="assets/plugin/nouislider/nouislider.min.js"></script>
 
-    <!-- Jquery Page Js --> 
+    <!-- Jquery Page Js -->
     <script src="../js/template.js"></script>
     <script src="assets/js/productList.js"></script>
-</body>
-</html> 
+
+    <!-- Include this script after loading all components -->
+    <script>
+      class UserProfileManager {
+        constructor() {
+          this.authToken = sessionStorage.getItem("authToken");
+          this.defaultImage = "assets/images/profile_av.svg";
+          this.apiBaseUrl = "http://localhost:5000"; // Update if needed
+          this.userDataKey = "userData"; // Key for storing user data in sessionStorage
+        }
+
+        /**
+         * Initializes the UserProfileManager.
+         */
+        async initialize() {
+          console.log("Initializing UserProfileManager");
+          if (!this.authToken) {
+            console.log("No authToken found, redirecting to signin");
+            this.handleSignout();
+            return;
+          }
+
+          if (this.isTokenExpired(this.authToken)) {
+            console.log("Auth token is expired, redirecting to signin");
+            this.handleSignout();
+            return;
+          }
+
+          try {
+            let userData = this.getStoredUserData();
+
+            if (!userData) {
+              console.log("No user data in sessionStorage, fetching from API");
+              const userId = this.getUserIdFromToken(this.authToken);
+              userData = await this.fetchUserData(userId);
+              this.storeUserData(userData);
+            } else {
+              console.log("User data retrieved from sessionStorage");
+            }
+
+            this.updateProfile(userData);
+            console.log("UserProfileManager initialized successfully");
+          } catch (error) {
+            console.error("Initialization error:", error);
+            this.setDefaultProfileValues();
+          }
+        }
+
+        /**
+         * Checks if the JWT token is expired.
+         * @param {string} token - The JWT token.
+         * @returns {boolean} True if expired, false otherwise.
+         */
+        isTokenExpired(token) {
+          try {
+            const payload = JSON.parse(atob(token.split(".")[1]));
+            const currentTime = Math.floor(Date.now() / 1000);
+            return payload.exp && payload.exp < currentTime;
+          } catch (error) {
+            console.error("Error checking token expiry:", error);
+            return true; // Treat as expired if unable to parse
+          }
+        }
+
+        /**
+         * Extracts the userId from the JWT token.
+         * @param {string} token - The JWT token.
+         * @returns {string} The userId.
+         */
+        getUserIdFromToken(token) {
+          try {
+            const payload = JSON.parse(atob(token.split(".")[1]));
+            return payload.payload.userId;
+          } catch (error) {
+            console.error("Error extracting userId from token:", error);
+            throw new Error("Invalid token");
+          }
+        }
+
+        /**
+         * Fetches user data from the API.
+         * @param {string} userId - The user ID.
+         * @returns {Object} The user data.
+         */
+        async fetchUserData(userId) {
+          const apiUrl = `${this.apiBaseUrl}/api/getusers/${userId}`;
+          try {
+            const response = await fetch(apiUrl, {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${this.authToken}`,
+                "Content-Type": "application/json",
+              },
+            });
+
+            if (!response.ok) {
+              throw new Error(
+                `API request failed with status ${response.status}`
+              );
+            }
+
+            const data = await response.json();
+            return data;
+          } catch (error) {
+            console.error("Error fetching user data:", error);
+            throw error;
+          }
+        }
+
+        /**
+         * Stores user data in sessionStorage.
+         * @param {Object} userData - The user data to store.
+         */
+        storeUserData(userData) {
+          try {
+            sessionStorage.setItem(this.userDataKey, JSON.stringify(userData));
+            sessionStorage.setItem("auth", this.authToken); // Aligning with sidebar.js
+            sessionStorage.setItem(
+              "email",
+              userData.email || "user@example.com"
+            ); // Aligning with sidebar.js
+            console.log("User data stored in sessionStorage");
+          } catch (error) {
+            console.error("Error storing user data in sessionStorage:", error);
+          }
+        }
+
+        /**
+         * Retrieves user data from sessionStorage.
+         * @returns {Object|null} The user data or null if not found.
+         */
+        getStoredUserData() {
+          try {
+            const data = sessionStorage.getItem(this.userDataKey);
+            return data ? JSON.parse(data) : null;
+          } catch (error) {
+            console.error(
+              "Error retrieving user data from sessionStorage:",
+              error
+            );
+            return null;
+          }
+        }
+
+        /**
+         * Updates the profile information in the DOM.
+         * @param {Object} userData - The user data from the API or sessionStorage.
+         */
+        updateProfile(userData) {
+          if (!userData) {
+            console.warn("No user data provided");
+            this.setDefaultProfileValues();
+            return;
+          }
+
+          const { Username, UserProfilePicture } = userData;
+
+          // Update username
+          const profileUserName = document.getElementById("profileUserName");
+          const profileUserNameSmall = document.getElementById(
+            "profileUserNameSmall"
+          );
+          if (profileUserName) {
+            profileUserName.textContent = Username || "User";
+          } else {
+            console.warn("Element with id profileUserName not found");
+          }
+
+          if (profileUserNameSmall) {
+            profileUserNameSmall.textContent = Username || "User";
+          } else {
+            console.warn("Element with id profileUserNameSmall not found");
+          }
+
+          // Update email and role if needed (from userData or token)
+          const profileEmail = document.getElementById("profileEmail");
+          const profileRole = document.getElementById("profileRole");
+          if (profileEmail) {
+            profileEmail.textContent = userData.email || "user@example.com";
+          } else {
+            console.warn("Element with id profileEmail not found");
+          }
+
+          if (profileRole) {
+            profileRole.textContent = `${userData.role || "User"} Profile`;
+          } else {
+            console.warn("Element with id profileRole not found");
+          }
+
+          // Update profile images
+          this.updateProfileImages(UserProfilePicture);
+        }
+
+        /**
+         * Updates the profile images in the DOM.
+         * @param {Object} profilePicture - The user's profile picture information.
+         */
+        updateProfileImages(profilePicture) {
+          if (!profilePicture || !profilePicture.filePath) {
+            console.log(
+              "No profile picture information available. Using default image."
+            );
+            this.setDefaultProfileImages();
+            return;
+          }
+
+          // Normalize filePath to use forward slashes
+          const normalizedFilePath = profilePicture.filePath.replace(
+            /\\/g,
+            "/"
+          );
+
+          // Construct the full URL for the profile image
+          const profileImageUrl = `${this.apiBaseUrl}/${normalizedFilePath}`;
+
+          console.log(`Loading profile image from: ${profileImageUrl}`);
+
+          const imageElements = ["profileImage", "profileImageSmall"];
+
+          imageElements.forEach((elementId) => {
+            const imgElement = document.getElementById(elementId);
+            if (imgElement) {
+              imgElement.onerror = () => {
+                console.warn(
+                  `Failed to load image: ${profileImageUrl}. Using default image.`
+                );
+                imgElement.src = this.defaultImage;
+                imgElement.onerror = null; // Prevent infinite loop if default image also fails
+              };
+              imgElement.src = profileImageUrl;
+            } else {
+              console.warn(`Image element with id ${elementId} not found`);
+            }
+          });
+        }
+
+        /**
+         * Sets default profile values when user data is unavailable.
+         */
+        setDefaultProfileValues() {
+          const defaultValues = {
+            userName: "User",
+            email: "user@example.com",
+            role: "User",
+          };
+
+          const profileUserName = document.getElementById("profileUserName");
+          const profileUserNameSmall = document.getElementById(
+            "profileUserNameSmall"
+          );
+          const profileEmail = document.getElementById("profileEmail");
+          const profileRole = document.getElementById("profileRole");
+
+          if (profileUserName) {
+            profileUserName.textContent = defaultValues.userName;
+          }
+
+          if (profileUserNameSmall) {
+            profileUserNameSmall.textContent = defaultValues.userName;
+          }
+
+          if (profileEmail) {
+            profileEmail.textContent = defaultValues.email;
+          }
+
+          if (profileRole) {
+            profileRole.textContent = `${defaultValues.role} Profile`;
+          }
+
+          this.setDefaultProfileImages();
+        }
+
+        /**
+         * Sets the profile images to the default image.
+         */
+        setDefaultProfileImages() {
+          const imageElements = ["profileImage", "profileImageSmall"];
+          imageElements.forEach((elementId) => {
+            const imgElement = document.getElementById(elementId);
+            if (imgElement) {
+              imgElement.src = this.defaultImage;
+            } else {
+              console.warn(`Image element with id ${elementId} not found`);
+            }
+          });
+        }
+
+        /**
+         * Handles the signout process by clearing the auth token and user data, then redirecting to the signin page.
+         */
+        handleSignout() {
+          sessionStorage.removeItem("authToken");
+          sessionStorage.removeItem(this.userDataKey); // Clear stored user data
+          sessionStorage.removeItem("auth"); // Aligning with sidebar.js
+          sessionStorage.removeItem("email"); // Aligning with sidebar.js
+          // Remove other session items if necessary
+          window.location.href = "auth-signin.html";
+        }
+      }
+
+      // Initialize when the document is ready
+      // (Already handled in the loadComponent Promise chain)
+    </script>
+  </body>
+</html>
