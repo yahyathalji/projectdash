@@ -29,7 +29,7 @@
 
             <!-- Body: Body -->
             <div class="body d-flex py-3">
-                <div class="container-xxl">
+                <div class="container-fluid"> <!-- Changed to container-fluid for full-width -->
                     <div class="row align-items-center">
                         <div class="border-0 mb-4">
                             <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
@@ -40,18 +40,18 @@
                     </div> <!-- Row end  -->
                    
                         
-                        <div class="col-md-12 col-lg-12 col-xl-8 col-xxl-9">
-                            <div class="col-md-12 mt-8">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <!-- إضافة مربع البحث -->
-                                        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search for packages...">
-                                        
-                                        <!-- جدول عرض الحزم -->
+                        <div class="col-12"> <!-- Changed to col-12 for full-width -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <!-- Search Box -->
+                                    <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search for packages...">
+                                    
+                                    <!-- Package Table -->
+                                    <div class="table-responsive"> <!-- Added table-responsive for better responsiveness -->
                                         <table id="packageListTable" class="table table-hover align-middle mb-0" style="width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th>PACKAGEID</th>
+                                                    <th>PACKAGE ID</th>
                                                     <th>PACKAGE NAME</th>
                                                     <th>OFFER</th>
                                                     <th>PRICE</th>
@@ -61,17 +61,17 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="packageListBody">
-                                                <!-- الصفوف الديناميكية ستظهر هنا -->
+                                                <!-- Dynamic Rows Will Appear Here -->
                                             </tbody>
                                         </table>
-                        
-                                        <!-- عناصر التحكم في الصفحات -->
-                                        <nav aria-label="Page navigation">
-                                            <ul class="pagination justify-content-center" id="paginationControls">
-                                                <!-- سيتم إدراج أزرار التصفح هنا -->
-                                            </ul>
-                                        </nav>
                                     </div>
+        
+                                    <!-- Pagination Controls -->
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination justify-content-center" id="paginationControls">
+                                            <!-- Pagination Buttons Will Be Inserted Here -->
+                                        </ul>
+                                    </nav>
                                 </div>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
             <!-- Modal Custom Settings-->
             <div id="modal"></div>
 
-            
+
         </div> 
 
     </div>
@@ -146,308 +146,580 @@
     <script src="../js/template.js"></script>
     
     <!-- packages list -->
-    <script src="assets/js/packageList.js"></script>
+
     <script>
-        class UserProfileManager {
-          constructor() {
-            this.authToken = sessionStorage.getItem("authToken");
-            this.defaultImage = "assets/images/profile_av.svg";
-            this.apiBaseUrl = "http://localhost:5000"; // Update if needed
-            this.userDataKey = "userData"; // Key for storing user data in sessionStorage
-          }
-    
-          /**
-           * Initializes the UserProfileManager.
-           */
-          async initialize() {
-            console.log("Initializing UserProfileManager");
-            if (!this.authToken) {
-              console.log("No authToken found, redirecting to signin");
-              this.handleSignout();
-              return;
+      /**
+       * Loads a component into the specified selector.
+       * @param {string} selector - The CSS selector where the component will be loaded.
+       * @param {string} url - The URL of the component to load.
+       * @returns {Promise} - Resolves when the component is loaded.
+       */
+      function loadComponent(selector, url) {
+        return fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`Failed to load ${url}: ${response.statusText}`);
             }
-    
-            if (this.isTokenExpired(this.authToken)) {
-              console.log("Auth token is expired, redirecting to signin");
-              this.handleSignout();
-              return;
-            }
-    
-            try {
-              let userData = this.getStoredUserData();
-    
-              if (!userData) {
-                console.log("No user data in sessionStorage, fetching from API");
-                const userId = this.getUserIdFromToken(this.authToken);
-                userData = await this.fetchUserData(userId);
-                this.storeUserData(userData);
-              } else {
-                console.log("User data retrieved from sessionStorage");
-              }
-    
-              this.updateProfile(userData);
-              console.log("UserProfileManager initialized successfully");
-            } catch (error) {
-              console.error("Initialization error:", error);
-              this.setDefaultProfileValues();
-            }
-          }
-    
-          /**
-           * Checks if the JWT token is expired.
-           * @param {string} token - The JWT token.
-           * @returns {boolean} True if expired, false otherwise.
-           */
-          isTokenExpired(token) {
-            try {
-              const payload = JSON.parse(atob(token.split(".")[1]));
-              const currentTime = Math.floor(Date.now() / 1000);
-              return payload.exp && payload.exp < currentTime;
-            } catch (error) {
-              console.error("Error checking token expiry:", error);
-              return true; // Treat as expired if unable to parse
-            }
-          }
-    
-          /**
-           * Extracts the userId from the JWT token.
-           * @param {string} token - The JWT token.
-           * @returns {string} The userId.
-           */
-          getUserIdFromToken(token) {
-            try {
-              const payload = JSON.parse(atob(token.split(".")[1]));
-              return payload.payload.userId;
-            } catch (error) {
-              console.error("Error extracting userId from token:", error);
-              throw new Error("Invalid token");
-            }
-          }
-    
-          /**
-           * Fetches user data from the API.
-           * @param {string} userId - The user ID.
-           * @returns {Object} The user data.
-           */
-          async fetchUserData(userId) {
-            const apiUrl = `${this.apiBaseUrl}/api/getusers/${userId}`;
-            try {
-              const response = await fetch(apiUrl, {
-                method: "GET",
-                headers: {
-                  Authorization: `Bearer ${this.authToken}`,
-                  "Content-Type": "application/json",
-                },
-              });
-    
-              if (!response.ok) {
-                throw new Error(
-                  `API request failed with status ${response.status}`
-                );
-              }
-    
-              const data = await response.json();
-              return data;
-            } catch (error) {
-              console.error("Error fetching user data:", error);
-              throw error;
-            }
-          }
-    
-          /**
-           * Stores user data in sessionStorage.
-           * @param {Object} userData - The user data to store.
-           */
-          storeUserData(userData) {
-            try {
-              sessionStorage.setItem(this.userDataKey, JSON.stringify(userData));
-              sessionStorage.setItem("auth", this.authToken); // Aligning with sidebar.js
-              sessionStorage.setItem(
-                "email",
-                userData.email || "user@example.com"
-              ); // Aligning with sidebar.js
-              console.log("User data stored in sessionStorage");
-            } catch (error) {
-              console.error("Error storing user data in sessionStorage:", error);
-            }
-          }
-    
-          /**
-           * Retrieves user data from sessionStorage.
-           * @returns {Object|null} The user data or null if not found.
-           */
-          getStoredUserData() {
-            try {
-              const data = sessionStorage.getItem(this.userDataKey);
-              return data ? JSON.parse(data) : null;
-            } catch (error) {
-              console.error(
-                "Error retrieving user data from sessionStorage:",
-                error
-              );
-              return null;
-            }
-          }
-    
-          /**
-           * Updates the profile information in the DOM.
-           * @param {Object} userData - The user data from the API or sessionStorage.
-           */
-          updateProfile(userData) {
-            if (!userData) {
-              console.warn("No user data provided");
-              this.setDefaultProfileValues();
-              return;
-            }
-    
-            const { Username, UserProfilePicture } = userData;
-    
-            // Update username
-            const profileUserName = document.getElementById("profileUserName");
-            const profileUserNameSmall = document.getElementById(
-              "profileUserNameSmall"
-            );
-            if (profileUserName) {
-              profileUserName.textContent = Username || "User";
+            return response.text();
+          })
+          .then((data) => {
+            const element = document.querySelector(selector);
+            if (element) {
+              element.innerHTML = data;
+              console.log(`Loaded ${url} into ${selector}`);
             } else {
-              console.warn("Element with id profileUserName not found");
+              console.warn(`Selector ${selector} not found`);
             }
-    
-            if (profileUserNameSmall) {
-              profileUserNameSmall.textContent = Username || "User";
-            } else {
-              console.warn("Element with id profileUserNameSmall not found");
+          })
+          .catch((error) => {
+            console.error(`Error loading ${url}:`, error);
+          });
+      }
+
+      // Load components sequentially
+      Promise.all([
+        loadComponent("#sidebar", "sidebar.html"),
+        loadComponent("#header", "header.html"),
+        loadComponent("#modal", "modal.html"),
+      ])
+        .then(() => {
+          // Initialize UserProfileManager after components are loaded
+          const userProfileManager = new UserProfileManager();
+          userProfileManager.initialize().catch((error) => {
+            console.error("Failed to initialize UserProfileManager:", error);
+          });
+        })
+        .catch((error) => {
+          console.error("Error loading components:", error);
+        });
+    </script>
+    <script>
+        let allPackages = [];
+        let packages = [];
+        const rowsPerPage = 10;
+        let currentPage = 1;
+
+        /**
+         * Sets up the pagination controls based on the current number of packages.
+         */
+        function setupPagination() {
+            const totalPages = Math.ceil(packages.length / rowsPerPage);
+            const paginationControls = document.getElementById("paginationControls");
+            paginationControls.innerHTML = "";
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement("li");
+                pageButton.classList.add("page-item");
+                const activeClass = (i === currentPage) ? " active" : "";
+                pageButton.innerHTML = `<a class="page-link${activeClass}" href="#" onclick="goToPage(${i})">${i}</a>`;
+                paginationControls.appendChild(pageButton);
             }
-    
-            // Update email and role if needed (from userData or token)
-            const profileEmail = document.getElementById("profileEmail");
-            const profileRole = document.getElementById("profileRole");
-            if (profileEmail) {
-              profileEmail.textContent = userData.email || "user@example.com";
-            } else {
-              console.warn("Element with id profileEmail not found");
-            }
-    
-            if (profileRole) {
-              profileRole.textContent = `${userData.role || "User"} Profile`;
-            } else {
-              console.warn("Element with id profileRole not found");
-            }
-    
-            // Update profile images
-            this.updateProfileImages(UserProfilePicture);
-          }
-    
-          /**
-           * Updates the profile images in the DOM.
-           * @param {Object} profilePicture - The user's profile picture information.
-           */
-          updateProfileImages(profilePicture) {
-            if (!profilePicture || !profilePicture.filePath) {
-              console.log(
-                "No profile picture information available. Using default image."
-              );
-              this.setDefaultProfileImages();
-              return;
-            }
-    
-            // Normalize filePath to use forward slashes
-            const normalizedFilePath = profilePicture.filePath.replace(
-              /\\/g,
-              "/"
-            );
-    
-            // Construct the full URL for the profile image
-            const profileImageUrl = `${this.apiBaseUrl}/${normalizedFilePath}`;
-    
-            console.log(`Loading profile image from: ${profileImageUrl}`);
-    
-            const imageElements = ["profileImage", "profileImageSmall"];
-    
-            imageElements.forEach((elementId) => {
-              const imgElement = document.getElementById(elementId);
-              if (imgElement) {
-                imgElement.onerror = () => {
-                  console.warn(
-                    `Failed to load image: ${profileImageUrl}. Using default image.`
-                  );
-                  imgElement.src = this.defaultImage;
-                  imgElement.onerror = null; // Prevent infinite loop if default image also fails
-                };
-                imgElement.src = profileImageUrl;
-              } else {
-                console.warn(`Image element with id ${elementId} not found`);
-              }
-            });
-          }
-    
-          /**
-           * Sets default profile values when user data is unavailable.
-           */
-          setDefaultProfileValues() {
-            const defaultValues = {
-              userName: "User",
-              email: "user@example.com",
-              role: "User",
-            };
-    
-            const profileUserName = document.getElementById("profileUserName");
-            const profileUserNameSmall = document.getElementById(
-              "profileUserNameSmall"
-            );
-            const profileEmail = document.getElementById("profileEmail");
-            const profileRole = document.getElementById("profileRole");
-    
-            if (profileUserName) {
-              profileUserName.textContent = defaultValues.userName;
-            }
-    
-            if (profileUserNameSmall) {
-              profileUserNameSmall.textContent = defaultValues.userName;
-            }
-    
-            if (profileEmail) {
-              profileEmail.textContent = defaultValues.email;
-            }
-    
-            if (profileRole) {
-              profileRole.textContent = `${defaultValues.role} Profile`;
-            }
-    
-            this.setDefaultProfileImages();
-          }
-    
-          /**
-           * Sets the profile images to the default image.
-           */
-          setDefaultProfileImages() {
-            const imageElements = ["profileImage", "profileImageSmall"];
-            imageElements.forEach((elementId) => {
-              const imgElement = document.getElementById(elementId);
-              if (imgElement) {
-                imgElement.src = this.defaultImage;
-              } else {
-                console.warn(`Image element with id ${elementId} not found`);
-              }
-            });
-          }
-    
-          /**
-           * Handles the signout process by clearing the auth token and user data, then redirecting to the signin page.
-           */
-          handleSignout() {
-            sessionStorage.removeItem("authToken");
-            sessionStorage.removeItem(this.userDataKey); // Clear stored user data
-            sessionStorage.removeItem("auth"); // Aligning with sidebar.js
-            sessionStorage.removeItem("email"); // Aligning with sidebar.js
-            // Remove other session items if necessary
-            window.location.href = "auth-signin.html";
-          }
         }
+
+        /**
+         * Navigates to the specified page number and renders the table.
+         * @param {number} page - The page number to navigate to.
+         */
+        function goToPage(page) {
+            currentPage = page;
+            renderTable();
+            setupPagination();
+        }
+
+        /**
+         * Renders the table rows based on the current page and filtered packages.
+         */
+        function renderTable() {
+            const packageListBody = document.getElementById("packageListBody");
+            packageListBody.innerHTML = "";
+
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const paginatedPackages = packages.slice(start, end);
+
+            paginatedPackages.forEach(packageItem => {
+                // Debug: Log the packageItem to inspect the Price field
+                console.log("Rendering package:", packageItem);
+
+                // Safely parse Price to a number
+                let price = parseFloat(packageItem.Price);
+                if (isNaN(price)) {
+                    console.warn(`Invalid Price for Package ID ${packageItem.PackageID}:`, packageItem.Price);
+                    price = 0; // Default value or handle as needed
+                }
+
+                // Safely parse AvgRating to a number
+                let avgRating = parseFloat(packageItem.AvgRating);
+                if (isNaN(avgRating)) {
+                    console.warn(`Invalid AvgRating for Package ID ${packageItem.PackageID}:`, packageItem.AvgRating);
+                    avgRating = 0; // Default value or handle as needed
+                }
+
+                const offerStatus = packageItem.Offer && packageItem.Offer.IsActive ? 'Available' : 'Not Available';
+                const offerClass = packageItem.Offer && packageItem.Offer.IsActive ? 'bg-success' : 'bg-danger';
+
+                let statusClass = '';
+                let statusText = '';
+                if (packageItem.Status.toLowerCase() === 'in stock') {
+                    statusClass = 'bg-success';
+                    statusText = 'In Stock';
+                } else if (packageItem.Status.toLowerCase() === 'out of stock') {
+                    statusClass = 'bg-danger';
+                    statusText = 'Out of Stock';
+                } else if (packageItem.Status.toLowerCase() === 'running low') {
+                    statusClass = 'bg-warning';
+                    statusText = 'Running Low';
+                } else {
+                    statusClass = 'bg-secondary';
+                    statusText = 'Unknown';
+                }
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>#${packageItem.PackageID}</strong></td>
+                    <td>${packageItem.Name}</td>
+                    <td><span class="badge ${offerClass}">${offerStatus}</span></td>
+                    <td>$${price.toFixed(2)}</td>
+                    <td><span class="badge ${statusClass}">${statusText}</span></td>
+                    <td>
+                        <span>${avgRating.toFixed(1)}</span>
+                        <i class="icofont-star text-warning"></i>
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                            <button class="btn btn-outline-secondary edit-btn" onclick="editPackage(${packageItem.PackageID})" title="Edit Package">
+                                <i class="icofont-edit text-success"></i>
+                            </button>
+                            <button class="btn btn-outline-danger delete-btn" onclick="deletePackage(${packageItem.PackageID})" title="Delete Package">
+                                <i class="icofont-ui-delete text-danger"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                packageListBody.appendChild(tr);
+            });
+
+            // If no packages are found, display a message
+            if (paginatedPackages.length === 0) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td colspan="7" class="text-center">No packages found.</td>`;
+                packageListBody.appendChild(tr);
+            }
+        }
+
+        /**
+         * Navigates to the edit page for the specified package.
+         * @param {number} packageID - The ID of the package to edit.
+         */
+        function editPackage(packageID) {
+            window.location.href = `package-edit.html?packageID=${packageID}`;
+        }
+
+        /**
+         * Deletes the specified package after confirmation.
+         * @param {number} packageID - The ID of the package to delete.
+         */
+        async function deletePackage(packageID) {
+            const confirmDelete = confirm(`Are you sure you want to delete package ID ${packageID}?`);
+            if (!confirmDelete) return;
+
+            try {
+                const response = await fetch(`http://localhost:5000/api/packages/${packageID}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`,
+                    }
+                });
+
+                if (response.ok) {
+                    alert(`Package ID ${packageID} has been deleted successfully.`);
+                    // Remove the deleted package from allPackages and packages arrays
+                    allPackages = allPackages.filter(pkg => pkg.PackageID !== packageID);
+                    packages = packages.filter(pkg => pkg.PackageID !== packageID);
+                    // Re-render the table and pagination
+                    renderTable();
+                    setupPagination();
+                } else {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Failed to delete the package.');
+                }
+            } catch (error) {
+                console.error("Error deleting package:", error);
+                alert(`Error deleting package: ${error.message}`);
+            }
+        }
+
+        /**
+         * Handles the search input to filter packages.
+         */
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+
+            if (query === '') {
+                packages = [...allPackages];
+            } else {
+                packages = allPackages.filter(packageItem => {
+                    return (
+                        (packageItem.Name && packageItem.Name.toLowerCase().includes(query)) || 
+                        (packageItem.Price && packageItem.Price.toString().toLowerCase().includes(query)) ||
+                        (packageItem.Status && packageItem.Status.toLowerCase().includes(query)) || 
+                        (packageItem.AvgRating && packageItem.AvgRating.toString().includes(query))
+                    );
+                });
+            }
+
+            currentPage = 1;
+            renderTable();
+            setupPagination();
+        });
+
+        /**
+         * Fetches the list of packages from the API.
+         */
+        async function fetchPackages() {
+            try {
+                const response = await fetch('http://localhost:5000/api/packages', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`,
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch packages: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                // Debug: Log the fetched data
+                console.log("Fetched packages data:", data);
+
+                allPackages = data.map(pkg => ({
+                    ...pkg,
+                    Price: typeof pkg.Price === 'number' ? pkg.Price : parseFloat(pkg.Price) || 0,
+                    AvgRating: typeof pkg.AvgRating === 'number' ? pkg.AvgRating : parseFloat(pkg.AvgRating) || 0
+                }));
+                packages = [...allPackages];
+                renderTable();
+                setupPagination();
+            } catch (error) {
+                console.error("Error fetching packages:", error);
+                const packageListBody = document.getElementById("packageListBody");
+                packageListBody.innerHTML = `<tr><td colspan="7" class="text-center text-danger">Failed to load packages. Please try again later.</td></tr>`;
+            }
+        }
+
+        // Fetch packages on page load
+        fetchPackages();
+
+        /**
+         * UserProfileManager Class to handle user profile related functionalities.
+         */
     
         // Initialize when the document is ready
         // (Already handled in the loadComponent Promise chain)
       </script>
+   <script>
+    class UserProfileManager {
+      constructor() {
+        this.authToken = sessionStorage.getItem("authToken");
+        this.defaultImage = "assets/images/profile_av.svg";
+        this.apiBaseUrl = "http://localhost:5000"; // Update if needed
+        this.userDataKey = "userData"; // Key for storing user data in sessionStorage
+      }
 
+      /**
+       * Initializes the UserProfileManager.
+       */
+      async initialize() {
+        console.log("Initializing UserProfileManager");
+        if (!this.authToken) {
+          console.log("No authToken found, redirecting to signin");
+          this.handleSignout();
+          return;
+        }
+
+        if (this.isTokenExpired(this.authToken)) {
+          console.log("Auth token is expired, redirecting to signin");
+          this.handleSignout();
+          return;
+        }
+
+        try {
+          let userData = this.getStoredUserData();
+
+          if (!userData) {
+            console.log("No user data in sessionStorage, fetching from API");
+            const userId = this.getUserIdFromToken(this.authToken);
+            userData = await this.fetchUserData(userId);
+            this.storeUserData(userData);
+          } else {
+            console.log("User data retrieved from sessionStorage");
+          }
+
+          this.updateProfile(userData);
+          console.log("UserProfileManager initialized successfully");
+        } catch (error) {
+          console.error("Initialization error:", error);
+          this.setDefaultProfileValues();
+        }
+      }
+
+      /**
+       * Checks if the JWT token is expired.
+       * @param {string} token - The JWT token.
+       * @returns {boolean} True if expired, false otherwise.
+       */
+      isTokenExpired(token) {
+        try {
+          const payload = JSON.parse(atob(token.split(".")[1]));
+          const currentTime = Math.floor(Date.now() / 1000);
+          return payload.exp && payload.exp < currentTime;
+        } catch (error) {
+          console.error("Error checking token expiry:", error);
+          return true; // Treat as expired if unable to parse
+        }
+      }
+
+      /**
+       * Extracts the userId from the JWT token.
+       * @param {string} token - The JWT token.
+       * @returns {string} The userId.
+       */
+      getUserIdFromToken(token) {
+        try {
+          const payload = JSON.parse(atob(token.split(".")[1]));
+          return payload.payload.userId;
+        } catch (error) {
+          console.error("Error extracting userId from token:", error);
+          throw new Error("Invalid token");
+        }
+      }
+
+      /**
+       * Fetches user data from the API.
+       * @param {string} userId - The user ID.
+       * @returns {Object} The user data.
+       */
+      async fetchUserData(userId) {
+        const apiUrl = `${this.apiBaseUrl}/api/getusers/${userId}`;
+        try {
+          const response = await fetch(apiUrl, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${this.authToken}`,
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error(
+              `API request failed with status ${response.status}`
+            );
+          }
+
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          throw error;
+        }
+      }
+
+      /**
+       * Stores user data in sessionStorage.
+       * @param {Object} userData - The user data to store.
+       */
+      storeUserData(userData) {
+        try {
+          sessionStorage.setItem(this.userDataKey, JSON.stringify(userData));
+          sessionStorage.setItem("auth", this.authToken); // Aligning with sidebar.js
+          sessionStorage.setItem(
+            "email",
+            userData.email || "user@example.com"
+          ); // Aligning with sidebar.js
+          console.log("User data stored in sessionStorage");
+        } catch (error) {
+          console.error("Error storing user data in sessionStorage:", error);
+        }
+      }
+
+      /**
+       * Retrieves user data from sessionStorage.
+       * @returns {Object|null} The user data or null if not found.
+       */
+      getStoredUserData() {
+        try {
+          const data = sessionStorage.getItem(this.userDataKey);
+          return data ? JSON.parse(data) : null;
+        } catch (error) {
+          console.error(
+            "Error retrieving user data from sessionStorage:",
+            error
+          );
+          return null;
+        }
+      }
+
+      /**
+       * Updates the profile information in the DOM.
+       * @param {Object} userData - The user data from the API or sessionStorage.
+       */
+      updateProfile(userData) {
+        if (!userData) {
+          console.warn("No user data provided");
+          this.setDefaultProfileValues();
+          return;
+        }
+
+        const { Username, UserProfilePicture } = userData;
+
+        // Update username
+        const profileUserName = document.getElementById("profileUserName");
+        const profileUserNameSmall = document.getElementById(
+          "profileUserNameSmall"
+        );
+        if (profileUserName) {
+          profileUserName.textContent = Username || "User";
+        } else {
+          console.warn("Element with id profileUserName not found");
+        }
+
+        if (profileUserNameSmall) {
+          profileUserNameSmall.textContent = Username || "User";
+        } else {
+          console.warn("Element with id profileUserNameSmall not found");
+        }
+
+        // Update email and role if needed (from userData or token)
+        const profileEmail = document.getElementById("profileEmail");
+        const profileRole = document.getElementById("profileRole");
+        if (profileEmail) {
+          profileEmail.textContent = userData.email || "user@example.com";
+        } else {
+          console.warn("Element with id profileEmail not found");
+        }
+
+        if (profileRole) {
+          profileRole.textContent = `${userData.role || "User"} Profile`;
+        } else {
+          console.warn("Element with id profileRole not found");
+        }
+
+        // Update profile images
+        this.updateProfileImages(UserProfilePicture);
+      }
+
+      /**
+       * Updates the profile images in the DOM.
+       * @param {Object} profilePicture - The user's profile picture information.
+       */
+      updateProfileImages(profilePicture) {
+        if (!profilePicture || !profilePicture.filePath) {
+          console.log(
+            "No profile picture information available. Using default image."
+          );
+          this.setDefaultProfileImages();
+          return;
+        }
+
+        // Normalize filePath to use forward slashes
+        const normalizedFilePath = profilePicture.filePath.replace(
+          /\\/g,
+          "/"
+        );
+
+        // Construct the full URL for the profile image
+        const profileImageUrl = `${this.apiBaseUrl}/${normalizedFilePath}`;
+
+        console.log(`Loading profile image from: ${profileImageUrl}`);
+
+        const imageElements = ["profileImage", "profileImageSmall"];
+
+        imageElements.forEach((elementId) => {
+          const imgElement = document.getElementById(elementId);
+          if (imgElement) {
+            imgElement.onerror = () => {
+              console.warn(
+                `Failed to load image: ${profileImageUrl}. Using default image.`
+              );
+              imgElement.src = this.defaultImage;
+              imgElement.onerror = null; // Prevent infinite loop if default image also fails
+            };
+            imgElement.src = profileImageUrl;
+          } else {
+            console.warn(`Image element with id ${elementId} not found`);
+          }
+        });
+      }
+
+      /**
+       * Sets default profile values when user data is unavailable.
+       */
+      setDefaultProfileValues() {
+        const defaultValues = {
+          userName: "User",
+          email: "user@example.com",
+          role: "User",
+        };
+
+        const profileUserName = document.getElementById("profileUserName");
+        const profileUserNameSmall = document.getElementById(
+          "profileUserNameSmall"
+        );
+        const profileEmail = document.getElementById("profileEmail");
+        const profileRole = document.getElementById("profileRole");
+
+        if (profileUserName) {
+          profileUserName.textContent = defaultValues.userName;
+        }
+
+        if (profileUserNameSmall) {
+          profileUserNameSmall.textContent = defaultValues.userName;
+        }
+
+        if (profileEmail) {
+          profileEmail.textContent = defaultValues.email;
+        }
+
+        if (profileRole) {
+          profileRole.textContent = `${defaultValues.role} Profile`;
+        }
+
+        this.setDefaultProfileImages();
+      }
+
+      /**
+       * Sets the profile images to the default image.
+       */
+      setDefaultProfileImages() {
+        const imageElements = ["profileImage", "profileImageSmall"];
+        imageElements.forEach((elementId) => {
+          const imgElement = document.getElementById(elementId);
+          if (imgElement) {
+            imgElement.src = this.defaultImage;
+          } else {
+            console.warn(`Image element with id ${elementId} not found`);
+          }
+        });
+      }
+
+      /**
+       * Handles the signout process by clearing the auth token and user data, then redirecting to the signin page.
+       */
+      handleSignout() {
+        sessionStorage.removeItem("authToken");
+        sessionStorage.removeItem(this.userDataKey); // Clear stored user data
+        sessionStorage.removeItem("auth"); // Aligning with sidebar.js
+        sessionStorage.removeItem("email"); // Aligning with sidebar.js
+        // Remove other session items if necessary
+        window.location.href = "auth-signin.html";
+      }
+    }
+
+    // Initialize when the document is ready
+    // (Already handled in the loadComponent Promise chain)
+  </script>
 </body>
-</html> 
+</html>
