@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const tableBody = document.querySelector("#myDataTable tbody");
     const statusFilter = document.getElementById('statusFilter');
     const applyFilterButton = document.getElementById('applyFilterButton');
-    const apiUrl = "http://localhost:5000/api/orders/admin";
-    let allOrders = []; // To store all fetched orders
+    const adminApiUrl = "http://localhost:5000/api/orders/admin";
+    const searchApiUrl = "http://localhost:5000/search/order";
+    const errorMessage = document.getElementById('errorMessage');
 
     // Initialize DataTable once
     const dataTable = $('#myDataTable').DataTable({
@@ -22,7 +22,16 @@ document.addEventListener("DOMContentLoaded", () => {
             info: "Showing _START_ to _END_ of _TOTAL_ orders",
             infoFiltered: "(filtered from _MAX_ total orders)",
             zeroRecords: "No matching orders found",
-            emptyTable: "No orders available"
+            emptyTable: "No orders available",
+            loadingRecords: "Loading orders...",
+            processing: "Processing...",
+            paginate: {
+                first: "First",
+                last: "Last",
+                next: "Next",
+                previous: "Previous"
+            },
+            // Customize other language options as needed
         },
         data: [], // Initialize with empty data
         columns: [
@@ -47,7 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
             // Status badge
             const status = mapStatus(data.Status);
             row.cells[3].innerHTML = `<span class="badge ${status.class}">${capitalizeFirstLetter(status.label)}</span>`;
-        }
+        },
+        // Optionally, handle error in DataTables' initComplete or drawCallback
     });
 
     // Function to map status to label and class
@@ -66,57 +76,78 @@ document.addEventListener("DOMContentLoaded", () => {
         return statusMap[status.toLowerCase()] || { label: status || 'Unknown', class: 'bg-light' };
     }
 
-    // Function to fetch all orders
-    function fetchAllOrders() {
-        fetch(apiUrl, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
-            },
-        })
-        .then((response) => {
+    // Function to fetch orders (all or filtered by status)
+    async function fetchOrders(status = '') {
+        // Hide any previous error message
+        errorMessage.classList.add('d-none');
+        errorMessage.textContent = '';
+
+        try {
+            let response;
+            let data;
+
+            if (status && status.toLowerCase() !== 'all') {
+                // Use the search API with POST method
+                response = await fetch(searchApiUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+                    },
+                    body: JSON.stringify({
+                        search: {
+                            Status: status.toLowerCase()
+                        }
+                    })
+                });
+            } else {
+                // Use the admin API with GET method
+                response = await fetch(adminApiUrl, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+                    },
+                });
+            }
+
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            return response.json();
-        })
-        .then((data) => {
-            allOrders = data; // Store all orders
-            applyFilter(); // Apply initial filter
-        })
-        .catch((error) => {
+
+            data = await response.json();
+
+            // Clear existing data
+            dataTable.clear();
+
+            if (Array.isArray(data) && data.length > 0) {
+                // Add new data
+                dataTable.rows.add(data).draw();
+            } else {
+                // No data available
+                dataTable.draw(); // Triggers DataTables to show 'emptyTable' or 'zeroRecords' message
+            }
+
+        } catch (error) {
             console.error("Error fetching data:", error);
+
+            // Clear existing data
             dataTable.clear().draw();
-            dataTable.row.add(`<tr><td colspan="4" class="text-center text-danger">Failed to load data</td></tr>`).draw();
-        });
-    }
 
-    // Function to apply filter and update DataTable
-    function applyFilter() {
-        const selectedStatus = statusFilter.value;
-        let filteredData = allOrders;
-
-        if (selectedStatus) {
-            filteredData = allOrders.filter(order => 
-                order.Status.toLowerCase() === selectedStatus.toLowerCase()
-            );
+            // Optionally, display an error message
+            errorMessage.textContent = "no orders found";
+            errorMessage.classList.remove('d-none');
         }
-
-        // Clear existing data
-        dataTable.clear();
-
-        // Add new filtered data
-        dataTable.rows.add(filteredData).draw();
     }
 
     // Handle apply filter button click
     applyFilterButton.addEventListener('click', () => {
-        applyFilter();
+        const selectedStatus = statusFilter.value;
+        fetchOrders(selectedStatus);
     });
 
     // Initial fetch of all orders
-    fetchAllOrders();
+    fetchOrders();
 });
 
 // Utility function to capitalize the first letter
