@@ -9,6 +9,7 @@
     />
     <title>::Fantasize:: Notifications</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <!-- DataTables CSS -->
     <link
       rel="stylesheet"
       href="assets/plugin/datatables/responsive.dataTables.min.css"
@@ -17,20 +18,44 @@
       rel="stylesheet"
       href="assets/plugin/datatables/dataTables.bootstrap5.min.css"
     />
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/ebazar.style.min.css" />
+    <!-- Bootstrap CSS -->
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+    crossorigin="anonymous"
+  />
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"
+  ></script>
+  
+
   </head>
+  
   <body>
+     <!-- Bootstrap JS Bundle (includes Popper) -->
+     <script
+     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+     integrity="sha384-QGexHbP4HggqGZx4O+IH9D0kGkGBi3uG73HVwCVv3P0bi4mYFwZ50S88M5bZQIg+"
+     crossorigin="anonymous"
+   ></script>
     <div id="ebazar-layout" class="theme-blue">
       <!-- Sidebar -->
       <div id="sidebar"></div>
-      <!-- Main body area -->
+      <!-- Main Body Area -->
       <div class="main px-lg-4 px-md-4">
         <!-- Header -->
         <div id="header"></div>
+        <!-- Notifications Section -->
         <div class="col-12">
           <div class="col-md-12 mt-4">
             <div class="card">
               <div class="card-body">
+                <!-- Search Input -->
                 <input
                   type="text"
                   id="searchInput"
@@ -54,11 +79,13 @@
                     </tr>
                   </thead>
                   <tbody id="notificationListBody">
+                    <!-- Dynamic Content -->
                     <tr>
-                      <td>sdf</td>
+                      <td colspan="6" class="text-center">Loading notifications...</td>
                     </tr>
                   </tbody>
                 </table>
+                <!-- Pagination Controls -->
                 <nav aria-label="Page navigation">
                   <ul
                     class="pagination justify-content-center"
@@ -71,23 +98,114 @@
         </div>
       </div>
 
-      <!-- Modal -->    <script src="assets/js/common.js"></script>
-
-      <div id="modal"></div>
+      <!-- Notification Modal -->
+      <div
+        class="modal fade"
+        id="notificationDialog"
+        tabindex="-1"
+        aria-labelledby="notificationDialogLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="notificationDialogLabel">
+                Notification Details
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <!-- Notification Details -->
+              <p><strong>ID:</strong> <span id="dialogNotificationID"></span></p>
+              <p><strong>User:</strong> <span id="dialogUser"></span></p>
+              <p><strong>Subject:</strong> <span id="dialogSubject"></span></p>
+              <p><strong>Template:</strong></p>
+              <pre id="dialogTemplate" style="white-space: pre-wrap;"></pre>
+              <p><strong>Created At:</strong> <span id="dialogCreatedAt"></span></p>
+              <p><strong>Updated At:</strong> <span id="dialogUpdatedAt"></span></p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- Bootstrap JS Bundle (includes Popper) -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-QGexHbP4HggqGZx4O+IH9D0kGkGBi3uG73HVwCVv3P0bi4mYFwZ50S88M5bZQIg+"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Load Components (Sidebar and Header) -->
     <script>
+      /**
+       * Loads a component into the specified selector.
+       * @param {string} selector - The CSS selector where the component will be loaded.
+       * @param {string} url - The URL of the component to load.
+       * @returns {Promise} - Resolves when the component is loaded.
+       */
       function loadComponent(selector, url) {
-        fetch(url)
-          .then((response) => response.text())
+        return fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`Failed to load ${url}: ${response.statusText}`);
+            }
+            return response.text();
+          })
           .then((data) => {
-            document.querySelector(selector).innerHTML = data;
+            const element = document.querySelector(selector);
+            if (element) {
+              element.innerHTML = data;
+              console.log(`Loaded ${url} into ${selector}`);
+            } else {
+              console.warn(`Selector ${selector} not found`);
+            }
+          })
+          .catch((error) => {
+            console.error(`Error loading ${url}:`, error);
           });
       }
-      loadComponent("#sidebar", "sidebar.html");
-      loadComponent("#header", "header.html");
-      loadComponent("#modal", "modal.html");
 
-      // Load Notifications Data
+      // Load Sidebar and Header Components Sequentially
+      Promise.all([
+        loadComponent("#sidebar", "sidebar.html"),
+        loadComponent("#header", "header.html"),
+        // Modal is embedded directly; no need to load it
+      ])
+        .then(() => {
+          // Initialize UserProfileManager after components are loaded
+          const userProfileManager = new UserProfileManager();
+          userProfileManager.initialize().catch((error) => {
+            console.error("Failed to initialize UserProfileManager:", error);
+          });
+        })
+        .catch((error) => {
+          console.error("Error loading components:", error);
+        });
+    </script>
+
+    <!-- Handle Notifications and Modal -->
+    <script>
+      // Store all notifications for easy access
+      let allNotifications = [];
+
+      /**
+       * Loads notifications from the API and populates the table.
+       */
       function loadNotifications() {
         fetch("http://localhost:5000/notifications", {
           method: "GET",
@@ -96,57 +214,155 @@
             Authorization: "Bearer " + sessionStorage.getItem("authToken"),
           },
         })
-          .then((response) => response.json())
-          .then((data) => {
-            // Populate table
-            const tableBody = document.getElementById("notificationListBody");
-            tableBody.innerHTML = "";
-            data.forEach((notification) => {
-              const row = document.createElement("tr");
-              row.innerHTML = `
-                            <td>${notification.notificationID}</td>
-                            <td>${notification.user?.name || "N/A"}</td>
-                            <td>${notification.subject}</td>
-                            <td>${JSON.stringify(notification.template)}</td>
-                            <td>${new Date(
-                              notification.createdAt
-                            ).toLocaleString()}</td>
-                            <td><button class="btn btn-primary btn-sm">View</button></td>
-                        `;
-              tableBody.appendChild(row);
-            });
-
-            // Add search functionality
-            const searchInput = document.getElementById("searchInput");
-            searchInput.addEventListener("keyup", () => {
-              const filter = searchInput.value.toLowerCase();
-              const rows = tableBody.querySelectorAll("tr");
-              rows.forEach((row) => {
-                const cells = row.querySelectorAll("td");
-                const match = Array.from(cells).some((cell) =>
-                  cell.textContent.toLowerCase().includes(filter)
-                );
-                row.style.display = match ? "" : "none";
-              });
-            });
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
           })
-          .catch((error) =>
-            console.error("Error loading notifications:", error)
-          );
+          .then((data) => {
+            allNotifications = data; // Store data for later use
+            populateTable(data);
+          })
+          .catch((error) => {
+            console.error("Error loading notifications:", error);
+            const tableBody = document.getElementById("notificationListBody");
+            tableBody.innerHTML = `
+              <tr>
+                <td colspan="6" class="text-center text-danger">
+                  Failed to load notifications. Please try again later.
+                </td>
+              </tr>
+            `;
+          });
       }
 
-      // Pagination functionality (if needed)
+      /**
+       * Populates the notifications table with data.
+       * @param {Array} notifications - Array of notification objects.
+       */
+      function populateTable(notifications) {
+        const tableBody = document.getElementById("notificationListBody");
+        tableBody.innerHTML = ""; // Clear existing content
+
+        if (notifications.length === 0) {
+          tableBody.innerHTML = `
+            <tr>
+              <td colspan="6" class="text-center">No notifications found.</td>
+            </tr>
+          `;
+          return;
+        }
+
+        notifications.forEach((notification) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${notification.notificationID}</td>
+            <td>${notification.user?.name || "N/A"}</td>
+            <td>${notification.subject}</td>
+            <td>${
+              typeof notification.template === "object"
+                ? JSON.stringify(notification.template)
+                : notification.template
+            }</td>
+            <td>${new Date(notification.createdAt).toLocaleString()}</td>
+            <td>
+              <button
+                class="btn btn-primary btn-sm view-btn"
+                data-id="${notification.notificationID}"
+              >
+                View
+              </button>
+            </td>
+          `;
+          tableBody.appendChild(row);
+        });
+
+        // Initialize event listeners for "View" buttons
+        initializeViewButtons();
+      }
+
+      /**
+       * Initializes event listeners on all "View" buttons.
+       */
+      function initializeViewButtons() {
+        const viewButtons = document.querySelectorAll(".view-btn");
+        viewButtons.forEach((button) => {
+          button.addEventListener("click", (event) => {
+            const notificationID = event.target.getAttribute("data-id");
+            viewNotification(notificationID);
+          });
+        });
+      }
+
+      /**
+       * View notification details.
+       * @param {number|string} notificationID - The ID of the notification to view.
+       */
+      function viewNotification(notificationID) {
+        const notification = allNotifications.find(
+          (notif) => notif.notificationID == notificationID
+        );
+        if (notification) {
+          populateAndShowDialog(notification);
+        } else {
+          console.error(`Notification with ID ${notificationID} not found.`);
+          alert("Notification details not found.");
+        }
+      }
+
+      /**
+       * Populates the modal with notification details and displays it.
+       * @param {Object} notification - The notification object.
+       */
+      function populateAndShowDialog(notification) {
+        // Populate dialog fields
+        document.getElementById("dialogNotificationID").textContent =
+          notification.notificationID;
+        document.getElementById("dialogUser").textContent =
+          notification.user?.name || "N/A";
+        document.getElementById("dialogSubject").textContent =
+          notification.subject;
+        document.getElementById("dialogTemplate").textContent =
+          typeof notification.template === "object"
+            ? JSON.stringify(notification.template, null, 2)
+            : notification.template;
+       
+        document.getElementById("dialogCreatedAt").textContent = new Date(
+          notification.createdAt
+        ).toLocaleString();
+        document.getElementById("dialogUpdatedAt").textContent = new Date(
+          notification.updatedAt
+        ).toLocaleString();
+
+        // Show the modal using Bootstrap's Modal API
+        const notificationModal = new bootstrap.Modal(
+          document.getElementById("notificationDialog"),
+          {
+            keyboard: true,
+          }
+        );
+        notificationModal.show();
+      }
+
+      /**
+       * Sets up pagination controls (optional).
+       * @param {Array} data - Array of notification objects.
+       * @param {number} rowsPerPage - Number of rows per page.
+       */
       function setupPagination(data, rowsPerPage) {
         const paginationControls =
           document.getElementById("paginationControls");
         const pageCount = Math.ceil(data.length / rowsPerPage);
 
         paginationControls.innerHTML = ""; // Clear existing controls
+
         for (let i = 1; i <= pageCount; i++) {
           const button = document.createElement("li");
           button.className = "page-item";
           button.innerHTML = `<a class="page-link" href="#">${i}</a>`;
-          button.addEventListener("click", () => {
+          button.addEventListener("click", (e) => {
+            e.preventDefault();
             const start = (i - 1) * rowsPerPage;
             const end = i * rowsPerPage;
             displayRows(data.slice(start, end));
@@ -155,57 +371,360 @@
         }
       }
 
+      /**
+       * Displays a subset of rows in the table based on pagination.
+       * @param {Array} rows - Array of notification objects to display.
+       */
       function displayRows(rows) {
         const tableBody = document.getElementById("notificationListBody");
         tableBody.innerHTML = "";
         rows.forEach((notification) => {
           const row = document.createElement("tr");
           row.innerHTML = `
-                    <td>${notification.notificationID}</td>
-                    <td>${notification.user?.name || "N/A"}</td>
-                    <td>${notification.subject}</td>
-                    <td>${JSON.stringify(notification.template)}</td>
-                    <td>${new Date(
-                      notification.createdAt
-                    ).toLocaleString()}</td>
-                    <td><button class="btn btn-primary btn-sm">View</button></td>
-                `;
+            <td>${notification.notificationID}</td>
+            <td>${notification.user?.name || "N/A"}</td>
+            <td>${notification.subject}</td>
+            <td>${
+              typeof notification.template === "object"
+                ? JSON.stringify(notification.template)
+                : notification.template
+            }</td>
+            <td>${new Date(notification.createdAt).toLocaleString()}</td>
+            <td>
+              <button
+                class="btn btn-primary btn-sm view-btn"
+                data-id="${notification.notificationID}"
+              >
+                View
+              </button>
+            </td>
+          `;
           tableBody.appendChild(row);
         });
+
+        // Re-initialize view button event listeners
+        initializeViewButtons();
       }
 
+      // Add search functionality and load notifications when the DOM is fully loaded
       document.addEventListener("DOMContentLoaded", () => {
         loadNotifications();
-      });
-      document
-        .getElementById("searchInput")
-        .addEventListener("input", function () {
-          const query = this.value.toLowerCase();
 
-          if (query === "") {
-            filteredNotifications = [...allNotifications];
-          } else {
-            filteredNotifications = allNotifications.filter((notification) => {
-              return (
-                notification.subject.toLowerCase().includes(query) ||
-                (notification.user?.name || "N/A")
-                  .toLowerCase()
-                  .includes(query) ||
-                new Date(notification.createdAt)
-                  .toLocaleString()
-                  .toLowerCase()
-                  .includes(query)
-              );
-            });
+        const searchInput = document.getElementById("searchInput");
+        searchInput.addEventListener("keyup", () => {
+          const filter = searchInput.value.toLowerCase();
+          const rows = document
+            .getElementById("notificationListBody")
+            .querySelectorAll("tr");
+          rows.forEach((row) => {
+            const cells = row.querySelectorAll("td");
+            const match = Array.from(cells).some((cell) =>
+              cell.textContent.toLowerCase().includes(filter)
+            );
+            row.style.display = match ? "" : "none";
+          });
+        });
+      });
+    </script>
+
+    <!-- UserProfileManager Script -->
+    <script>
+      class UserProfileManager {
+        constructor() {
+          this.authToken = sessionStorage.getItem("authToken");
+          this.defaultImage = "assets/images/profile_av.svg";
+          this.apiBaseUrl = "http://localhost:5000"; // Update if needed
+          this.userDataKey = "userData"; // Key for storing user data in sessionStorage
+        }
+
+        /**
+         * Initializes the UserProfileManager.
+         */
+        async initialize() {
+          console.log("Initializing UserProfileManager");
+          if (!this.authToken) {
+            console.log("No authToken found, redirecting to signin");
+            this.handleSignout();
+            return;
           }
 
-          currentPage = 1;
-          renderTable();
-          setupPagination(filteredNotifications);
-        });
+          if (this.isTokenExpired(this.authToken)) {
+            console.log("Auth token is expired, redirecting to signin");
+            this.handleSignout();
+            return;
+          }
+
+          try {
+            let userData = this.getStoredUserData();
+
+            if (!userData) {
+              console.log("No user data in sessionStorage, fetching from API");
+              const userId = this.getUserIdFromToken(this.authToken);
+              userData = await this.fetchUserData(userId);
+              this.storeUserData(userData);
+            } else {
+              console.log("User data retrieved from sessionStorage");
+            }
+
+            this.updateProfile(userData);
+            console.log("UserProfileManager initialized successfully");
+          } catch (error) {
+            console.error("Initialization error:", error);
+            this.setDefaultProfileValues();
+          }
+        }
+
+        /**
+         * Checks if the JWT token is expired.
+         * @param {string} token - The JWT token.
+         * @returns {boolean} True if expired, false otherwise.
+         */
+        isTokenExpired(token) {
+          try {
+            const payload = JSON.parse(atob(token.split(".")[1]));
+            const currentTime = Math.floor(Date.now() / 1000);
+            return payload.exp && payload.exp < currentTime;
+          } catch (error) {
+            console.error("Error checking token expiry:", error);
+            return true; // Treat as expired if unable to parse
+          }
+        }
+
+        /**
+         * Extracts the userId from the JWT token.
+         * @param {string} token - The JWT token.
+         * @returns {string} The userId.
+         */
+        getUserIdFromToken(token) {
+          try {
+            const payload = JSON.parse(atob(token.split(".")[1]));
+            return payload.payload.userId;
+          } catch (error) {
+            console.error("Error extracting userId from token:", error);
+            throw new Error("Invalid token");
+          }
+        }
+
+        /**
+         * Fetches user data from the API.
+         * @param {string} userId - The user ID.
+         * @returns {Object} The user data.
+         */
+        async fetchUserData(userId) {
+          const apiUrl = `${this.apiBaseUrl}/api/getusers/${userId}`;
+          try {
+            const response = await fetch(apiUrl, {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${this.authToken}`,
+                "Content-Type": "application/json",
+              },
+            });
+
+            if (!response.ok) {
+              throw new Error(
+                `API request failed with status ${response.status}`
+              );
+            }
+
+            const data = await response.json();
+            return data;
+          } catch (error) {
+            console.error("Error fetching user data:", error);
+            throw error;
+          }
+        }
+
+        /**
+         * Stores user data in sessionStorage.
+         * @param {Object} userData - The user data to store.
+         */
+        storeUserData(userData) {
+          try {
+            sessionStorage.setItem(this.userDataKey, JSON.stringify(userData));
+            sessionStorage.setItem("auth", this.authToken); // Aligning with sidebar.js
+            sessionStorage.setItem(
+              "email",
+              userData.email || "user@example.com"
+            ); // Aligning with sidebar.js
+            console.log("User data stored in sessionStorage");
+          } catch (error) {
+            console.error("Error storing user data in sessionStorage:", error);
+          }
+        }
+
+        /**
+         * Retrieves user data from sessionStorage.
+         * @returns {Object|null} The user data or null if not found.
+         */
+        getStoredUserData() {
+          try {
+            const data = sessionStorage.getItem(this.userDataKey);
+            return data ? JSON.parse(data) : null;
+          } catch (error) {
+            console.error(
+              "Error retrieving user data from sessionStorage:",
+              error
+            );
+            return null;
+          }
+        }
+
+        /**
+         * Updates the profile information in the DOM.
+         * @param {Object} userData - The user data from the API or sessionStorage.
+         */
+        updateProfile(userData) {
+          if (!userData) {
+            console.warn("No user data provided");
+            this.setDefaultProfileValues();
+            return;
+          }
+
+          const { Username, UserProfilePicture } = userData;
+
+          // Update username
+          const profileUserName = document.getElementById("profileUserName");
+          const profileUserNameSmall = document.getElementById(
+            "profileUserNameSmall"
+          );
+          if (profileUserName) {
+            profileUserName.textContent = Username || "User";
+          } else {
+            console.warn("Element with id profileUserName not found");
+          }
+
+          if (profileUserNameSmall) {
+            profileUserNameSmall.textContent = Username || "User";
+          } else {
+            console.warn("Element with id profileUserNameSmall not found");
+          }
+
+          // Update email and role if needed (from userData or token)
+          const profileEmail = document.getElementById("profileEmail");
+          const profileRole = document.getElementById("profileRole");
+          if (profileEmail) {
+            profileEmail.textContent = userData.email || "user@example.com";
+          } else {
+            console.warn("Element with id profileEmail not found");
+          }
+
+          if (profileRole) {
+            profileRole.textContent = `${userData.role || "User"} Profile`;
+          } else {
+            console.warn("Element with id profileRole not found");
+          }
+
+          // Update profile images
+          this.updateProfileImages(UserProfilePicture);
+        }
+
+        /**
+         * Updates the profile images in the DOM.
+         * @param {Object} profilePicture - The user's profile picture information.
+         */
+        updateProfileImages(profilePicture) {
+          if (!profilePicture || !profilePicture.filePath) {
+            console.log(
+              "No profile picture information available. Using default image."
+            );
+            this.setDefaultProfileImages();
+            return;
+          }
+
+          // Normalize filePath to use forward slashes
+          const normalizedFilePath = profilePicture.filePath.replace(
+            /\\/g,
+            "/"
+          );
+
+          // Construct the full URL for the profile image
+          const profileImageUrl = `${this.apiBaseUrl}/${normalizedFilePath}`;
+
+          console.log(`Loading profile image from: ${profileImageUrl}`);
+
+          const imageElements = ["profileImage", "profileImageSmall"];
+
+          imageElements.forEach((elementId) => {
+            const imgElement = document.getElementById(elementId);
+            if (imgElement) {
+              imgElement.onerror = () => {
+                console.warn(
+                  `Failed to load image: ${profileImageUrl}. Using default image.`
+                );
+                imgElement.src = this.defaultImage;
+                imgElement.onerror = null; // Prevent infinite loop if default image also fails
+              };
+              imgElement.src = profileImageUrl;
+            } else {
+              console.warn(`Image element with id ${elementId} not found`);
+            }
+          });
+        }
+
+        /**
+         * Sets default profile values when user data is unavailable.
+         */
+        setDefaultProfileValues() {
+          const defaultValues = {
+            userName: "User",
+            email: "user@example.com",
+            role: "User",
+          };
+
+          const profileUserName = document.getElementById("profileUserName");
+          const profileUserNameSmall = document.getElementById(
+            "profileUserNameSmall"
+          );
+          const profileEmail = document.getElementById("profileEmail");
+          const profileRole = document.getElementById("profileRole");
+
+          if (profileUserName) {
+            profileUserName.textContent = defaultValues.userName;
+          }
+
+          if (profileUserNameSmall) {
+            profileUserNameSmall.textContent = defaultValues.userName;
+          }
+
+          if (profileEmail) {
+            profileEmail.textContent = defaultValues.email;
+          }
+
+          if (profileRole) {
+            profileRole.textContent = `${defaultValues.role} Profile`;
+          }
+
+          this.setDefaultProfileImages();
+        }
+
+        /**
+         * Sets the profile images to the default image.
+         */
+        setDefaultProfileImages() {
+          const imageElements = ["profileImage", "profileImageSmall"];
+          imageElements.forEach((elementId) => {
+            const imgElement = document.getElementById(elementId);
+            if (imgElement) {
+              imgElement.src = this.defaultImage;
+            } else {
+              console.warn(`Image element with id ${elementId} not found`);
+            }
+          });
+        }
+
+        /**
+         * Handles the signout process by clearing the auth token and user data, then redirecting to the signin page.
+         */
+        handleSignout() {
+          sessionStorage.removeItem("authToken");
+          sessionStorage.removeItem(this.userDataKey); // Clear stored user data
+          sessionStorage.removeItem("auth"); // Aligning with sidebar.js
+          sessionStorage.removeItem("email"); // Aligning with sidebar.js
+          // Remove other session items if necessary
+          window.location.href = "auth-signin.html";
+        }
+      }
     </script>
-    <script src="assets/bundles/libscripts.bundle.js"></script>
-    <script src="assets/bundles/dataTables.bundle.js"></script>
-    <script src="../js/template.js"></script>
   </body>
 </html>

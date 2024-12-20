@@ -1,0 +1,49 @@
+<!-- notificationDialog.html -->
+<div
+  class="modal fade"
+  id="notificationDialog"
+  tabindex="-1"
+  aria-labelledby="notificationDialogLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="notificationDialogLabel">Notification Details</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- Loading Spinner -->
+        <div id="dialogLoading" class="text-center my-3">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        <!-- Notification Details will be populated here -->
+        <div id="dialogContent" style="display: none;">
+          <p><strong>ID:</strong> <span id="dialogNotificationID"></span></p>
+          <p><strong>Subject:</strong> <span id="dialogSubject"></span></p>
+          <p><strong>Template:</strong></p>
+          <pre id="dialogTemplate" style="white-space: pre-wrap;"></pre>
+          <p><strong>Sent:</strong> <span id="dialogSent"></span></p>
+          <p><strong>Created At:</strong> <span id="dialogCreatedAt"></span></p>
+          <p><strong>Updated At:</strong> <span id="dialogUpdatedAt"></span></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
