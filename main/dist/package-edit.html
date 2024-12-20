@@ -612,54 +612,58 @@
     <script src="../js/template.js"></script>
     <script>
       "use strict";
-
+    
       // Utility function to get package ID from URL
       function getPackageIdFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get("packageID");
       }
-
+    
       const params = getPackageIdFromUrl();
       let uploadedImagesCount = 0;
       let selectedFiles = [];
       let selectedCategoryId = null;
-
+    
       let originalMaterials = [];
       let materialsToDelete = [];
       let hasMaterials = false; // Flag to determine if package has materials
-
+    
+      // Global variables to store existing resource IDs
+      let existingImageIDs = [];
+      let existingVideoIDs = [];
+    
       // Global variable to store available materials
       let availableMaterials = [];
-
+    
       document.addEventListener("DOMContentLoaded", async () => {
         // Fetch categories
         await fetchCategories();
-
+    
         // Fetch available materials
         await fetchAvailableMaterials();
-
+    
         // Fetch package details
         await fetchPackageDetails(params);
-
+    
         // Fetch assigned materials for the package
         await fetchAssignedMaterials(params);
-
+    
         // Initialize materials buttons
         initializeMaterialsButtons();
-
+    
         // Initialize product table and selection logic
         initializeProductTableLogic();
-
+    
         // Initialize image and video upload logic
         initializeImageUploader();
         initializeVideoUploader();
-
+    
         // Initialize form submission
         document
           .getElementById("submitButton")
           .addEventListener("click", updatePackage);
       });
-
+    
       // ---------------------------- Fetch Categories ----------------------------
       async function fetchCategories() {
         try {
@@ -676,31 +680,31 @@
           );
           const data = await response.json();
           const categorySelect = document.getElementById("categorySelect");
-
+    
           data.forEach((category) => {
             if (category.SubCategory && category.SubCategory.length > 0) {
               const optgroup = document.createElement("optgroup");
               optgroup.label = category.Name;
-
+    
               category.SubCategory.forEach((subCategory) => {
                 const option = document.createElement("option");
                 option.value = subCategory.SubCategoryID;
                 option.textContent = subCategory.Name;
                 optgroup.appendChild(option);
               });
-
+    
               categorySelect.appendChild(optgroup);
             }
           });
         } catch (error) {
           console.error("Error fetching categories:", error);
         }
-
+    
         const categorySelect = document.getElementById("categorySelect");
         const selectedCategoriesList = document.getElementById(
           "selectedCategoriesList"
         );
-
+    
         categorySelect.addEventListener("change", function (event) {
           selectedCategoriesList.innerHTML = "";
           const selectedOption =
@@ -713,7 +717,7 @@
             selectedCategoriesList.appendChild(listItem);
           }
         });
-
+    
         categorySelect.addEventListener("dblclick", function (event) {
           const selectedOption = event.target;
           if (selectedOption.tagName === "OPTION") {
@@ -724,7 +728,7 @@
             selectedCategoriesList.appendChild(listItem);
           }
         });
-
+    
         selectedCategoriesList.addEventListener("click", function (event) {
           const clickedItem = event.target;
           if (clickedItem.tagName === "LI") {
@@ -739,7 +743,7 @@
           }
         });
       }
-
+    
       // ---------------------------- Fetch Available Materials ----------------------------
       async function fetchAvailableMaterials() {
         try {
@@ -754,13 +758,13 @@
               },
             }
           );
-
+    
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
-
+    
           const data = await response.json();
-
+    
           if (Array.isArray(data)) {
             availableMaterials = data.map((m) => ({ name: m.Name }));
           } else {
@@ -770,7 +774,7 @@
           console.error("Error fetching available materials:", error);
         }
       }
-
+    
       // ---------------------------- Fetch Package Details ----------------------------
       async function fetchPackageDetails(packageID) {
         const apiUrl = `http://localhost:5000/api/packages/${packageID}`;
@@ -783,11 +787,11 @@
               cookie: "authToken=" + sessionStorage.getItem("authToken"),
             },
           });
-
+    
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
-
+    
           const data = await response.json();
           fillInTheFields(data);
           displayCustomizations(data.Customization);
@@ -800,7 +804,7 @@
           );
         }
       }
-
+    
       // ---------------------------- Fetch Assigned Materials for Package ----------------------------
       async function fetchAssignedMaterials(packageID) {
         const apiUrl = `http://localhost:5000/material/package/${packageID}`;
@@ -813,15 +817,15 @@
               ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
             },
           });
-
+    
           if (!response.ok) {
             // If no materials, assume empty
             hasMaterials = false;
             return;
           }
-
+    
           const data = await response.json();
-
+    
           if (Array.isArray(data) && data.length > 0) {
             hasMaterials = true;
             originalMaterials = data.map((m) => ({
@@ -838,13 +842,13 @@
           hasMaterials = false;
         }
       }
-
+    
       function fillInTheFields(data) {
         document.getElementById("packageName").value = data.Name;
         document.getElementById("packagePrice").value = data.Price;
         document.getElementById("packageQuantity").value = data.Quantity;
         document.getElementById("packageDescription").value = data.Description;
-
+    
         const selectedCategoriesList = document.getElementById(
           "selectedCategoriesList"
         );
@@ -857,19 +861,32 @@
           selectedCategoriesList.appendChild(li);
           li.style.fontWeight = "bold";
         }
-
+    
+        // Populate existingImageIDs and existingVideoIDs
+        existingImageIDs = data.Resource
+          .filter(resource => resource.fileType.startsWith('image/'))
+          .map(resource => resource.ResourceID);
+        
+        existingVideoIDs = data.Resource
+          .filter(resource => resource.fileType.startsWith('video/'))
+          .map(resource => resource.ResourceID);
+    
+        // Display resources
+        displayPackageResources(data.Resource);
+    
         // Display selected products
         document.getElementById("selectedProductsBody").innerHTML = "";
         if (data.PackageProduct && data.PackageProduct.length > 0) {
           data.PackageProduct.forEach((product) => {
             const row = document.createElement("tr");
-
+            row.setAttribute('data-product-id', product.Product.ProductID); // Set productId
+    
             const productIdCell = document.createElement("td");
             productIdCell.innerHTML = `<strong>#${product.Product.ProductID}</strong>`;
-
+    
             const productNameCell = document.createElement("td");
             productNameCell.textContent = product.Product.Name;
-
+    
             const quantityCell = document.createElement("td");
             quantityCell.innerHTML = `
                   <div class="input-group">
@@ -878,18 +895,18 @@
                     <button class="btn btn-outline-secondary increase-quantity">+</button>
                   </div>
                 `;
-
+    
             const mainQuantityCell = document.createElement("td");
             mainQuantityCell.classList.add("main-quantity");
             mainQuantityCell.textContent = product.Product.Quantity;
-
+    
             const actionCell = document.createElement("td");
             actionCell.innerHTML = `
                   <button class="btn btn-outline-danger remove-from-selected">
                     <i class="icofont-ui-delete text-danger"></i>
                   </button>
                 `;
-
+    
             actionCell
               .querySelector(".remove-from-selected")
               .addEventListener("click", () => {
@@ -899,36 +916,36 @@
                   document.getElementById("tableBody").rows
                 ).find(
                   (r) =>
-                    r.children[1].textContent.trim() === product.Product.Name
+                    r.getAttribute('data-product-id') === product.Product.ProductID.toString()
                 );
                 if (mainRow) {
                   mainRow.querySelector(".add-to-selected").disabled = false;
                 }
               });
-
+    
             row.appendChild(productIdCell);
             row.appendChild(productNameCell);
             row.appendChild(quantityCell);
             row.appendChild(mainQuantityCell);
             row.appendChild(actionCell);
-
+    
             document.getElementById("selectedProductsBody").appendChild(row);
           });
         }
       }
-
+    
       function displayCustomizations(customizations) {
         const container = document.getElementById(
           "customizationsAssignedContainer"
         );
         container.innerHTML = "";
-
+    
         if (!customizations || customizations.length === 0) {
           container.innerHTML =
             '<p class="text-muted">No customizations assigned.</p>';
           return;
         }
-
+    
         customizations.forEach((customization) => {
           const customizationItem = document.createElement("div");
           customizationItem.className = "customization-item";
@@ -936,19 +953,15 @@
             "data-customization-id",
             customization.CustomizationID
           );
-
+    
           customizationItem.innerHTML = `
             <div>
-                <strong>${customization.option.name} (${
-            customization.option.type
-          })</strong>
+                <strong>${customization.option.name} (${customization.option.type})</strong>
                 <ul class="list-unstyled mb-0">
                     ${customization.option.optionValues
                       .map(
                         (value) => `
-                        <li>${value.name}${
-                          value.value ? `: ${value.value}` : ""
-                        }</li>
+                        <li>${value.name}${value.value ? `: ${value.value}` : ""}</li>
                     `
                       )
                       .join("")}
@@ -958,17 +971,17 @@
                 Remove
             </button>
         `;
-
+    
           customizationItem
             .querySelector(".remove-customization-btn")
             .addEventListener("click", () => {
               unassignCustomization(customization.CustomizationID);
             });
-
+    
           container.appendChild(customizationItem);
         });
       }
-
+    
       async function unassignCustomization(customizationId) {
         if (
           !confirm(
@@ -977,12 +990,12 @@
         ) {
           return;
         }
-
+    
         const payload = {
           customizationId: customizationId,
           packageIds: [parseInt(params)],
         };
-
+    
         try {
           const authToken = sessionStorage.getItem("authToken");
           const response = await fetch(
@@ -996,16 +1009,16 @@
               body: JSON.stringify(payload),
             }
           );
-
+    
           if (!response.ok) {
             const errorData = await response.json();
             throw new Error(
               errorData.message || `Server error: ${response.status}`
             );
           }
-
+    
           const result = await response.json();
-
+    
           if (response.ok) {
             const container = document.getElementById(
               "customizationsAssignedContainer"
@@ -1016,7 +1029,7 @@
             if (customizationElement) {
               customizationElement.remove();
             }
-
+    
             showMessage(
               result.message || "Customization unassigned successfully!",
               true
@@ -1035,7 +1048,7 @@
           );
         }
       }
-
+    
       function displayPackageResources(resources) {
         const images = resources.filter((resource) =>
           resource.fileType.startsWith("image/")
@@ -1043,106 +1056,125 @@
         const videos = resources.filter((resource) =>
           resource.fileType.startsWith("video/")
         );
-
+    
         // Display Images
         const uploadedImagesContainer =
           document.getElementById("uploaded-images");
         uploadedImagesContainer.innerHTML = "";
         uploadedImagesCount = 0;
         selectedFiles = [];
-
+    
         images.forEach((image) => {
-          displayImage(image.filePath, false);
+          displayImage(image.filePath, false, image.ResourceID);
         });
-
+    
         // Display Videos
         if (videos.length > 0) {
+          const video = videos[0]; // Assuming only one video per package
           displayVideo(
-            `http://localhost:5000${videos[0].filePath.replace(/\\/g, "/")}`
+            `http://localhost:5000${normalizeFilePath(video.filePath)}`,
+            video.ResourceID
           );
         }
       }
-
+    
+      // Normalize file path to ensure single slashes and leading slash
+      function normalizeFilePath(filePath) {
+        let normalizedPath = filePath.replace(/\\/g, "/"); // Replace backslashes with forward slashes
+        if (!normalizedPath.startsWith("/")) {
+          normalizedPath = "/" + normalizedPath;
+        }
+        normalizedPath = normalizedPath.replace(/\/\//g, "/"); // Replace double slashes with single slash
+        return normalizedPath;
+      }
+    
       // Display assigned materials
       function displayAssignedMaterials(materials) {
         const materialsContainer =
           document.getElementById("materialsContainer");
         materialsContainer.innerHTML = "";
-
+    
         materials.forEach((m) => {
           const materialItem = createMaterialItem();
           const materialSelect = materialItem.querySelector(".material-select");
           const percentageInput = materialItem.querySelector(
             ".material-percentage"
           );
-
+    
           materialSelect.value = m.name;
           percentageInput.value = m.percentage;
           materialsContainer.appendChild(materialItem);
         });
       }
-
-      function displayImage(filePath, isFile = false) {
+    
+      function displayImage(filePath, isFile = false, resourceId = null) {
         const uploadedImagesContainer =
           document.getElementById("uploaded-images");
         const fileLimitWarning = document.getElementById("file-limit-warning");
-        let uploadedImagesCount = uploadedImagesContainer.children.length;
-
-        if (uploadedImagesCount >= 5) {
+        let currentUploadedCount = uploadedImagesContainer.children.length;
+    
+        if (currentUploadedCount >= 5) {
           fileLimitWarning.style.display = "block";
           return;
         }
-
+    
         uploadedImagesCount++;
         const imgElement = document.createElement("img");
         const src = isFile
           ? URL.createObjectURL(filePath)
-          : `http://localhost:5000${filePath.replace(/\\/g, "/")}`;
+          : `http://localhost:5000${normalizeFilePath(filePath)}`;
         imgElement.src = src;
         imgElement.style.width = "100px";
         imgElement.style.height = "100px";
         imgElement.style.objectFit = "cover";
         imgElement.className = "rounded border";
-
+    
         const removeButton = document.createElement("button");
         removeButton.innerHTML = "&times;";
         removeButton.className =
           "btn btn-sm btn-danger position-absolute top-0 end-0";
         removeButton.style.margin = "-5px";
         removeButton.style.zIndex = "1";
-
+    
         const wrapper = document.createElement("div");
         wrapper.className = "position-relative d-inline-block";
         wrapper.style.position = "relative";
         wrapper.appendChild(imgElement);
         wrapper.appendChild(removeButton);
-
+    
+        if (!isFile && resourceId !== null) {
+          wrapper.setAttribute('data-resource-id', resourceId);
+        }
+    
         uploadedImagesContainer.appendChild(wrapper);
-
+    
         removeButton.addEventListener("click", () => {
           wrapper.remove();
           uploadedImagesCount--;
+          if (resourceId !== null) {
+            existingImageIDs = existingImageIDs.filter(id => id !== resourceId);
+          }
           fileLimitWarning.style.display = "none";
         });
       }
-
+    
       function initializeMaterialsButtons() {
         const addMaterialBtn = document.getElementById("addMaterialBtn");
         const updateMaterialsBtn =
           document.getElementById("updateMaterialsBtn");
         const materialsContainer =
           document.getElementById("materialsContainer");
-
+    
         addMaterialBtn.addEventListener("click", function () {
           materialsContainer.appendChild(createMaterialItem());
         });
-
+    
         materialsContainer.addEventListener("click", function (e) {
           if (e.target && e.target.classList.contains("remove-material-btn")) {
             const item = e.target.closest(".material-item");
             const materialSelect = item.querySelector(".material-select");
             const selectedMaterialName = materialSelect.value;
-
+    
             // If the material was originally assigned, mark it for deletion
             const orig = originalMaterials.find(
               (m) => m.name === selectedMaterialName
@@ -1150,18 +1182,18 @@
             if (orig) {
               materialsToDelete.push(orig.name);
             }
-
+    
             item.remove();
           }
         });
-
+    
         updateMaterialsBtn.addEventListener("click", async function () {
           const materialItems = document.querySelectorAll(".material-item");
           const newMaterials = [];
           let totalPercentage = 0;
           let valid = true;
           const selectedMaterialNames = new Set();
-
+    
           materialItems.forEach((item) => {
             const materialSelect = item.querySelector(".material-select");
             const materialName = materialSelect.value.trim();
@@ -1169,7 +1201,7 @@
               item.querySelector(".material-percentage").value,
               10
             );
-
+    
             if (
               !materialName ||
               isNaN(percentage) ||
@@ -1179,24 +1211,24 @@
               valid = false;
               return;
             }
-
+    
             if (selectedMaterialNames.has(materialName)) {
               valid = false;
               return;
             }
-
+    
             selectedMaterialNames.add(materialName);
             totalPercentage += percentage;
             newMaterials.push({ name: materialName, percentage });
           });
-
+    
           if (!valid) {
             alert(
               "Please ensure all materials are selected with a valid percentage between 0 and 100, and no duplicates are present."
             );
             return;
           }
-
+    
           if (totalPercentage !== 100) {
             alert(
               "Total percentage of materials must equal 100%. Currently, it is " +
@@ -1205,9 +1237,9 @@
             );
             return;
           }
-
+    
           const authToken = sessionStorage.getItem("authToken");
-
+    
           if (hasMaterials) {
             // Update existing materials using PUT
             try {
@@ -1227,16 +1259,16 @@
                   }),
                 }
               );
-
+    
               if (!updateResponse.ok) {
                 const errorData = await updateResponse.json();
                 throw new Error(
                   errorData.message || `Server error: ${updateResponse.status}`
                 );
               }
-
+    
               const updateData = await updateResponse.json();
-
+    
               if (updateData.success) {
                 showMessage(
                   updateData.message || "Materials updated successfully!",
@@ -1257,7 +1289,7 @@
                 false
               );
             }
-
+    
             // Handle deletion of specific materials
             if (materialsToDelete.length > 0) {
               try {
@@ -1277,7 +1309,7 @@
                     }),
                   }
                 );
-
+    
                 if (!deleteResponse.ok) {
                   const errorData = await deleteResponse.json();
                   throw new Error(
@@ -1285,9 +1317,9 @@
                       `Server error: ${deleteResponse.status}`
                   );
                 }
-
+    
                 const deleteData = await deleteResponse.json();
-
+    
                 if (deleteData.success) {
                   showMessage(
                     deleteData.message || "Materials removed successfully!",
@@ -1330,16 +1362,16 @@
                   }),
                 }
               );
-
+    
               if (!assignResponse.ok) {
                 const errorData = await assignResponse.json();
                 throw new Error(
                   errorData.message || `Server error: ${assignResponse.status}`
                 );
               }
-
+    
               const assignData = await assignResponse.json();
-
+    
               if (assignData.success) {
                 showMessage(
                   assignData.message || "Materials assigned successfully!",
@@ -1364,18 +1396,18 @@
           }
         });
       }
-
+    
       function createMaterialItem() {
         const materialItem = document.createElement("div");
         materialItem.className = "material-item row";
-
+    
         const materialOptions = availableMaterials
           .map(
             (material) =>
               `<option value="${material.name}">${material.name}</option>`
           )
           .join("");
-
+    
         materialItem.innerHTML = `
           <div class="col-md-5">
             <label class="form-label">Material</label>
@@ -1392,10 +1424,10 @@
             <button type="button" class="btn btn-danger remove-material-btn">Remove</button>
           </div>
         `;
-
+    
         return materialItem;
       }
-
+    
       // ---------------------------- Product Table Logic ----------------------------
       function initializeProductTableLogic() {
         const mainTable = document.getElementById("tableBody");
@@ -1406,12 +1438,12 @@
         const prevPageButton = document.getElementById("prevPage");
         const nextPageButton = document.getElementById("nextPage");
         const pageNumber = document.getElementById("pageNumber");
-
+    
         const rowsPerPage = 10;
         let currentPage = 1;
         let products = [];
         let filteredProducts = [];
-
+    
         const authToken = sessionStorage.getItem("authToken");
         fetch("http://localhost:5000/api/GetAllProducts", {
           method: "GET",
@@ -1427,17 +1459,18 @@
             renderTable();
           })
           .catch((error) => console.error("Error fetching data:", error));
-
+    
         function renderTable() {
           mainTable.innerHTML = "";
-
+    
           const start = (currentPage - 1) * rowsPerPage;
           const end = start + rowsPerPage;
           const pageProducts = filteredProducts.slice(start, end);
-
+    
           pageProducts.forEach((product) => {
             const row = document.createElement("tr");
-
+            row.setAttribute('data-product-id', product.ProductID); // Set productId
+    
             const productId = product.ProductID;
             const productName = product.Name;
             const offerStatus =
@@ -1450,21 +1483,13 @@
                 ? "Out of Stock"
                 : "Running Low";
             const quantity = product.Quantity;
-
+    
             row.innerHTML = `
                 <td><strong>#${productId}</strong></td>
                 <td>${productName}</td>
-                <td><span class="badge bg-${
-                  offerStatus === "Available" ? "success" : "danger"
-                }">${offerStatus}</span></td>
+                <td><span class="badge bg-${offerStatus === "Available" ? "success" : "danger"}">${offerStatus}</span></td>
                 <td>${price}</td>
-                <td><span class="badge bg-${
-                  status === "In Stock"
-                    ? "success"
-                    : status === "Out of Stock"
-                    ? "danger"
-                    : "warning"
-                }">${status}</span></td>
+                <td><span class="badge bg-${status === "In Stock" ? "success" : status === "Out of Stock" ? "danger" : "warning"}">${status}</span></td>
                 <td class="main-quantity">${quantity}</td>
                 <td>
                     <button class="btn btn-outline-primary add-to-selected" ${
@@ -1476,22 +1501,22 @@
             `;
             mainTable.appendChild(row);
           });
-
+    
           updatePaginationControls();
           updatePageNumber();
         }
-
+    
         function updatePaginationControls() {
           prevPageButton.disabled = currentPage === 1;
           nextPageButton.disabled =
             currentPage * rowsPerPage >= filteredProducts.length;
         }
-
+    
         function updatePageNumber() {
           const totalPages = Math.ceil(filteredProducts.length / rowsPerPage);
           pageNumber.textContent = `Page ${currentPage} of ${totalPages}`;
         }
-
+    
         searchInput.addEventListener("input", function () {
           const searchTerm = searchInput.value.toLowerCase();
           filteredProducts = products.filter((product) => {
@@ -1503,33 +1528,34 @@
           currentPage = 1;
           renderTable();
         });
-
+    
         prevPageButton.addEventListener("click", function () {
           if (currentPage > 1) {
             currentPage--;
             renderTable();
           }
         });
-
+    
         nextPageButton.addEventListener("click", function () {
           if (currentPage * rowsPerPage < filteredProducts.length) {
             currentPage++;
             renderTable();
           }
         });
-
+    
         mainTable.addEventListener("click", function (event) {
           if (event.target.closest(".add-to-selected")) {
             const row = event.target.closest("tr");
+            const productId = row.getAttribute('data-product-id');
             const productName = row.children[1].textContent.trim();
             const quantityCell = row.querySelector(".main-quantity");
             let mainQuantity = parseInt(quantityCell.textContent, 10);
-
+    
             if (mainQuantity > 0) {
               const existingRow = Array.from(selectedProductsTable.rows).find(
                 (r) => r.children[1].textContent.trim() === productName
               );
-
+    
               if (existingRow) {
                 const quantityInput =
                   existingRow.querySelector(".quantity-input");
@@ -1537,30 +1563,30 @@
                 mainQuantity -= 1;
               } else {
                 const clonedRow = document.createElement("tr");
-
+                clonedRow.setAttribute('data-product-id', productId); // Set productId
+    
                 const productIdCell = document.createElement("td");
-                const product = products.find((p) => p.Name === productName);
-                productIdCell.innerHTML = `<strong>#${product.ProductID}</strong>`;
-
+                productIdCell.innerHTML = `<strong>#${productId}</strong>`;
+    
                 const productNameCell = document.createElement("td");
                 productNameCell.textContent = productName;
-
+    
                 const quantityCellClone = document.createElement("td");
                 quantityCellClone.innerHTML = `
-                        <div class="input-group">
-                            <button class="btn btn-outline-secondary decrease-quantity">-</button>
-                            <input type="text" class="form-control text-center quantity-input" value="1" readonly>
-                            <button class="btn btn-outline-secondary increase-quantity">+</button>
-                        </div>
-                    `;
-
+                    <div class="input-group">
+                        <button class="btn btn-outline-secondary decrease-quantity">-</button>
+                        <input type="text" class="form-control text-center quantity-input" value="1" readonly>
+                        <button class="btn btn-outline-secondary increase-quantity">+</button>
+                    </div>
+                `;
+    
                 const actionCell = document.createElement("td");
                 actionCell.innerHTML = `
-                        <button class="btn btn-outline-danger remove-from-selected">
-                            <i class="icofont-ui-delete text-danger"></i>
-                        </button>
-                    `;
-
+                    <button class="btn btn-outline-danger remove-from-selected">
+                        <i class="icofont-ui-delete text-danger"></i>
+                    </button>
+                `;
+    
                 actionCell
                   .querySelector(".remove-from-selected")
                   .addEventListener("click", () => {
@@ -1573,17 +1599,15 @@
                     clonedRow.remove();
                     row.querySelector(".add-to-selected").disabled = false;
                   });
-
-                row.querySelector(".add-to-selected").disabled = true;
-
+    
                 clonedRow.appendChild(productIdCell);
                 clonedRow.appendChild(productNameCell);
                 clonedRow.appendChild(quantityCellClone);
                 clonedRow.appendChild(actionCell);
-
+    
                 selectedProductsTable.appendChild(clonedRow);
               }
-
+    
               quantityCell.textContent = mainQuantity;
               if (mainQuantity <= 0) {
                 row.querySelector(".add-to-selected").disabled = true;
@@ -1591,55 +1615,53 @@
             }
           }
         });
-
+    
         selectedProductsTable.addEventListener("click", function (event) {
           const target = event.target;
-
+    
           if (target.closest(".decrease-quantity")) {
             const row = target.closest("tr");
             const quantityInput = row.querySelector(".quantity-input");
             const currentQuantity = parseInt(quantityInput.value, 10);
-            const productName = row.children[1].textContent.trim();
-
+            const productId = row.getAttribute('data-product-id');
+    
             if (currentQuantity > 1) {
               quantityInput.value = currentQuantity - 1;
               const mainRow = Array.from(
                 document.getElementById("tableBody").rows
-              ).find((r) => r.children[1].textContent.trim() === productName);
-
+              ).find((r) => r.getAttribute('data-product-id') === productId);
               if (mainRow) {
                 const mainQuantityCell =
                   mainRow.querySelector(".main-quantity");
                 let mainQuantity = parseInt(mainQuantityCell.textContent, 10);
                 mainQuantity += 1;
                 mainQuantityCell.textContent = mainQuantity;
-
+    
                 if (mainQuantity > 0) {
                   mainRow.querySelector(".add-to-selected").disabled = false;
                 }
               }
             }
           }
-
+    
           if (target.closest(".increase-quantity")) {
             const row = target.closest("tr");
             const quantityInput = row.querySelector(".quantity-input");
             const currentQuantity = parseInt(quantityInput.value, 10);
-            const productName = row.children[1].textContent.trim();
-
+            const productId = row.getAttribute('data-product-id');
+    
             const mainRow = Array.from(
               document.getElementById("tableBody").rows
-            ).find((r) => r.children[1].textContent.trim() === productName);
-
+            ).find((r) => r.getAttribute('data-product-id') === productId);
             if (mainRow) {
               const mainQuantityCell = mainRow.querySelector(".main-quantity");
               let mainQuantity = parseInt(mainQuantityCell.textContent, 10);
-
+    
               if (mainQuantity > 0) {
                 quantityInput.value = currentQuantity + 1;
                 mainQuantity -= 1;
                 mainQuantityCell.textContent = mainQuantity;
-
+    
                 if (mainQuantity <= 0) {
                   mainRow.querySelector(".add-to-selected").disabled = true;
                 }
@@ -1647,34 +1669,34 @@
             }
           }
         });
-
+    
         selectedProductsTable.addEventListener("click", function (event) {
           if (event.target.closest(".remove-from-selected")) {
             const row = event.target.closest("tr");
+            const productId = row.getAttribute('data-product-id');
             const productName = row.children[1].textContent.trim();
             const quantityInput = row.querySelector(".quantity-input");
             const selectedQuantity = parseInt(quantityInput.value, 10);
-
+    
             const mainRow = Array.from(
               document.getElementById("tableBody").rows
-            ).find((r) => r.children[1].textContent.trim() === productName);
-
+            ).find((r) => r.getAttribute('data-product-id') === productId);
             if (mainRow) {
               const mainQuantityCell = mainRow.querySelector(".main-quantity");
               let mainQuantity = parseInt(mainQuantityCell.textContent, 10);
               mainQuantity += selectedQuantity;
               mainQuantityCell.textContent = mainQuantity;
-
+    
               if (mainQuantity > 0) {
                 mainRow.querySelector(".add-to-selected").disabled = false;
               }
             }
-
+    
             row.remove();
           }
         });
       }
-
+    
       // ---------------------------- Image Uploader ----------------------------
       function initializeImageUploader() {
         const imageUploader = document.getElementById("image-uploader");
@@ -1684,12 +1706,12 @@
         const fileSizeWarning = document.getElementById("file-size-warning");
         uploadedImagesCount = uploadedImagesContainer.children.length;
         selectedFiles = [];
-
+    
         imageUploader.addEventListener("change", function (event) {
           const files = event.target.files;
           let validFiles = [];
           let sizeExceeded = false;
-
+    
           Array.from(files).forEach((file) => {
             if (file.size > 2 * 1024 * 1024) {
               sizeExceeded = true;
@@ -1697,63 +1719,36 @@
               validFiles.push(file);
             }
           });
-
+    
           if (sizeExceeded) {
             fileSizeWarning.style.display = "block";
           } else {
             fileSizeWarning.style.display = "none";
           }
-
+    
           if (uploadedImagesCount + validFiles.length > 5) {
             fileLimitWarning.style.display = "block";
             event.target.value = "";
             return;
           }
-
+    
           fileLimitWarning.style.display = "none";
-
+    
           validFiles.forEach((file) => {
             uploadedImagesCount++;
             selectedFiles.push(file);
-
+    
             const reader = new FileReader();
             reader.onload = function (e) {
-              const imgElement = document.createElement("img");
-              imgElement.src = e.target.result;
-              imgElement.style.width = "100px";
-              imgElement.style.height = "100px";
-              imgElement.style.objectFit = "cover";
-              imgElement.className = "rounded border uploaded-image";
-
-              const removeButton = document.createElement("button");
-              removeButton.innerHTML = "&times;";
-              removeButton.className =
-                "btn btn-sm btn-danger position-absolute top-0 end-0";
-              removeButton.style.margin = "-5px";
-              removeButton.style.zIndex = "1";
-
-              const wrapper = document.createElement("div");
-              wrapper.className = "position-relative d-inline-block";
-              wrapper.style.position = "relative";
-              wrapper.appendChild(imgElement);
-              wrapper.appendChild(removeButton);
-
-              uploadedImagesContainer.appendChild(wrapper);
-
-              removeButton.addEventListener("click", () => {
-                wrapper.remove();
-                uploadedImagesCount--;
-                selectedFiles = selectedFiles.filter((f) => f !== file);
-                fileLimitWarning.style.display = "none";
-              });
+              displayImage(file, true);
             };
             reader.readAsDataURL(file);
           });
-
+    
           event.target.value = "";
         });
       }
-
+    
       // ---------------------------- Video Uploader ----------------------------
       function initializeVideoUploader() {
         const videoInput = document.getElementById("videoInput");
@@ -1763,43 +1758,48 @@
         const videoPreview = document.getElementById("videoPreview");
         const errorText = document.getElementById("errorText");
         const deleteVideoButton = document.getElementById("deleteVideoButton");
-
+    
         videoInput.addEventListener("change", function (event) {
           const file = event.target.files[0];
           if (!file) return;
-
+    
           if (file.size > 10 * 1024 * 1024) {
             errorText.style.display = "block";
             this.value = "";
             return;
           }
-
+    
           errorText.style.display = "none";
           const fileURL = URL.createObjectURL(file);
           displayVideo(fileURL);
         });
-
+    
         deleteVideoButton.addEventListener("click", function () {
           videoInput.value = "";
           videoPreview.src = "";
           videoPreviewContainer.style.display = "none";
           errorText.style.display = "none";
+          existingVideoIDs = []; // Optionally, track deletion if video was existing
         });
       }
-
-      function displayVideo(videoUrl) {
+    
+      function displayVideo(videoUrl, resourceId = null) {
         const videoPreview = document.getElementById("videoPreview");
         const videoPreviewContainer = document.getElementById(
           "videoPreviewContainer"
         );
         videoPreview.src = videoUrl;
         videoPreviewContainer.style.display = "block";
+    
+        if (resourceId !== null) {
+          videoPreviewContainer.setAttribute('data-resource-id', resourceId);
+        }
       }
-
+    
       // ---------------------------- Update Package ----------------------------
       async function updatePackage(e) {
         e.preventDefault();
-
+    
         try {
           const name = document.getElementById("packageName").value.trim();
           const description = document
@@ -1812,9 +1812,9 @@
             document.getElementById("packageQuantity").value,
             10
           );
-
+    
           const subCategoryId = selectedCategoryId;
-
+    
           if (
             !name ||
             !description ||
@@ -1825,22 +1825,23 @@
             showMessage("Please fill out all fields correctly.", false);
             return;
           }
-
+    
           const selectedProducts = [];
           document
             .querySelectorAll("#selectedProductsBody tr")
             .forEach((row) => {
+              const productId = row.getAttribute('data-product-id');
               const productName = row.children[1].textContent.trim();
               const productQuantity = parseInt(
                 row.querySelector(".quantity-input").value,
                 10
               );
               selectedProducts.push({
-                productName,
+                productId: Number(productId),
                 quantity: productQuantity,
               });
             });
-
+    
           const formData = new FormData();
           formData.append("Name", name);
           formData.append("Description", description);
@@ -1848,16 +1849,18 @@
           formData.append("Quantity", packageQuantity);
           formData.append("SubCategoryId", subCategoryId);
           formData.append("products", JSON.stringify(selectedProducts));
-
+          formData.append("existingImageIDs", JSON.stringify(existingImageIDs));
+          formData.append("existingVideoIDs", JSON.stringify(existingVideoIDs));
+    
           selectedFiles.forEach((file) => {
             formData.append("images", file);
           });
-
+    
           const videoFile = document.getElementById("videoInput").files[0];
           if (videoFile) {
             formData.append("videos", videoFile);
           }
-
+    
           const authToken = sessionStorage.getItem("authToken");
           const response = await fetch(
             `http://localhost:5000/api/packages/${params}`,
@@ -1869,21 +1872,18 @@
               body: formData,
             }
           );
-
+    
           if (!response.ok) {
-            throw new Error(`Server error: ${response.status}`);
+            const errorData = await response.json();
+            throw new Error(errorData.message || `Server error: ${response.status}`);
           }
-
+    
           const result = await response.json();
           console.log("Success:", result);
-
-          localStorage.setItem(
-            "responseMessage",
-            "Package updated successfully!"
-          );
-          localStorage.setItem("responseSuccess", "true");
-
-          window.location.reload();
+    
+          showMessage("Package updated successfully!", true);
+          // Refresh the package details to reflect updates
+          await fetchPackageDetails(params);
         } catch (error) {
           console.error("Error submitting the package:", error);
           showMessage(
@@ -1892,7 +1892,7 @@
           );
         }
       }
-
+    
       // ---------------------------- Show Message ----------------------------
       function showMessage(message, isSuccess) {
         const responseMessage = document.getElementById("responseMessage");
@@ -1904,12 +1904,12 @@
           responseMessage.style.display = "none";
         }, 5000);
       }
-
+    
       // ---------------------------- Handle Response Messages on Load ----------------------------
       window.addEventListener("load", () => {
         const message = localStorage.getItem("responseMessage");
         const isSuccess = localStorage.getItem("responseSuccess") === "true";
-
+    
         if (message) {
           showMessage(message, isSuccess);
           localStorage.removeItem("responseMessage");
@@ -1917,6 +1917,7 @@
         }
       });
     </script>
+    
     <script>
       class UserProfileManager {
         constructor() {
