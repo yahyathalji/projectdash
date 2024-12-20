@@ -11,7 +11,6 @@ $(document).ready(function() {
         success: function(data) {
             const selectElement = $('select.form-select');
             selectElement.empty();
-            selectElement.append('<option value="">Select Parent Category</option>');
 
             data.forEach(function(category) {
                 selectElement.append(

@@ -65,6 +65,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (imageFile) {
       formData.append("file", imageFile);
     }
+    if (!imageFile) {
+      messageParagraph.textContent = "Image is required!";
+      messageParagraph.style.color = "red";
+      return;
+    }
 
     try {
       // Make API request to create category
