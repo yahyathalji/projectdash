@@ -1,7 +1,7 @@
 // listCustomizations.js
 
 document.addEventListener("DOMContentLoaded", function () {
-    const apiEndpoint = "http://localhost:5000/api/customization"; // API Endpoint
+    const apiEndpoint = "http://35.234.135.60:5000/api/customization"; // API Endpoint
     const customizationsTableBody = document.querySelector("#customizationsTable tbody");
     const feedbackContainer = document.getElementById("feedbackContainer");
     const loadingSpinner = document.getElementById("loadingSpinner");

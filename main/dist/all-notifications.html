@@ -207,7 +207,7 @@
        * Loads notifications from the API and populates the table.
        */
       function loadNotifications() {
-        fetch("http://localhost:5000/notifications", {
+        fetch("http://35.234.135.60:5000/notifications", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -433,7 +433,7 @@
         constructor() {
           this.authToken = sessionStorage.getItem("authToken");
           this.defaultImage = "assets/images/profile_av.svg";
-          this.apiBaseUrl = "http://localhost:5000"; // Update if needed
+          this.apiBaseUrl = "http://35.234.135.60:5000"; // Update if needed
           this.userDataKey = "userData"; // Key for storing user data in sessionStorage
         }
 

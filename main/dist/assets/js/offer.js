@@ -96,7 +96,7 @@ function initializeTables() {
 // Populate Products Table
 async function populateProducts() {
   try {
-    const products = await fetchData("http://localhost:5000/api/GetAllProducts");
+    const products = await fetchData("http://35.234.135.60:5000/api/GetAllProducts");
 
     const productTableBody = document.getElementById("productTableBody");
     productTableBody.innerHTML = "";
@@ -125,7 +125,7 @@ async function populateProducts() {
 // Populate Packages Table
 async function populatePackages() {
   try {
-    const packages = await fetchData("http://localhost:5000/api/packages");
+    const packages = await fetchData("http://35.234.135.60:5000/api/packages");
 
     const packageTableBody = document.getElementById("packageTableBody");
     packageTableBody.innerHTML = "";
@@ -209,7 +209,7 @@ $("#submitOfferBtn").click(async function () {
     if (selectedPackages.length > 0) {
       apiCalls.push(
         sendOfferToAPI(
-          "http://localhost:5000/api/offers/packages", // Ensure this matches your backend route
+          "http://35.234.135.60:5000/api/offers/packages", // Ensure this matches your backend route
           selectedPackages
         )
       );
@@ -219,7 +219,7 @@ $("#submitOfferBtn").click(async function () {
     if (selectedProducts.length > 0) {
       apiCalls.push(
         sendOfferToAPI(
-          "http://localhost:5000/api/offers/products", // Ensure this matches your backend route
+          "http://35.234.135.60:5000/api/offers/products", // Ensure this matches your backend route
           selectedProducts
         )
       );

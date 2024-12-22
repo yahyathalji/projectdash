@@ -358,7 +358,7 @@ document.addEventListener("DOMContentLoaded", function () {
             noData.style.display = "none";
             editCustomizationForm.style.display = "none";
 
-            const response = await fetch(`http://localhost:5000/api/customization/${id}`, {
+            const response = await fetch(`http://35.234.135.60:5000/api/customization/${id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -637,7 +637,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             // Add handling for other customization types that require file uploads if necessary
 
-            const response = await fetch(`http://localhost:5000/api/customization/${customizationId}`, {
+            const response = await fetch(`http://35.234.135.60:5000/api/customization/${customizationId}`, {
                 method: "PUT", // Assuming PUT method for full update
                 headers: {
                     "Authorization": `Bearer ${sessionStorage.getItem("authToken")}` // Include if required

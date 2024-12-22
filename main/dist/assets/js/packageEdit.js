@@ -8,7 +8,7 @@ function getPackageIdFormUrl(){
 const params = getPackageIdFormUrl();
 
 document.addEventListener("DOMContentLoaded",() =>{
-    const apiUrl = `http://localhost:5000/api/packages/${params}`;
+    const apiUrl = `http://35.234.135.60:5000/api/packages/${params}`;
     fetch(apiUrl,
     {
         method: "GET",
@@ -92,7 +92,7 @@ function fillInTheFields(data){
       imageResources.forEach(image => displayImage(image.filePath, false));
       const videoResources = data.Resource.filter(resource => resource.fileType.startsWith('video/'));
       if (videoResources.length > 0) {
-          displayVideo(`http://localhost:5000/${videoResources[0].filePath}`);
+          displayVideo(`http://35.234.135.60:5000/${videoResources[0].filePath}`);
       }
 }
 
@@ -111,7 +111,7 @@ function fillInTheFields(data){
         let products = [];
         let filteredProducts = [];
     
-        fetch("http://localhost:5000/api/GetAllProducts")
+        fetch("http://35.234.135.60:5000/api/GetAllProducts")
             .then((response) => response.json())
             .then((data) => {
                 products = data;
@@ -336,7 +336,7 @@ if (target.closest(".increase-quantity")) {
 let selectedCategoryId = null;
 
 // Fetch categories and subcategories data from API
-fetch('http://localhost:5000/api/categories/subcategories')
+fetch('http://35.234.135.60:5000/api/categories/subcategories')
     .then(response => response.json())
     .then(data => {
         const categorySelect = document.getElementById('categorySelect');
@@ -438,7 +438,7 @@ function removeSelectedFile(file) {
 function displayImage(fileOrUrl, isFile = true) { 
     uploadedImagesCount++;
 
-    const filePath = isFile ? URL.createObjectURL(fileOrUrl) : `http://localhost:5000${fileOrUrl.replace(/\\/g, '/')}`;
+    const filePath = isFile ? URL.createObjectURL(fileOrUrl) : `http://35.234.135.60:5000${fileOrUrl.replace(/\\/g, '/')}`;
 
     const imgElement = document.createElement('img');
     imgElement.src = filePath;
@@ -633,7 +633,7 @@ function displayVideo(videoUrl) {
                 }
         
                 // Submit data to the API
-                const response = await fetch(`http://localhost:5000/api/packages/${params}`, {
+                const response = await fetch(`http://35.234.135.60:5000/api/packages/${params}`, {
                     method: 'PUT',
                     body: formData,
                 });

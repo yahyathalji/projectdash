@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    const apiUrl = `http://localhost:5000/api/category/${params}`;
+    const apiUrl = `http://35.234.135.60:5000/api/category/${params}`;
     const categoryNameInput = document.getElementById("categoryName");
     const isActiveCheckbox = document.getElementById("isActive");
     const imageInput = $('#dropify-event'); // Use jQuery selector
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Handle image display
         if (data.Image && data.Image.filePath) {
             const fixedPath = data.Image.filePath.replace(/\\/g, "/");
-            const imagePath = `http://localhost:5000/${fixedPath}`;
+            const imagePath = `http://35.234.135.60:5000/${fixedPath}`;
         
             const drEvent = imageInput.data('dropify'); // Get Dropify instance
             drEvent.settings.defaultFile = imagePath;
@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         try {
-            const updateResponse = await fetch(`http://localhost:5000/api/category/${params}`, {
+            const updateResponse = await fetch(`http://35.234.135.60:5000/api/category/${params}`, {
                 method: "PUT",
                 body: formData,
                 headers: {

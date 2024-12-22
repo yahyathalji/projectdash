@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("Auth Token:", token);
 
   // Fetch Dashboard Data
-  fetch("http://localhost:5000/api/dashboard", {
+  fetch("http://35.234.135.60:5000/api/dashboard", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

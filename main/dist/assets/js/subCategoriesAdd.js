@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $.ajax({
-        url: 'http://localhost:5000/api/categories',
+        url: 'http://35.234.135.60:5000/api/categories',
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ $(document).ready(function() {
         }
 
         const categoryId = parentCategoryId; 
-        fetch(`http://localhost:5000/api/categories/${categoryId}/subcategories`, {
+        fetch(`http://35.234.135.60:5000/api/categories/${categoryId}/subcategories`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

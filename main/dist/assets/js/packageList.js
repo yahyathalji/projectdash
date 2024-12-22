@@ -101,7 +101,7 @@ document.getElementById('searchInput').addEventListener('input', function() {
 
 async function fetchPackages() {
     try {
-        const response = await fetch('http://localhost:5000/api/packages',
+        const response = await fetch('http://35.234.135.60:5000/api/packages',
             {
                 method: 'GET',
                 headers: {

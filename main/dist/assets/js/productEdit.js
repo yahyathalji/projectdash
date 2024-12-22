@@ -42,7 +42,7 @@ async function initializePage() {
 async function fetchAndPopulateCategories() {
   try {
     const response = await fetch(
-      "http://localhost:5000/api/categories/subcategories",
+      "http://35.234.135.60:5000/api/categories/subcategories",
       {
         method: "GET",
         headers: {
@@ -263,7 +263,7 @@ function displayImage(fileOrUrl, isFile = true) {
   const imgElement = document.createElement("img");
   const src = isFile
     ? URL.createObjectURL(fileOrUrl)
-    : `http://localhost:5000/${fileOrUrl.replace(/\\/g, "/")}`;
+    : `http://35.234.135.60:5000/${fileOrUrl.replace(/\\/g, "/")}`;
   imgElement.src = src;
   imgElement.style.width = "100px";
   imgElement.style.height = "100px";
@@ -371,7 +371,7 @@ document.addEventListener("click", async function (event) {
     if (confirm("Are you sure you want to delete this customization?")) {
       // Call API to delete customization
       const response = await fetch(
-        `http://localhost:5000/api/customization/product`,
+        `http://35.234.135.60:5000/api/customization/product`,
         {
           method: "DELETE",
           headers: {
@@ -455,7 +455,7 @@ function initializeFormSubmission() {
 
       console.log("Form Data:", Array.from(formData.entries()));
 
-      fetch(`http://localhost:5000/api/product/${productId}`, {
+      fetch(`http://35.234.135.60:5000/api/product/${productId}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
@@ -490,7 +490,7 @@ function initializeFormSubmission() {
 async function fetchAndPopulateProductData(productId) {
   try {
     const response = await fetch(
-      `http://localhost:5000/api/getProduct/${productId}`,
+      `http://35.234.135.60:5000/api/getProduct/${productId}`,
       {
         method: "GET",
         headers: {
@@ -555,7 +555,7 @@ async function fetchAndPopulateProductData(productId) {
         resource.fileType.startsWith("video/")
       );
       if (videoResources.length > 0) {
-        const videoUrl = `http://localhost:5000/${videoResources[0].filePath.replace(
+        const videoUrl = `http://35.234.135.60:5000/${videoResources[0].filePath.replace(
           /\\/g,
           "/"
         )}`;

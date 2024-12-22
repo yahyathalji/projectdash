@@ -18,8 +18,8 @@ function getUserIdFromURL() {
 document.addEventListener("DOMContentLoaded", () => {
   const userId = getUserIdFromURL();
   const ordersTableBody = document.querySelector("#myDataTable tbody");
-  const userDetailsUrl = `http://localhost:5000/api/get_user_detail/${userId}`;
-  const userOrdersUrl = `http://localhost:5000/api/user/orders/${userId}`;
+  const userDetailsUrl = `http://35.234.135.60:5000/api/get_user_detail/${userId}`;
+  const userOrdersUrl = `http://35.234.135.60:5000/api/user/orders/${userId}`;
 
   if (!userId) {
     const mainContent = document.querySelector(".main");
@@ -186,7 +186,7 @@ function ProfileAndAddress(data) {
 
       // If filePath is relative, prepend '/resources/' to form the correct URL
       if (!filePath.startsWith("http")) {
-        filePath = `http://localhost:5000/resources/${filePath}`;
+        filePath = `http://35.234.135.60:5000/resources/${filePath}`;
       }
 
       profilePictureElem.src = filePath;

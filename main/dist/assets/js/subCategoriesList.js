@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const response =fetch("http://localhost:5000/api/categories/subcategories",
+    const response =fetch("http://35.234.135.60:5000/api/categories/subcategories",
         {
             method: "GET",
             headers: {

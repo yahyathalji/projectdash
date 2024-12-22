@@ -569,7 +569,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             // Send POST request with all customizations
-            const response = await fetch("http://localhost:5000/api/customization", { // Ensure your backend supports this endpoint
+            const response = await fetch("http://35.234.135.60:5000/api/customization", { // Ensure your backend supports this endpoint
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${sessionStorage.getItem("authToken")}`

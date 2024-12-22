@@ -218,7 +218,7 @@ document.getElementById("videoInput").addEventListener("change", function (event
             let products = [];
             let filteredProducts = [];
         
-            fetch("http://localhost:5000/api/GetAllProducts",
+            fetch("http://35.234.135.60:5000/api/GetAllProducts",
                 {
                     method: "GET",
                     headers: {
@@ -451,7 +451,7 @@ selectedProductsTable.addEventListener("click", function (event) {
     let selectedCategoryId = null;
 
     // Fetch categories and subcategories data from API
-    fetch('http://localhost:5000/api/categories/subcategories',
+    fetch('http://35.234.135.60:5000/api/categories/subcategories',
         {
             method: 'GET',
             headers: {
@@ -597,7 +597,7 @@ selectedProductsTable.addEventListener("click", function (event) {
                 }
         
                 // Submit data to the API
-                const response = await fetch('http://localhost:5000/api/packages', {
+                const response = await fetch('http://35.234.135.60:5000/api/packages', {
                     method: 'POST',
                     headers: {
                         Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
