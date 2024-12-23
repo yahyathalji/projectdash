@@ -187,7 +187,7 @@
         console.log("SubCategoryID from URL:", subCategoryId);
         console.log("CategoryID from URL:", categoryId);
 
-        const apiBaseUrl = "http://localhost:5000/api"; // Updated base URL
+        const apiBaseUrl = "http://35.234.135.60:5000/api"; // Updated base URL
 
         // Function to fetch subcategory details
         function fetchSubCategory() {
@@ -232,34 +232,42 @@
 
         // Function to fetch categories for the parent category select
         function fetchCategories() {
-          $.ajax({
-            url: `${apiBaseUrl}/categories`,
+          fetch(`${apiBaseUrl}/categories`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
-              // 'cookie' header is typically managed by the browser; no need to set it manually
             },
-            success: function (data) {
-              const selectElement = $("#parentCategorySelect");
-              selectElement.empty();
-
-              data.forEach(function (category) {
-                selectElement.append(
-                  `<option value="${category.CategoryID}">${category.Name}</option>`
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(
+                  `Failed to fetch categories: ${response.statusText}`
                 );
+              }
+              return response.json();
+            })
+            .then((data) => {
+              const selectElement = document.getElementById(
+                "parentCategorySelect"
+              );
+              selectElement.innerHTML = "";
+
+              data.forEach((category) => {
+                const option = document.createElement("option");
+                option.value = category.CategoryID;
+                option.textContent = category.Name;
+                selectElement.appendChild(option);
               });
 
               if (categoryId) {
-                selectElement.val(categoryId);
+                selectElement.value = categoryId;
               }
-            },
-            error: function (error) {
+            })
+            .catch((error) => {
               console.error("Error fetching categories:", error);
-            },
-          });
+            });
         }
-
         // Initial fetch calls
         fetchSubCategory();
         fetchCategories();
@@ -317,31 +325,34 @@
 
           // Update URL to match the desired API endpoint
           const updateUrl = `${apiBaseUrl}/categories/${categoryId}/subcategories/${subCategoryId}`;
-
-          $.ajax({
-            url: updateUrl,
+            fetch(updateUrl, {
             method: "PUT",
-            contentType: "application/json",
             headers: {
+              "Content-Type": "application/json",
               Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
-              // 'cookie' header is typically managed by the browser; no need to set it manually
             },
-            data: JSON.stringify(data),
-            success: function (response) {
-              console.log("Subcategory updated successfully:", response);
+            body: JSON.stringify(data),
+            })
+            .then((response) => {
+              if (!response.ok) {
+              throw new Error(`Error updating subcategory: ${response.statusText}`);
+              }
+              return response.json();
+            })
+            .then((responseData) => {
+              console.log("Subcategory updated successfully:", responseData);
               $("#responseMessage").html(
-                '<div class="alert alert-success">Subcategory updated successfully!</div>'
+              '<div class="alert alert-success">Subcategory updated successfully!</div>'
               );
-            },
-            error: function (error) {
+            })
+            .catch((error) => {
               console.error("Error updating subcategory:", error);
               $("#responseMessage").html(
-                '<div class="alert alert-danger">Error updating subcategory.</div>'
+              '<div class="alert alert-danger">Error updating subcategory.</div>'
               );
-            },
+            });
           });
-        });
-      });
+          });
     </script>
     <script>
       class UserProfileManager {
