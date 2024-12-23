@@ -11,22 +11,22 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <!-- Favicon-->
 
-    <!--plugin css file -->
+    <!-- Plugin CSS files -->
     <link rel="stylesheet" href="assets/plugin/cropper/cropper.min.css" />
     <link
       rel="stylesheet"
       href="assets/plugin/dropify/dist/css/dropify.min.css"
     />
 
-    <!-- Project css file  -->
+    <!-- Project CSS file -->
     <link rel="stylesheet" href="assets/css/ebazar.style.min.css" />
   </head>
   <body>
     <div id="ebazar-layout" class="theme-blue">
-      <!-- sidebar -->
+      <!-- Sidebar -->
       <div id="sidebar"></div>
 
-      <!-- main body area -->
+      <!-- Main body area -->
       <div class="main px-lg-4 px-md-4">
         <!-- Body: Header -->
         <div id="header"></div>
@@ -72,6 +72,7 @@
                             type="text"
                             class="form-control"
                             id="subCategoryName"
+                            required
                           />
                         </div>
 
@@ -91,22 +92,18 @@
                         </div>
 
                         <!-- Parent Category Select -->
-                        <div class="card mb-3">
-                          <div class="card-body">
-                            <label class="form-label"
-                              >Parent Category Select</label
-                            >
-                            <select
-                              class="form-select"
-                              size="6"
-                              aria-label="size 3 select example"
-                              id="parentCategorySelect"
-                            >
-                              <!-- سيتم ملؤها ديناميكياً عبر JavaScript -->
-                            </select>
-                          </div>
+                        <div class="col-md-12">
+                          <label class="form-label">Parent Category Select</label>
+                          <select
+                            class="form-select"
+                            size="6"
+                            aria-label="size 6 select example"
+                            id="parentCategorySelect"
+                          >
+                            <!-- Will be dynamically populated via JavaScript -->
+                          </select>
                         </div>
-                        <div id="responseMessage"></div>
+                        <div id="responseMessage" class="col-12"></div>
                       </div>
                     </form>
                   </div>
@@ -168,16 +165,16 @@
         });
     </script>
 
-    <!-- Jquery Core Js -->
+    <!-- jQuery Core Js -->
     <script src="assets/bundles/libscripts.bundle.js"></script>
 
-    <!-- Jquery Plugin -->
+    <!-- jQuery Plugin -->
     <script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>
     <script src="assets/plugin/cropper/cropper.min.js"></script>
     <script src="assets/plugin/cropper/cropper-init.js"></script>
     <script src="assets/bundles/dropify.bundle.js"></script>
 
-    <!-- Jquery Page Js -->
+    <!-- jQuery Page Js -->
     <script src="../js/template.js"></script>
     <script>
       $(document).ready(function () {
@@ -304,7 +301,7 @@
         $(".dropify-fr").dropify({
           messages: {
             default: "Glissez-déposez un fichier ici ou cliquez",
-            replace: "Glissez-déposez un fichier ou cliquez pour remplacer",
+            replace: "Glissez-déposez un fichier أو cliquez pour remplacer",
             remove: "Supprimer",
             error: "Désolé, le fichier est trop volumineux",
           },
@@ -314,45 +311,61 @@
         $("#saveButton").on("click", function (e) {
           e.preventDefault();
 
-          const name = $("#subCategoryName").val();
+          const name = $("#subCategoryName").val().trim();
           const isActive = $("#isActive").prop("checked");
           const parentCategoryId = $("#parentCategorySelect").val();
+
+          // Input validation
+          if (!name) {
+            $("#responseMessage").html(
+              '<div class="alert alert-warning">Name field cannot be empty.</div>'
+            );
+            return;
+          }
 
           // Prepare the data object based on the API requirements
           const data = {
             Name: name,
+            IsActive: isActive,
           };
+
+          // If parentCategoryId is different from the current categoryId, include it in the update
+          if (parentCategoryId && parentCategoryId !== categoryId) {
+            data.CategoryId = Number(parentCategoryId);
+          }
 
           // Update URL to match the desired API endpoint
           const updateUrl = `${apiBaseUrl}/categories/${categoryId}/subcategories/${subCategoryId}`;
-            fetch(updateUrl, {
+          fetch(updateUrl, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
             },
             body: JSON.stringify(data),
-            })
+          })
             .then((response) => {
               if (!response.ok) {
-              throw new Error(`Error updating subcategory: ${response.statusText}`);
+                return response.json().then(errData => {
+                  throw new Error(errData.message || `Error updating subcategory: ${response.statusText}`);
+                });
               }
               return response.json();
             })
             .then((responseData) => {
               console.log("Subcategory updated successfully:", responseData);
               $("#responseMessage").html(
-              '<div class="alert alert-success">Subcategory updated successfully!</div>'
+                '<div class="alert alert-success">Subcategory updated successfully!</div>'
               );
             })
             .catch((error) => {
               console.error("Error updating subcategory:", error);
               $("#responseMessage").html(
-              '<div class="alert alert-danger">Error updating subcategory.</div>'
+                `<div class="alert alert-danger">Error updating subcategory: ${error.message}</div>`
               );
             });
-          });
-          });
+        });
+      });
     </script>
     <script>
       class UserProfileManager {
