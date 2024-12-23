@@ -10,9 +10,9 @@
     <!-- Plugin CSS files -->
     <link rel="stylesheet" href="assets/plugin/datatables/responsive.dataTables.min.css">
     <link rel="stylesheet" href="assets/plugin/datatables/dataTables.bootstrap5.min.css">
-
-    <!-- Project CSS file -->
     <link rel="stylesheet" href="assets/css/ebazar.style.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Project CSS file -->
 </head>
 <body>
     <div id="ebazar-layout" class="theme-blue">
@@ -209,8 +209,8 @@
                         </div><!-- Row end  -->
 
                         <!-- Avg Expense Costs and Chart -->
-                        <div class="row g-3 mb-3" style="margin: 0.5%;">
-                            <div class="col-lg-8 col-md-12">
+                        <div class="row g-1 mb-2" style="margin: 0.5%;">
+                            <div class="col-lg-12 col-md-12">
                                 <div class="card">
                                     <div class="card-header py-3 d-flex justify-content-between align-items-center bg-transparent border-bottom-0">
                                         <h6 class="m-0 fw-bold">Avg Expense Costs</h6>
@@ -225,7 +225,7 @@
                         </div><!-- Row end  -->
 
                         <!-- Recent Orders Table -->
-                        <div class="row g-3 mb-3" style="margin: 0.5%;"> 
+                        <div class="row g-1 mb-3" style="margin: 0.5%;"> 
                             <div class="col-md-12">
                                 <div class="card"> 
                                     <div class="card-body"> 
@@ -249,7 +249,7 @@
                         </div> <!-- Row end  -->
 
                         <!-- Top Products Table -->
-                        <div class="row g-3 mb-3" style="margin: 0.5%;">
+                        <div class="row g-1 mb-3" style="margin: 0.5%;">
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-body">
@@ -343,7 +343,7 @@
             constructor() {
                 this.authToken = sessionStorage.getItem('authToken');
                 this.defaultImage = 'assets/images/profile_av.svg';
-                this.apiBaseUrl = 'http://35.234.135.60:80'; // Update this if needed
+                this.apiBaseUrl = 'http://35.234.135.60:5000'; // Update this if needed
                 this.initializeEventListeners();
             }
 
@@ -550,289 +550,7 @@
     
     </script>
 
-    <!-- Include this script after loading all components -->
-<script>
-    class UserProfileManager {
-        constructor() {
-            this.authToken = sessionStorage.getItem('authToken');
-            this.defaultImage = 'assets/images/profile_av.svg';
-            this.apiBaseUrl = 'http://35.234.135.60:80'; // Update if needed
-            this.userDataKey = 'userData'; // Key for storing user data in sessionStorage
-        }
 
-        /**
-         * Initializes the UserProfileManager.
-         */
-        async initialize() {
-            console.log('Initializing UserProfileManager');
-            if (!this.authToken) {
-                console.log('No authToken found, redirecting to signin');
-                this.handleSignout();
-                return;
-            }
-
-            if (this.isTokenExpired(this.authToken)) {
-                console.log('Auth token is expired, redirecting to signin');
-                this.handleSignout();
-                return;
-            }
-
-            try {
-                let userData = this.getStoredUserData();
-
-                if (!userData) {
-                    console.log('No user data in sessionStorage, fetching from API');
-                    const userId = this.getUserIdFromToken(this.authToken);
-                    userData = await this.fetchUserData(userId);
-                    this.storeUserData(userData);
-                } else {
-                    console.log('User data retrieved from sessionStorage');
-                }
-
-                this.updateProfile(userData);
-                console.log('UserProfileManager initialized successfully');
-            } catch (error) {
-                console.error('Initialization error:', error);
-                this.setDefaultProfileValues();
-            }
-        }
-
-        /**
-         * Checks if the JWT token is expired.
-         * @param {string} token - The JWT token.
-         * @returns {boolean} True if expired, false otherwise.
-         */
-        isTokenExpired(token) {
-            try {
-                const payload = JSON.parse(atob(token.split('.')[1]));
-                const currentTime = Math.floor(Date.now() / 1000);
-                return payload.exp && payload.exp < currentTime;
-            } catch (error) {
-                console.error('Error checking token expiry:', error);
-                return true; // Treat as expired if unable to parse
-            }
-        }
-
-        /**
-         * Extracts the userId from the JWT token.
-         * @param {string} token - The JWT token.
-         * @returns {string} The userId.
-         */
-        getUserIdFromToken(token) {
-            try {
-                const payload = JSON.parse(atob(token.split('.')[1]));
-                return payload.payload.userId;
-            } catch (error) {
-                console.error('Error extracting userId from token:', error);
-                throw new Error('Invalid token');
-            }
-        }
-
-        /**
-         * Fetches user data from the API.
-         * @param {string} userId - The user ID.
-         * @returns {Object} The user data.
-         */
-        async fetchUserData(userId) {
-            const apiUrl = `${this.apiBaseUrl}/api/getusers/${userId}`;
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${this.authToken}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error(`API request failed with status ${response.status}`);
-                }
-
-                const data = await response.json();
-                return data;
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-                throw error;
-            }
-        }
-
-        /**
-         * Stores user data in sessionStorage.
-         * @param {Object} userData - The user data to store.
-         */
-        storeUserData(userData) {
-            try {
-                sessionStorage.setItem(this.userDataKey, JSON.stringify(userData));
-                sessionStorage.setItem('auth', this.authToken); // Aligning with sidebar.js
-                sessionStorage.setItem('email', userData.email || 'user@example.com'); // Aligning with sidebar.js
-                console.log('User data stored in sessionStorage');
-            } catch (error) {
-                console.error('Error storing user data in sessionStorage:', error);
-            }
-        }
-
-        /**
-         * Retrieves user data from sessionStorage.
-         * @returns {Object|null} The user data or null if not found.
-         */
-        getStoredUserData() {
-            try {
-                const data = sessionStorage.getItem(this.userDataKey);
-                return data ? JSON.parse(data) : null;
-            } catch (error) {
-                console.error('Error retrieving user data from sessionStorage:', error);
-                return null;
-            }
-        }
-
-        /**
-         * Updates the profile information in the DOM.
-         * @param {Object} userData - The user data from the API or sessionStorage.
-         */
-        updateProfile(userData) {
-            if (!userData) {
-                console.warn('No user data provided');
-                this.setDefaultProfileValues();
-                return;
-            }
-
-            const { Username, UserProfilePicture } = userData;
-
-            // Update username
-            const profileUserName = document.getElementById('profileUserName');
-            const profileUserNameSmall = document.getElementById('profileUserNameSmall');
-            if (profileUserName) {
-                profileUserName.textContent = Username || 'User';
-            } else {
-                console.warn('Element with id profileUserName not found');
-            }
-
-            if (profileUserNameSmall) {
-                profileUserNameSmall.textContent = Username || 'User';
-            } else {
-                console.warn('Element with id profileUserNameSmall not found');
-            }
-
-            // Update email and role if needed (from userData or token)
-            const profileEmail = document.getElementById('profileEmail');
-            const profileRole = document.getElementById('profileRole');
-            if (profileEmail) {
-                profileEmail.textContent = userData.email || 'user@example.com';
-            } else {
-                console.warn('Element with id profileEmail not found');
-            }
-
-            if (profileRole) {
-                profileRole.textContent = `${userData.role || 'User'} Profile`;
-            } else {
-                console.warn('Element with id profileRole not found');
-            }
-
-            // Update profile images
-            this.updateProfileImages(UserProfilePicture);
-        }
-
-        /**
-         * Updates the profile images in the DOM.
-         * @param {Object} profilePicture - The user's profile picture information.
-         */
-        updateProfileImages(profilePicture) {
-            if (!profilePicture || !profilePicture.filePath) {
-                console.log('No profile picture information available. Using default image.');
-                this.setDefaultProfileImages();
-                return;
-            }
-
-            // Normalize filePath to use forward slashes
-            const normalizedFilePath = profilePicture.filePath.replace(/\\/g, '/');
-
-            // Construct the full URL for the profile image
-            const profileImageUrl = `${this.apiBaseUrl}/${normalizedFilePath}`;
-
-            console.log(`Loading profile image from: ${profileImageUrl}`);
-
-            const imageElements = ['profileImage', 'profileImageSmall'];
-
-            imageElements.forEach(elementId => {
-                const imgElement = document.getElementById(elementId);
-                if (imgElement) {
-                    imgElement.onerror = () => {
-                        console.warn(`Failed to load image: ${profileImageUrl}. Using default image.`);
-                        imgElement.src = this.defaultImage;
-                        imgElement.onerror = null; // Prevent infinite loop if default image also fails
-                    };
-                    imgElement.src = profileImageUrl;
-                } else {
-                    console.warn(`Image element with id ${elementId} not found`);
-                }
-            });
-        }
-
-        /**
-         * Sets default profile values when user data is unavailable.
-         */
-        setDefaultProfileValues() {
-            const defaultValues = {
-                userName: 'User',
-                email: 'user@example.com',
-                role: 'User'
-            };
-
-            const profileUserName = document.getElementById('profileUserName');
-            const profileUserNameSmall = document.getElementById('profileUserNameSmall');
-            const profileEmail = document.getElementById('profileEmail');
-            const profileRole = document.getElementById('profileRole');
-
-            if (profileUserName) {
-                profileUserName.textContent = defaultValues.userName;
-            }
-
-            if (profileUserNameSmall) {
-                profileUserNameSmall.textContent = defaultValues.userName;
-            }
-
-            if (profileEmail) {
-                profileEmail.textContent = defaultValues.email;
-            }
-
-            if (profileRole) {
-                profileRole.textContent = `${defaultValues.role} Profile`;
-            }
-
-            this.setDefaultProfileImages();
-        }
-
-        /**
-         * Sets the profile images to the default image.
-         */
-        setDefaultProfileImages() {
-            const imageElements = ['profileImage', 'profileImageSmall'];
-            imageElements.forEach(elementId => {
-                const imgElement = document.getElementById(elementId);
-                if (imgElement) {
-                    imgElement.src = this.defaultImage;
-                } else {
-                    console.warn(`Image element with id ${elementId} not found`);
-                }
-            });
-        }
-
-        /**
-         * Handles the signout process by clearing the auth token and user data, then redirecting to the signin page.
-         */
-        handleSignout() {
-            sessionStorage.removeItem('authToken');
-            sessionStorage.removeItem(this.userDataKey); // Clear stored user data
-            sessionStorage.removeItem('auth'); // Aligning with sidebar.js
-            sessionStorage.removeItem('email'); // Aligning with sidebar.js
-            // Remove other session items if necessary
-            window.location.href = 'auth-signin.html';
-        }
-    }
-
-    // Initialize when the document is ready
-    // (Already handled in the loadComponent Promise chain)
-</script>
 
     </body>
 

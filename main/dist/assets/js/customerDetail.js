@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const userId = getUserIdFromURL();
   const ordersTableBody = document.querySelector("#myDataTable tbody");
   const userDetailsUrl = `http://35.234.135.60:5000/api/get_user_detail/${userId}`;
-  const userOrdersUrl = `http://35.234.135.60:5000/api/user/orders/${userId}`;
+  const userOrdersUrl = `http://35.234.135.60:5000/api/orders?id=${userId}`; // Assuming API accepts userId as a query parameter
 
   if (!userId) {
     const mainContent = document.querySelector(".main");
@@ -35,8 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Ensure proper content type headers are set
   const headers = {
     "Content-Type": "application/json",
-    Accept: "application/json",
     Authorization: `Bearer ${authToken}`,
+    cookie: `authToken=${authToken}`,
   };
 
   // Fetch user details and orders concurrently
@@ -70,7 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Handle User Orders API Response
       if (ordersResponse.ok) {
-        ordersData = await ordersResponse.json();
+        const ordersJson = await ordersResponse.json();
+        ordersData = Array.isArray(ordersJson.data) ? ordersJson.data : [];
       } else if (ordersResponse.status === 404) {
         console.warn("User Orders not found (404).");
         ordersData = []; // Set to empty array to indicate no orders
@@ -103,6 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       const profileInfo = document.querySelector(".profile-info");
       if (profileInfo) {
+        console.error("Error fetching user details:", error);
         profileInfo.innerHTML += `<div class="alert alert-danger mt-3">Failed to load user details.</div>`;
       }
     });
@@ -118,31 +120,18 @@ function renderTableData(ordersData, tableBody) {
     ordersData.forEach((order) => {
       const createdAt = new Date(order.CreatedAt);
       rows += `
-                <tr>
-                    <td><a href="order-details.html?orderId=${
-                      order.OrderID
-                    }"><strong>#Order-${order.OrderID}</strong></a></td>
-                    <td>${
-                      isNaN(createdAt) ? "N/A" : createdAt.toLocaleDateString()
-                    }</td>
-                    <td>$${
-                      isNaN(parseFloat(order.TotalPrice))
-                        ? "N/A"
-                        : parseFloat(order.TotalPrice).toFixed(2)
-                    }</td>
-                    <td>${capitalizeFirstLetter(order.Status) || "N/A"}</td>
-                    <td>${
-                      typeof order.IsGift === "boolean"
-                        ? order.IsGift
-                          ? "Yes"
-                          : "No"
-                        : "N/A"
-                    }</td>
-                </tr>
-            `;
+        <tr>
+          <td><a href="order-details.html?orderId=${order.OrderID}"><strong>#Order-${order.OrderID}</strong></a></td>
+          <td>${isNaN(createdAt) ? "N/A" : createdAt.toLocaleDateString()}</td>
+          <td>$${isNaN(parseFloat(order.TotalPrice)) ? "N/A" : parseFloat(order.TotalPrice).toFixed(2)}</td>
+          <td>${capitalizeFirstLetter(order.Status) || "N/A"}</td>
+          <td>${typeof order.IsGift === "boolean" ? (order.IsGift ? "Yes" : "No") : "N/A"}</td>
+        </tr>
+      `;
     });
   }
 
+  console.log("Generated Rows:", rows); // Debugging line
   tableBody.innerHTML = rows;
 }
 
@@ -182,11 +171,11 @@ function ProfileAndAddress(data) {
   if (profilePictureElem) {
     if (data.UserProfilePicture && data.UserProfilePicture.filePath) {
       // Replace backslashes with forward slashes
-      let filePath = data.UserProfilePicture.entityName.replace(/\\/g, "/");
+      let filePath = data.UserProfilePicture.filePath.replace(/\\/g, "/");
 
-      // If filePath is relative, prepend '/resources/' to form the correct URL
+      // If filePath is relative, prepend the base URL to form the correct URL
       if (!filePath.startsWith("http")) {
-        filePath = `http://35.234.135.60:5000/resources/${filePath}`;
+        filePath = `http://35.234.135.60:5000/${filePath}`;
       }
 
       profilePictureElem.src = filePath;
@@ -205,7 +194,6 @@ function ProfileAndAddress(data) {
 }
 
 // Function to populate multiple addresses
-// Function to populate multiple addresses
 function populateAddresses(addresses) {
   const addressSection = document.getElementById("AddressSection");
   if (addressSection) {
@@ -213,32 +201,32 @@ function populateAddresses(addresses) {
       let addressHtml = "";
       addresses.forEach((address, index) => {
         addressHtml += `
-            <div class="info-card address-card">
-              <div class="info-card-header">
-                <h6 class="info-card-title">Address ${index + 1}</h6>
-              </div>
-              <div class="info-field">
-                <span class="info-label">Address Line:</span>
-                <span class="info-value">${address.AddressLine || "N/A"}</span>
-              </div>
-              <div class="info-field">
-                <span class="info-label">City:</span>
-                <span class="info-value">${address.City || "N/A"}</span>
-              </div>
-              <div class="info-field">
-                <span class="info-label">State:</span>
-                <span class="info-value">${address.State || "N/A"}</span>
-              </div>
-              <div class="info-field">
-                <span class="info-label">Country:</span>
-                <span class="info-value">${address.Country || "N/A"}</span>
-              </div>
-              <div class="info-field">
-                <span class="info-label">Postal Code:</span>
-                <span class="info-value">${address.PostalCode || "N/A"}</span>
-              </div>
+          <div class="info-card address-card">
+            <div class="info-card-header">
+              <h6 class="info-card-title">Address ${index + 1}</h6>
             </div>
-          `;
+            <div class="info-field">
+              <span class="info-label">Address Line:</span>
+              <span class="info-value">${address.AddressLine || "N/A"}</span>
+            </div>
+            <div class="info-field">
+              <span class="info-label">City:</span>
+              <span class="info-value">${address.City || "N/A"}</span>
+            </div>
+            <div class="info-field">
+              <span class="info-label">State:</span>
+              <span class="info-value">${address.State || "N/A"}</span>
+            </div>
+            <div class="info-field">
+              <span class="info-label">Country:</span>
+              <span class="info-value">${address.Country || "N/A"}</span>
+            </div>
+            <div class="info-field">
+              <span class="info-label">Postal Code:</span>
+              <span class="info-value">${address.PostalCode || "N/A"}</span>
+            </div>
+          </div>
+        `;
       });
       addressSection.innerHTML = addressHtml;
     } else {
@@ -247,7 +235,6 @@ function populateAddresses(addresses) {
   }
 }
 
-// Function to populate payment methods
 // Function to populate payment methods
 function populatePaymentMethods(data) {
   const paymentMethodsSection = document.getElementById(
@@ -266,47 +253,47 @@ function populatePaymentMethods(data) {
         }
 
         paymentHtml += `
-            <div class="info-card payment-card">
-              <div class="info-card-header">
-                <h6 class="info-card-title">Payment Method ${index + 1}</h6>
-                <span class="card-status ${
-                  isExpired ? "status-expired" : "status-active"
-                }">
-                  ${isExpired ? "Expired" : "Active"}
-                </span>
-              </div>
-              <div class="info-field">
-                <span class="info-label">Method:</span>
-                <span class="info-value">${method.Method || "N/A"}</span>
-              </div>
-              <div class="info-field">
-                <span class="info-label">Cardholder Name:</span>
-                <span class="info-value">${
-                  method.CardholderName || "N/A"
-                }</span>
-              </div>
-              <div class="info-field">
-                <span class="info-label">Card Number:</span>
-                <span class="info-value">${
-                  maskCardNumber(method.CardNumber) || "N/A"
-                }</span>
-              </div>
-              <div class="info-field">
-                <span class="info-label">Expiration Date:</span>
-                <span class="info-value">${
-                  method.ExpirationDate
-                    ? formatDate(method.ExpirationDate)
-                    : "N/A"
-                }</span>
-              </div>
-              <div class="info-field">
-                <span class="info-label">Card Type:</span>
-                <span class="info-value">${
-                  capitalizeFirstLetter(method.CardType) || "N/A"
-                }</span>
-              </div>
+          <div class="info-card payment-card">
+            <div class="info-card-header">
+              <h6 class="info-card-title">Payment Method ${index + 1}</h6>
+              <span class="card-status ${
+                isExpired ? "status-expired" : "status-active"
+              }">
+                ${isExpired ? "Expired" : "Active"}
+              </span>
             </div>
-          `;
+            <div class="info-field">
+              <span class="info-label">Method:</span>
+              <span class="info-value">${method.Method || "N/A"}</span>
+            </div>
+            <div class="info-field">
+              <span class="info-label">Cardholder Name:</span>
+              <span class="info-value">${
+                method.CardholderName || "N/A"
+              }</span>
+            </div>
+            <div class="info-field">
+              <span class="info-label">Card Number:</span>
+              <span class="info-value">${
+                maskCardNumber(method.CardNumber) || "N/A"
+              }</span>
+            </div>
+            <div class="info-field">
+              <span class="info-label">Expiration Date:</span>
+              <span class="info-value">${
+                method.ExpirationDate
+                  ? formatDate(method.ExpirationDate)
+                  : "N/A"
+              }</span>
+            </div>
+            <div class="info-field">
+              <span class="info-label">Card Type:</span>
+              <span class="info-value">${
+                capitalizeFirstLetter(method.CardType) || "N/A"
+              }</span>
+            </div>
+          </div>
+        `;
       });
       paymentMethodsSection.innerHTML = paymentHtml;
     } else {

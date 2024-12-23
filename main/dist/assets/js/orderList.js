@@ -35,32 +35,53 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         data: [], // Initialize with empty data
         columns: [
-            { data: 'OrderID', title: 'Order-Id' },
-            { data: 'User.Username', title: 'Customer Name' },
-            { data: 'TotalPrice', title: 'Price' },
-            { data: 'Status', title: 'Status' }
+            { 
+                data: 'OrderID', 
+                title: 'Order ID',
+                render: function(data, type, row) {
+                    return `<a href="order-details.html?orderId=${encodeURIComponent(data)}"><strong>#Order-${escapeHtml(data)}</strong></a>`;
+                }
+            },
+            { 
+                data: 'CustomerName', 
+                title: 'Customer Name',
+                render: function(data, type, row) {
+                    if (data) {
+                        return escapeHtml(data.trim());
+                    } else {
+                        console.warn(`OrderID: ${row.OrderID} - CustomerName missing`);
+                        return 'Unknown';
+                    }
+                }
+            },
+            { 
+                data: 'Price', 
+                title: 'Price',
+                render: function(data, type, row) {
+                    const priceNumber = parseFloat(data);
+                    if (isNaN(priceNumber)) {
+                        console.warn(`OrderID: ${row.OrderID} - Invalid Price: ${data}`);
+                        return `$0.00`;
+                    }
+                    return `$${priceNumber.toFixed(2)}`;
+                }
+            },
+            { 
+                data: 'Status', 
+                title: 'Status',
+                render: function(data, type, row) {
+                    const status = mapStatus(data);
+                    return `<span class="badge ${status.class}">${capitalizeFirstLetter(status.label)}</span>`;
+                }
+            }
         ],
-        createdRow: function(row, data, dataIndex) {
-            // Customize the row after creation
-            // Order ID link
-            const orderIdCell = row.cells[0];
-            orderIdCell.innerHTML = `<a href="order-details.html?orderId=${encodeURIComponent(data.OrderID)}"><strong>#Order-${escapeHtml(data.OrderID)}</strong></a>`;
-
-            // Customer Name
-            const customerName = data.User && data.User.Username ? escapeHtml(data.User.Username) : "Unknown";
-            row.cells[1].textContent = customerName;
-
-            // Price formatting
-            row.cells[2].textContent = `$${Number(data.TotalPrice).toFixed(2)}`;
-
-            // Status badge
-            const status = mapStatus(data.Status);
-            row.cells[3].innerHTML = `<span class="badge ${status.class}">${capitalizeFirstLetter(status.label)}</span>`;
-        },
-        // Optionally, handle error in DataTables' initComplete or drawCallback
     });
 
-    // Function to map status to label and class
+    /**
+     * Maps the order status to corresponding label and CSS class for styling.
+     * @param {string} status - The status of the order.
+     * @returns {Object} An object containing the label and CSS class.
+     */
     function mapStatus(status) {
         const statusMap = {
             'pending': { label: 'Pending', class: 'bg-warning' },
@@ -76,7 +97,10 @@ document.addEventListener("DOMContentLoaded", () => {
         return statusMap[status.toLowerCase()] || { label: status || 'Unknown', class: 'bg-light' };
     }
 
-    // Function to fetch orders (all or filtered by status)
+    /**
+     * Fetches orders from the API, either all orders or filtered by status.
+     * @param {string} status - The status to filter orders by. Defaults to fetching all orders.
+     */
     async function fetchOrders(status = '') {
         // Hide any previous error message
         errorMessage.classList.add('d-none');
@@ -88,6 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (status && status.toLowerCase() !== 'all') {
                 // Use the search API with POST method
+                console.log(`Fetching orders with status: ${status}`);
                 response = await fetch(searchApiUrl, {
                     method: "POST",
                     headers: {
@@ -102,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             } else {
                 // Use the admin API with GET method
+                console.log(`Fetching all orders`);
                 response = await fetch(adminApiUrl, {
                     method: "GET",
                     headers: {
@@ -112,10 +138,19 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                // Attempt to parse error details from the response
+                let errorText = `HTTP error! Status: ${response.status}`;
+                try {
+                    const errorData = await response.json();
+                    errorText = errorData.message || errorText;
+                } catch (jsonError) {
+                    console.warn("Failed to parse error response as JSON:", jsonError);
+                }
+                throw new Error(errorText);
             }
 
             data = await response.json();
+            console.log("Fetched data:", data); // Log fetched data for debugging
 
             // Clear existing data
             dataTable.clear();
@@ -126,6 +161,8 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 // No data available
                 dataTable.draw(); // Triggers DataTables to show 'emptyTable' or 'zeroRecords' message
+                errorMessage.textContent = "No orders available.";
+                errorMessage.classList.remove('d-none');
             }
 
         } catch (error) {
@@ -134,8 +171,8 @@ document.addEventListener("DOMContentLoaded", () => {
             // Clear existing data
             dataTable.clear().draw();
 
-            // Optionally, display an error message
-            errorMessage.textContent = "no orders found";
+            // Display a user-friendly error message
+            errorMessage.textContent = error.message || "An unexpected error occurred while fetching orders.";
             errorMessage.classList.remove('d-none');
         }
     }
@@ -143,6 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Handle apply filter button click
     applyFilterButton.addEventListener('click', () => {
         const selectedStatus = statusFilter.value;
+        console.log(`Apply Filter clicked with status: '${selectedStatus}'`);
         fetchOrders(selectedStatus);
     });
 
@@ -150,13 +188,21 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchOrders();
 });
 
-// Utility function to capitalize the first letter
+/**
+ * Capitalizes the first letter of a given string.
+ * @param {string} string - The string to capitalize.
+ * @returns {string} The capitalized string.
+ */
 function capitalizeFirstLetter(string) {
     if (typeof string !== 'string') return '';
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-// Utility function to escape HTML to prevent XSS
+/**
+ * Escapes HTML characters in a string to prevent XSS attacks.
+ * @param {string} text - The text to escape.
+ * @returns {string} The escaped text.
+ */
 function escapeHtml(text) {
     if (typeof text !== 'string') return text;
     const map = {

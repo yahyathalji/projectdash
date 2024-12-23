@@ -7,16 +7,7 @@ function initializeDropify() {
             // Specific Dropify instance for the category image
             const drEvent = $('#dropify-event').dropify();
 
-            // Confirmation before clearing the image
-            drEvent.on('dropify.beforeClear', function (event, element) {
-                return confirm(`Do you really want to delete "${element.file.name}"?`);
-            });
-
-            // Alert after the image is cleared
-            drEvent.on('dropify.afterClear', function () {
-                alert('File deleted');
-            });
-
+        
             // Initialize Dropify with French messages
             $('.dropify-fr').dropify({
                 messages: {
