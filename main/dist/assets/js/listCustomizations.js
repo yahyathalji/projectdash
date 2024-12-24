@@ -122,9 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Actions (View, Edit, Delete)
             const tdActions = document.createElement('td');
             tdActions.innerHTML = `
-                <button class="btn btn-info btn-sm action-btn view-btn" title="View Details">
-                    <i class="fa fa-eye"></i>
-                </button>
+              
                 <button class="btn btn-warning btn-sm action-btn edit-btn" title="Edit Customization">
                     <i class="fa fa-edit"></i>
                 </button>
@@ -138,9 +136,8 @@ document.addEventListener("DOMContentLoaded", function () {
             customizationsTableBody.appendChild(tr);
 
             // Add Event Listeners for Action Buttons
-            tr.querySelector('.view-btn').addEventListener('click', function () {
-                viewCustomization(customization.CustomizationID);
-            });
+          
+
 
             tr.querySelector('.edit-btn').addEventListener('click', function () {
                 editCustomization(customization.CustomizationID);
@@ -162,12 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // ------------------------
     // View Customization Function
     // ------------------------
-    function viewCustomization(customizationID) {
-        // Implement the logic to view customization details
-        // For example, redirect to a details page or open a modal
-        // Example: window.location.href = `view-customization.html?id=${customizationID}`;
-        showFeedback(`View details for Customization ID: ${customizationID}`, 'info');
-    }
+  
 
     // ------------------------
     // Edit Customization Function
@@ -175,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function editCustomization(customizationID) {
         // Implement the logic to edit the customization
         // For example, redirect to an edit form page
-         window.location.href = `Edit-customization.html?id=${customizationID}`;
+         window.location.href = `Edit-Customization.html?id=${customizationID}`;
         showFeedback(`Edit Customization ID: ${customizationID}`, 'warning');
     }
 

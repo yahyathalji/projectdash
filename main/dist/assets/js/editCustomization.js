@@ -478,11 +478,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <input type="text" class="form-control option-one-value" placeholder="Option One Value" value="${value}" required>
                             <input type="file" class="form-control upload-option-one-file" accept="image/*">
                         </div>
-                        <div class="d-flex gap-2">
-                            <input type="text" class="form-control option-two-name" placeholder="Option Two Name" value="" required>
-                            <input type="text" class="form-control option-two-value" placeholder="Option Two Value" value="" required>
-                            <input type="file" class="form-control upload-option-two-file" accept="image/*">
-                        </div>
+                       
                         <button type="button" class="btn btn-outline-danger remove-option-btn mt-2" title="Remove Option">
                             <i class="fa fa-trash"></i>
                         </button>
