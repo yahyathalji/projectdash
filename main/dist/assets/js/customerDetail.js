@@ -18,8 +18,8 @@ function getUserIdFromURL() {
 document.addEventListener("DOMContentLoaded", () => {
   const userId = getUserIdFromURL();
   const ordersTableBody = document.querySelector("#myDataTable tbody");
-  const userDetailsUrl = `http://35.234.135.60:5000/api/get_user_detail/${userId}`;
-  const userOrdersUrl = `http://35.234.135.60:5000/api/orders?id=${userId}`; // Assuming API accepts userId as a query parameter
+  const userDetailsUrl = `http://localhost:5000/api/get_user_detail/${userId}`;
+  const userOrdersUrl = `http://localhost:5000/api/orders?id=${userId}`; // Assuming API accepts userId as a query parameter
 
   if (!userId) {
     const mainContent = document.querySelector(".main");
@@ -175,7 +175,7 @@ function ProfileAndAddress(data) {
 
       // If filePath is relative, prepend the base URL to form the correct URL
       if (!filePath.startsWith("http")) {
-        filePath = `http://35.234.135.60:5000/${filePath}`;
+        filePath = `http://localhost:5000/${filePath}`;
       }
 
       profilePictureElem.src = filePath;

@@ -234,7 +234,7 @@
       
         // Function to load notifications from the API
         function loadNotifications() {
-          fetch("http://35.234.135.60:5000/notifications", {
+          fetch("http://localhost:5000/notifications", {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -415,7 +415,7 @@
                 return;
               }
 
-              apiUrl = "http://35.234.135.60:5000/notifications/send";
+              apiUrl = "http://localhost:5000/notifications/send";
               requestBody = {
                 title: title,
                 body: body
@@ -437,7 +437,7 @@
                 return;
               }
 
-              apiUrl = "http://35.234.135.60:5000/notifications/sendPush";
+              apiUrl = "http://localhost:5000/notifications/sendPush";
               requestBody = {
                 title: title,
                 body: body,
@@ -509,7 +509,7 @@
         constructor() {
             this.authToken = sessionStorage.getItem("authToken");
             this.defaultImage = "assets/images/profile_av.svg";
-            this.apiBaseUrl = "http://35.234.135.60:5000"; // Update if needed
+            this.apiBaseUrl = "http://localhost:5000"; // Update if needed
             this.userDataKey = "userData"; // Key for storing user data in sessionStorage
         }
 

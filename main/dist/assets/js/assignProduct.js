@@ -1,9 +1,9 @@
 // assignProduct.js
 
 document.addEventListener("DOMContentLoaded", function () {
-    const customizationsApiEndpoint = "http://35.234.135.60:5000/api/customization"; // API Endpoint to fetch customizations
-    const assignApiEndpoint = "http://35.234.135.60:5000/api/customization/product"; // API Endpoint to assign customization to products
-    const productsApiEndpoint = "http://35.234.135.60:5000/api/getAllproducts"; // API Endpoint to fetch products
+    const customizationsApiEndpoint = "http://localhost:5000/api/customization"; // API Endpoint to fetch customizations
+    const assignApiEndpoint = "http://localhost:5000/api/customization/product"; // API Endpoint to assign customization to products
+    const productsApiEndpoint = "http://localhost:5000/api/getAllproducts"; // API Endpoint to fetch products
 
     // DOM Elements for Customizations
     const customizationsTableBody = document.querySelector("#customizationsTable tbody");

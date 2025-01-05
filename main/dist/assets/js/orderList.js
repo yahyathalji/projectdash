@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const statusFilter = document.getElementById('statusFilter');
     const applyFilterButton = document.getElementById('applyFilterButton');
-    const adminApiUrl = "http://35.234.135.60:5000/api/orders/admin";
-    const searchApiUrl = "http://35.234.135.60:5000/search/order";
+    const adminApiUrl = "http://localhost:5000/api/orders/admin";
+    const searchApiUrl = "http://localhost:5000/search/order";
     const errorMessage = document.getElementById('errorMessage');
 
     // Initialize DataTable once

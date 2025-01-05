@@ -669,7 +669,7 @@
         try {
           const authToken = sessionStorage.getItem("authToken");
           const response = await fetch(
-            "http://35.234.135.60:5000/api/categories/subcategories",
+            "http://localhost:5000/api/categories/subcategories",
             {
               method: "GET",
               headers: {
@@ -749,7 +749,7 @@
         try {
           const authToken = sessionStorage.getItem("authToken");
           const response = await fetch(
-            "http://35.234.135.60:5000/material/material",
+            "http://localhost:5000/material/material",
             {
               method: "GET",
               headers: {
@@ -777,7 +777,7 @@
     
       // ---------------------------- Fetch Package Details ----------------------------
       async function fetchPackageDetails(packageID) {
-        const apiUrl = `http://35.234.135.60:5000/api/packages/${packageID}`;
+        const apiUrl = `http://localhost:5000/api/packages/${packageID}`;
         try {
           const response = await fetch(apiUrl, {
             method: "GET",
@@ -807,7 +807,7 @@
     
       // ---------------------------- Fetch Assigned Materials for Package ----------------------------
       async function fetchAssignedMaterials(packageID) {
-        const apiUrl = `http://35.234.135.60:5000/material/package/${packageID}`;
+        const apiUrl = `http://localhost:5000/material/package/${packageID}`;
         try {
           const authToken = sessionStorage.getItem("authToken");
           const response = await fetch(apiUrl, {
@@ -999,7 +999,7 @@
         try {
           const authToken = sessionStorage.getItem("authToken");
           const response = await fetch(
-            "http://35.234.135.60:5000/api/customization/package",
+            "http://localhost:5000/api/customization/package",
             {
               method: "DELETE",
               headers: {
@@ -1072,7 +1072,7 @@
         if (videos.length > 0) {
           const video = videos[0]; // Assuming only one video per package
           displayVideo(
-            `http://35.234.135.60:5000${normalizeFilePath(video.filePath)}`,
+            `http://localhost:5000${normalizeFilePath(video.filePath)}`,
             video.ResourceID
           );
         }
@@ -1122,7 +1122,7 @@
         const imgElement = document.createElement("img");
         const src = isFile
           ? URL.createObjectURL(filePath)
-          : `http://35.234.135.60:5000${normalizeFilePath(filePath)}`;
+          : `http://localhost:5000${normalizeFilePath(filePath)}`;
         imgElement.src = src;
         imgElement.style.width = "100px";
         imgElement.style.height = "100px";
@@ -1244,7 +1244,7 @@
             // Update existing materials using PUT
             try {
               const updateResponse = await fetch(
-                "http://35.234.135.60:5000/material/package/update",
+                "http://localhost:5000/material/package/update",
                 {
                   method: "PUT",
                   headers: {
@@ -1294,7 +1294,7 @@
             if (materialsToDelete.length > 0) {
               try {
                 const deleteResponse = await fetch(
-                  "http://35.234.135.60:5000/material/package/delete",
+                  "http://localhost:5000/material/package/delete",
                   {
                     method: "DELETE",
                     headers: {
@@ -1347,7 +1347,7 @@
             // Assign new materials using POST
             try {
               const assignResponse = await fetch(
-                "http://35.234.135.60:5000/material/package",
+                "http://localhost:5000/material/package",
                 {
                   method: "POST",
                   headers: {
@@ -1445,7 +1445,7 @@
         let filteredProducts = [];
     
         const authToken = sessionStorage.getItem("authToken");
-        fetch("http://35.234.135.60:5000/api/GetAllProducts", {
+        fetch("http://localhost:5000/api/GetAllProducts", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -1863,7 +1863,7 @@
     
           const authToken = sessionStorage.getItem("authToken");
           const response = await fetch(
-            `http://35.234.135.60:5000/api/packages/${params}`,
+            `http://localhost:5000/api/packages/${params}`,
             {
               method: "PUT",
               headers: {
@@ -1923,7 +1923,7 @@
         constructor() {
           this.authToken = sessionStorage.getItem("authToken");
           this.defaultImage = "assets/images/profile_av.svg";
-          this.apiBaseUrl = "http://35.234.135.60:5000"; // Update if needed
+          this.apiBaseUrl = "http://localhost:5000"; // Update if needed
           this.userDataKey = "userData"; // Key for storing user data in sessionStorage
         }
 

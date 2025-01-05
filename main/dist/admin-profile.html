@@ -580,7 +580,7 @@
     <!-- Custom JavaScript -->
     <script>
       // Base URL for API
-      const BASE_URL = "http://35.234.135.60:5000";
+      const BASE_URL = "http://localhost:5000";
 
       // Retrieve authToken from sessionStorage
       const authToken = sessionStorage.getItem("authToken");
@@ -1260,7 +1260,7 @@
         constructor() {
           this.authToken = sessionStorage.getItem("authToken");
           this.defaultImage = "assets/images/profile_av.svg";
-          this.apiBaseUrl = "http://35.234.135.60:5000"; // Update if needed
+          this.apiBaseUrl = "http://localhost:5000"; // Update if needed
           this.userDataKey = "userData"; // Key for storing user data in sessionStorage
         }
 

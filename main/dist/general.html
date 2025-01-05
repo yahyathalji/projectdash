@@ -217,7 +217,7 @@
             // Load current settings
             async function loadSettings() {
                 try {
-                    const response = await fetch('http://35.234.135.60:5000/general/get', {
+                    const response = await fetch('http://localhost:5000/general/get', {
                         headers: {
                             'Authorization': `Bearer ${authToken}`
                         }
@@ -275,7 +275,7 @@
                 };
 
                 try {
-                    const response = await fetch('http://35.234.135.60:5000/general/update', {
+                    const response = await fetch('http://localhost:5000/general/update', {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -305,7 +305,7 @@
             const contactFormsTable = $('#contactFormsTable').DataTable({
                 responsive: true,
                 ajax: {
-                    url: 'http://35.234.135.60:5000/general/contactUs',
+                    url: 'http://localhost:5000/general/contactUs',
                     headers: {
                         'Authorization': `Bearer ${authToken}`
                     },
@@ -337,7 +337,7 @@
             $('#contactFormsTable').on('click', '.view-message', async function() {
                 const id = $(this).data('id');
                 try {
-                    const response = await fetch(`http://35.234.135.60:5000/general/contactUs/${id}`, {
+                    const response = await fetch(`http://localhost:5000/general/contactUs/${id}`, {
                         headers: {
                             'Authorization': `Bearer ${authToken}`
                         }
@@ -377,7 +377,7 @@
         constructor() {
             this.authToken = sessionStorage.getItem('authToken');
             this.defaultImage = 'assets/images/profile_av.svg';
-            this.apiBaseUrl = 'http://35.234.135.60:5000'; // Update if needed
+            this.apiBaseUrl = 'http://localhost:5000'; // Update if needed
             this.userDataKey = 'userData'; // Key for storing user data in sessionStorage
         }
 

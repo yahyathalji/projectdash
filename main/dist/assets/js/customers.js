@@ -1,4 +1,4 @@
-const apiUrl = 'http://35.234.135.60:5000/api';
+const apiUrl = 'http://localhost:5000/api';
 
 // Load all users and populate the table
 function loadUsers() {

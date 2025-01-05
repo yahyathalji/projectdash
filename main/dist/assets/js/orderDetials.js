@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch('http://35.234.135.60:5000/api/orders/admin', {
+            const response = await fetch('http://localhost:5000/api/orders/admin', {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch(`http://35.234.135.60:5000/api/orders/${orderId}`, {
+            const response = await fetch(`http://localhost:5000/api/orders/${orderId}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const imgCell = document.createElement('td');
             const firstImage = extractFirstImage(product.Product.Resource);
             if (firstImage) {
-                const imagePath = `http://35.234.135.60:5000/${firstImage.filePath.replace(/\\/g, '/')}`;
+                const imagePath = `http://localhost:5000/${firstImage.filePath.replace(/\\/g, '/')}`;
                 imgCell.innerHTML = `<img src="${imagePath}" class="avatar rounded lg" style="width: 100px; height: auto;" alt="${product.Product.Name}">`;
             } else {
                 imgCell.textContent = "No image available";
@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 customization.option.optionValues.forEach(value => {
                     customizationHTML += `<strong>${capitalizeFirstLetter(value.name)}:</strong> ${value.value || 'N/A'}<br>`;
                     if (value.fileName) {
-                        const resourcePath = `http://35.234.135.60:5000/resources/${value.fileName}`;
+                        const resourcePath = `http://localhost:5000/resources/${value.fileName}`;
                         customizationHTML += `<img src="${resourcePath}" style="max-width:100px; max-height:100px;" alt="${value.name}"><br>`;
                     }
                 });
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const imgCell = document.createElement('td');
                 const firstImage = extractFirstImage(pkg.Package.Resource);
                 if (firstImage) {
-                    const imagePath = `http://35.234.135.60:5000/${firstImage.filePath.replace(/\\/g, '/')}`;
+                    const imagePath = `http://localhost:5000/${firstImage.filePath.replace(/\\/g, '/')}`;
                     imgCell.innerHTML = `<img src="${imagePath}" class="avatar rounded lg" style="width: 100px; height: auto;" alt="${pkg.Package.Name}">`;
                 } else {
                     imgCell.textContent = "No image available";
@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     customization.option.optionValues.forEach(value => {
                         customizationHTML += `<strong>${capitalizeFirstLetter(value.name)}:</strong> ${value.value || 'N/A'}<br>`;
                         if (value.fileName) {
-                            const resourcePath = `http://35.234.135.60:5000/resources/${value.fileName}`;
+                            const resourcePath = `http://localhost:5000/resources/${value.fileName}`;
                             customizationHTML += `<img src="${resourcePath}" style="max-width:100px; max-height:100px;" alt="${value.name}"><br>`;
                         }
                     });
@@ -267,17 +267,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        let endpoint = `http://35.234.135.60:5000/api/orders/${orderId}`;
+        let endpoint = `http://localhost:5000/api/orders/${orderId}`;
         let method = 'PATCH';
         let body = JSON.stringify({ Status: newStatus });
 
         // Special handling for 'approved' and 'rejected' statuses
         if (newStatus === 'approved') {
-            endpoint = `http://35.234.135.60:5000/api/orders/${orderId}/approve`;
+            endpoint = `http://localhost:5000/api/orders/${orderId}/approve`;
             method = 'POST';
             body = null;
         } else if (newStatus === 'rejected') {
-            endpoint = `http://35.234.135.60:5000/api/orders/${orderId}/reject`;
+            endpoint = `http://localhost:5000/api/orders/${orderId}/reject`;
             method = 'POST';
             body = null;
         }
@@ -323,7 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch(`http://35.234.135.60:5000/api/orders/${orderId}`, {
+            const response = await fetch(`http://localhost:5000/api/orders/${orderId}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -376,7 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const imgCell = document.createElement('td');
             const firstImage = extractFirstImage(product.Product.Resource);
             if (firstImage) {
-                const imagePath = `http://35.234.135.60:5000/${firstImage.filePath.replace(/\\/g, '/')}`;
+                const imagePath = `http://localhost:5000/${firstImage.filePath.replace(/\\/g, '/')}`;
                 imgCell.innerHTML = `<img src="${imagePath}" class="avatar rounded lg" style="width: 100px; height: auto;" alt="${product.Product.Name}">`;
             } else {
                 imgCell.textContent = "No image available";
@@ -413,7 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 customization.option.optionValues.forEach(value => {
                     customizationHTML += `<strong>${capitalizeFirstLetter(value.name)}:</strong> ${value.value || 'N/A'}<br>`;
                     if (value.fileName) {
-                        const resourcePath = `http://35.234.135.60:5000/resources/${value.fileName}`;
+                        const resourcePath = `http://localhost:5000/resources/${value.fileName}`;
                         customizationHTML += `<img src="${resourcePath}" style="max-width:100px; max-height:100px;" alt="${value.name}"><br>`;
                     }
                 });
@@ -434,7 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const imgCell = document.createElement('td');
                 const firstImage = extractFirstImage(pkg.Package.Resource);
                 if (firstImage) {
-                    const imagePath = `http://35.234.135.60:5000/${firstImage.filePath.replace(/\\/g, '/')}`;
+                    const imagePath = `http://localhost:5000/${firstImage.filePath.replace(/\\/g, '/')}`;
                     imgCell.innerHTML = `<img src="${imagePath}" class="avatar rounded lg" style="width: 100px; height: auto;" alt="${pkg.Package.Name}">`;
                 } else {
                     imgCell.textContent = "No image available";
@@ -471,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     customization.option.optionValues.forEach(value => {
                         customizationHTML += `<strong>${capitalizeFirstLetter(value.name)}:</strong> ${value.value || 'N/A'}<br>`;
                         if (value.fileName) {
-                            const resourcePath = `http://35.234.135.60:5000/resources/${value.fileName}`;
+                            const resourcePath = `http://localhost:5000/resources/${value.fileName}`;
                             customizationHTML += `<img src="${resourcePath}" style="max-width:100px; max-height:100px;" alt="${value.name}"><br>`;
                         }
                     });
@@ -494,17 +494,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        let endpoint = `http://35.234.135.60:5000/api/orders/${orderId}`;
+        let endpoint = `http://localhost:5000/api/orders/${orderId}`;
         let method = 'PATCH';
         let body = JSON.stringify({ Status: newStatus });
 
         // Special handling for 'approved' and 'rejected' statuses
         if (newStatus === 'approved') {
-            endpoint = `http://35.234.135.60:5000/api/orders/${orderId}/approve`;
+            endpoint = `http://localhost:5000/api/orders/${orderId}/approve`;
             method = 'POST';
             body = null;
         } else if (newStatus === 'rejected') {
-            endpoint = `http://35.234.135.60:5000/api/orders/${orderId}/reject`;
+            endpoint = `http://localhost:5000/api/orders/${orderId}/reject`;
             method = 'POST';
             body = null;
         }

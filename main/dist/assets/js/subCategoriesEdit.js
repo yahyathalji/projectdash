@@ -6,7 +6,7 @@ $(document).ready(function () {
     console.log("CategoryID from URL:", categoryId);
 
     $.ajax({
-        url: 'http://35.234.135.60:5000/api/categories/subcategories',
+        url: 'http://localhost:5000/api/categories/subcategories',
         
 
         method: 'GET',
@@ -78,7 +78,7 @@ $(document).ready(function () {
     });
 
     $.ajax({
-        url: 'http://35.234.135.60:5000/api/categories',
+        url: 'http://localhost:5000/api/categories',
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

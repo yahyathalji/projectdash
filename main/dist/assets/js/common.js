@@ -3,7 +3,7 @@ class UserProfileManager {
         this.navbar = navbarElement;
         this.authToken = sessionStorage.getItem('authToken');
         this.defaultImage = 'assets/images/profile_av.svg';
-        this.apiBaseUrl = 'http://35.234.135.60:5000/api/getusers';
+        this.apiBaseUrl = 'http://localhost:5000/api/getusers';
         this.userDataKey = 'userData'; // Key for storing user data in sessionStorage
         this.initializeEventListeners();
     }

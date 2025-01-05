@@ -97,7 +97,7 @@ function initializeDataTable() {
    * @param {HTMLElement} offersTableBody - The tbody element where rows will be inserted.
    */
   async function populateOffers(offersTableBody) {
-    const offers = await fetchData("http://35.234.135.60:5000/api/offers");
+    const offers = await fetchData("http://localhost:5000/api/offers");
   
     // Validate that the fetched data is an array
     if (!Array.isArray(offers)) {
@@ -264,7 +264,7 @@ function initializeDataTable() {
       };
   
       // Send PUT request to update the offer
-      const response = await fetch(`http://35.234.135.60:5000/api/offers/${offerId}`, {
+      const response = await fetch(`http://localhost:5000/api/offers/${offerId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

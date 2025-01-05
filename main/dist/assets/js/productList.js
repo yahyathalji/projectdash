@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const apiUrl = "http://35.234.135.60:5000/search";
+  const apiUrl = "http://localhost:5000/search";
   const rowsPerPage = 5; // As per the search limit
   let currentPage = 1;
   let totalPages = 1;
@@ -250,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const deleteUrl = `http://35.234.135.60:5000/api/products/${productId}`;
+      const deleteUrl = `http://localhost:5000/api/products/${productId}`;
       const response = await fetch(deleteUrl, {
         method: "DELETE",
         headers: {

@@ -443,7 +443,7 @@
         // ---------------------------- Fetch Brands ----------------------------
         function fetchBrands() {
           const authToken = sessionStorage.getItem("authToken");
-          fetch("http://35.234.135.60:5000/api/brands", {
+          fetch("http://localhost:5000/api/brands", {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -480,7 +480,7 @@
         // ---------------------------- Fetch Categories ----------------------------
         function fetchCategories() {
           const authToken = sessionStorage.getItem("authToken");
-          fetch("http://35.234.135.60:5000/api/categories/subcategories", {
+          fetch("http://localhost:5000/api/categories/subcategories", {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -524,7 +524,7 @@
         // ---------------------------- Fetch Materials ----------------------------
         function fetchMaterials() {
           const authToken = sessionStorage.getItem("authToken");
-          return fetch("http://35.234.135.60:5000/material/material", {
+          return fetch("http://localhost:5000/material/material", {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -697,7 +697,7 @@
 
           const authToken = sessionStorage.getItem("authToken");
           const response = await fetch(
-            "http://35.234.135.60:5000/material/product/assign",
+            "http://localhost:5000/material/product/assign",
             {
               method: "POST",
               headers: {
@@ -864,7 +864,7 @@
 
           const authToken = sessionStorage.getItem("authToken");
           const response = await fetch(
-            "http://35.234.135.60:5000/api/createProduct",
+            "http://localhost:5000/api/createProduct",
             {
               method: "POST",
               headers: {
@@ -892,7 +892,7 @@
 
           // ---------------------------- Fetch Last Created Product ----------------------------
           function fetchLastProduct() {
-            return fetch("http://35.234.135.60:5000/api/last/product", {
+            return fetch("http://localhost:5000/api/last/product", {
               method: "GET",
               headers: {
                 "Content-Type": "application/json",
@@ -959,7 +959,7 @@
         constructor() {
           this.authToken = sessionStorage.getItem("authToken");
           this.defaultImage = "assets/images/profile_av.svg";
-          this.apiBaseUrl = "http://35.234.135.60:5000"; // Update if needed
+          this.apiBaseUrl = "http://localhost:5000"; // Update if needed
           this.userDataKey = "userData"; // Key for storing user data in sessionStorage
         }
 

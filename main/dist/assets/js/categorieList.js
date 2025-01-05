@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     try {
-        const response = await fetch("http://35.234.135.60:5000/api/categories",
+        const response = await fetch("http://localhost:5000/api/categories",
             {
                 method: "GET",
                 headers: {

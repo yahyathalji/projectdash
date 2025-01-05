@@ -1,9 +1,9 @@
 // assignPackage.js
 
 document.addEventListener("DOMContentLoaded", function () {
-    const customizationsApiEndpoint = "http://35.234.135.60:5000/api/customization"; // API Endpoint to fetch customizations
-    const assignApiEndpoint = "http://35.234.135.60:5000/api/customization/package"; // API Endpoint to assign customization to packages
-    const packagesApiEndpoint = "http://35.234.135.60:5000/api/packages"; // API Endpoint to fetch packages
+    const customizationsApiEndpoint = "http://localhost:5000/api/customization"; // API Endpoint to fetch customizations
+    const assignApiEndpoint = "http://localhost:5000/api/customization/package"; // API Endpoint to assign customization to packages
+    const packagesApiEndpoint = "http://localhost:5000/api/packages"; // API Endpoint to fetch packages
 
     // DOM Elements for Customizations
     const customizationsTableBody = document.querySelector("#customizationsTable tbody");

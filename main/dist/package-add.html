@@ -337,7 +337,7 @@
 
             // Fetch categories
             const authToken = sessionStorage.getItem("authToken");
-            fetch('http://35.234.135.60:5000/api/categories/subcategories', {
+            fetch('http://localhost:5000/api/categories/subcategories', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -378,7 +378,7 @@
             const nextPageButton = document.getElementById("nextPage");
             const pageNumber = document.getElementById("pageNumber");
 
-            fetch("http://35.234.135.60:5000/api/GetAllProducts", {
+            fetch("http://localhost:5000/api/GetAllProducts", {
                 method: "GET",
                 headers: {
                     "content-type": "application/json",
@@ -600,7 +600,7 @@
 
         function fetchMaterials() {
             const authToken = sessionStorage.getItem("authToken");
-            return fetch("http://35.234.135.60:5000/material/material", {
+            return fetch("http://localhost:5000/material/material", {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
@@ -711,7 +711,7 @@
             assignMaterialsBtn.textContent = "Assigning...";
 
             const authToken = sessionStorage.getItem("authToken");
-            fetch("http://35.234.135.60:5000/material/package", {
+            fetch("http://localhost:5000/material/package", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -903,7 +903,7 @@
                 submitButton.textContent = 'Saving...';
 
                 const authToken = sessionStorage.getItem('authToken');
-                const response = await fetch('http://35.234.135.60:5000/api/packages', {
+                const response = await fetch('http://localhost:5000/api/packages', {
                     method: 'POST',
                     headers: {
                         ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
@@ -947,7 +947,7 @@
 
         async function fetchLastPackage() {
             const authToken = sessionStorage.getItem('authToken');
-            const response = await fetch('http://35.234.135.60:5000/api/last/package', {
+            const response = await fetch('http://localhost:5000/api/last/package', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       // Make API request to create category
-      const response = await fetch("http://35.234.135.60:5000/api/categories", {
+      const response = await fetch("http://localhost:5000/api/categories", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
